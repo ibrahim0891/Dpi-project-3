@@ -17,9 +17,7 @@ const SignUp = () => {
             email: email, 
             password : password
         }
-        Authenticaion('signup',credential).then((user) => {
-          console.log(user.uid);
-        })
+        Authenticaion('signup',credential) 
     }
     return (
         <form action="">

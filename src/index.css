@@ -1,9 +1,9 @@
-.active{
-padding: 1rem;
-background: #000;
-color: white
-}
+
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.active {
+    @apply bg-gray-700 text-white border-b-4
+}
