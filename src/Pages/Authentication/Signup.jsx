@@ -25,7 +25,7 @@ const SignUp = () => {
     }
     return (
         <form action="" className="border  px-8 py-12 m-auto">
-            <h1 className="font-thin text-3xl text-center"> Sign Up Here </h1> <br/>
+            <h1 className="font-thin text-3xl text-center"> SignUp করেন </h1> <br/>
             <label htmlFor="">First name</label>
             <input type="text" onChange={(e)=>{setFname(e.target.value)}} />
             <label htmlFor="">Last name</label>
