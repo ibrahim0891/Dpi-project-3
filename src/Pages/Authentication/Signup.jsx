@@ -26,13 +26,13 @@ const SignUp = () => {
     return (
         <form action="" className="border  px-8 py-12 m-auto">
             <h1 className="font-thin text-3xl text-center"> সাক্ষর উপরে করেন </h1> <br/>
-            <label htmlFor="">First name</label> <br/>
+            <label className="py-2 font-bold text-md" htmlFor="">First name</label> <br/>
             <input type="text" onChange={(e)=>{setFname(e.target.value)}} /> <br/>
-            <label htmlFor="">Last name</label> <br/>
+            <label className="py-2 font-bold text-md" htmlFor="">Last name</label> <br/>
             <input type="text"  onChange={(e)=>{setLname(e.target.value)}}/> <br/>
-            <label htmlFor="">Email Address</label> <br/>
+            <label className="py-2 font-bold text-md" htmlFor="">Email Address</label> <br/>
             <input type="email"  onChange={(e)=>{setEmail(e.target.value)}}/> <br/>
-            <label htmlFor="">Password</label> <br/>
+            <label className="py-2 font-bold text-md" htmlFor="">Password</label> <br/>
             <input type="password"  onChange={(e)=>{setPassword(e.target.value)}}/> <br/>
             <button onClick={(e)=>handleSignup(e)}> Signup </button>
             <div>
