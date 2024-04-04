@@ -11,7 +11,8 @@ export function Authenticaion(actionType, formInput , navigate) {
             signInWithEmailAndPassword(auth, formInput.email, formInput.password).then((usercredential) => {
                 const user = usercredential.user
                 navigate(links.home.root)
-                resolve(user)
+                console.log(user);
+                // resolve(user)
             }).catch((error) => {
               resolve(error)
             })
@@ -21,7 +22,7 @@ export function Authenticaion(actionType, formInput , navigate) {
                 const user = usercredential.user
                 writeDataInDB('/users/'+user.uid+'/info' , formInput)
                 navigate(links.home.root)
-                resolve(user)
+                // resolve(user)
             }).catch((error) => {
               resolve(error)
             })

@@ -7,3 +7,7 @@
 .active {
     @apply bg-gray-700 text-white border-b-4
 }
+
+#root{
+    @apply max-w-[360px] m-auto mt-12 
+}
