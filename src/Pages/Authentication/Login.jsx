@@ -16,7 +16,7 @@ const Login = () => {
     Authenticaion('login',credential)
   }
   return (
-    <form action="">
+    <form action="" className="border p-5 flex flex-col justify-center items-center">
         <label htmlFor="">Enter email</label>
         <input type="text" onChange={(e)=>{ setEmail(e.target.value)}}/>
         <label htmlFor="">Enter password</label>
