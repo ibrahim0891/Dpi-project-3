@@ -16,33 +16,20 @@ const Login = () => {
     Authenticaion('login',credential)
   }
   return (
-    <div className="flex bg-gradient-to-r from-blue-300 to-cyan-500 lg:h-screen sm:h-screen md:h-screen items-center justify-center">
-      
-      <div className="flex p-4 bg-white h-3/5 items-center w-3/5 justify-center ">
-        <div className="w-2/4 flex justify-center md:hidden sm:hidden lg:block">
-          <img className="w-96" src={image} alt="" />
+    <div className="flex w-4/5 justify-center ">
+      <div className="w-2/4 ">
+        <img src={image} alt="" />
         </div>
-        <div className=" lg:w-2/4 flex justify-center">
-          <form action="" className=" md:w-96 sm:w-96  p-5">
-            <table>
-              <tr className="my-1">
-                <td className="w-1/2"> <label htmlFor="">Enter email</label></td>
-                <td className="w-1/2"><input type="text" className="border" onChange={(e)=>{ setEmail(e.target.value)}}/></td>
-              </tr>
-            
-              <tr className="my-1">
-                <td className="w-1/2"> <label htmlFor="">Enter password</label></td>
-                <td className="w-1/2"><input type="password" className="border" onChange={(e)=>{ setPassword(e.target.value)}}/></td>
-              </tr>
-            
-            </table>
-            <button onClick={handleLogin}> Log in </button>
-            <div>
-                <p>New here? <Link to="/auth/signup">Sign up </Link></p>
-            </div>
-          </form>
+      <form action="" className="border w-2/4 p-5 ">
+        <label htmlFor="">Enter email</label>
+        <input type="text" className="border" onChange={(e)=>{ setEmail(e.target.value)}}/><br/>
+        <label htmlFor="">Enter password</label>
+        <input type="password" onChange={(e)=>{ setPassword(e.target.value)}}/>
+        <button onClick={handleLogin}> Log in </button>
+        <div>
+            <p>New here? <Link to="/auth/signup">Sign up </Link></p>
         </div>
-      </div>
+      </form>
     </div>
   )
 }
