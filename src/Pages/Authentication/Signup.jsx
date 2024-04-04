@@ -34,9 +34,9 @@ const SignUp = () => {
             <input className="my-3 w-full border-2 p-2" type="email"  onChange={(e)=>{setEmail(e.target.value)}}/> <br/>
             <label className="my-3 w-full py-2 font-bold text-md" htmlFor="">Password</label> <br/>
             <input className="my-3 w-full border-2 p-2" type="password"  onChange={(e)=>{setPassword(e.target.value)}}/> <br/>
-            <button  className="block bg-gray-800 text-white hover:bg-gray-700 px-3 py-2 my-4" onClick={(e)=>handleSignup(e)}> Signup </button>
+            <button  className="block bg-gray-800 text-white w-full hover:bg-gray-700 px-3 py-2 my-4" onClick={(e)=>handleSignup(e)}> Signup </button>
             <div>
-                Already have account? <Link to="/auth/login">Log in</Link>
+                Already have account? <Link to="/auth/login" className="text-blue-600">Log in</Link>
             </div>
         </form>
     )
