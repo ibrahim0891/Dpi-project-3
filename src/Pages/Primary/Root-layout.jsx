@@ -10,12 +10,12 @@ import { useNavigate } from "react-router-dom"
 const RootLayout = () => {
     const navigate = useNavigate()
     useEffect(() => {
-      onAuthStateChanged(auth, (user) => {
-        if (!user){
-            navigate('/auth/login')
-        }
-      })
-    },[])
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                navigate('/auth/login')
+            }
+        })
+    }, [])
     return (
         <div>
             <nav className="bg-gray-800 text-white flex space-between">
@@ -23,7 +23,9 @@ const RootLayout = () => {
                 <NavLink className='p-4 w-1/3 text-nowrap text-center ' to='/others'> People </NavLink>
                 <NavLink className='p-4 w-1/3 text-nowrap text-center ' to='/inbox'> Inbox </NavLink>
             </nav>
-            <Outlet />
+            <div className="p-6">
+                <Outlet />
+            </div>
         </div>
     )
 }
