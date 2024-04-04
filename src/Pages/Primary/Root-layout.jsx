@@ -1,7 +1,21 @@
+import { onAuthStateChanged } from "firebase/auth"
+import { useEffect } from "react"
 import { Outlet } from "react-router-dom"
 import { NavLink } from "react-router-dom"
+import { auth } from "../../../firebase"
+import { useNavigate } from "react-router-dom"
+
+//under developemt
 
 const RootLayout = () => {
+    const navigate = useNavigate()
+    useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+        if (!user){
+            navigate('/auth/login')
+        }
+      })
+    },[])
     return (
         <div>
             <nav className="bg-gray-800 text-white flex space-between">

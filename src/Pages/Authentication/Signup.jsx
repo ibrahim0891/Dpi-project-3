@@ -1,14 +1,18 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Authenticaion } from "../../Common/Authfunction"
+import { useNavigate } from "react-router-dom"
 
-
+//Ready 
 
 const SignUp = () => {
     const [fname ,setFname]= useState('')
     const [lname ,setLname]= useState('')
     const [email ,setEmail]= useState('')
     const [password ,setPassword]= useState('')
+
+    const navigate = useNavigate()
+
     const handleSignup = (e)=>{
         e.preventDefault()
         const credential = {
@@ -17,7 +21,7 @@ const SignUp = () => {
             email: email, 
             password : password
         }
-        Authenticaion('signup',credential) 
+        Authenticaion('signup',credential, navigate) 
     }
     return (
         <form action="">

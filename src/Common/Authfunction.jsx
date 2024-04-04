@@ -1,11 +1,16 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { writeDataInDB } from "./Database";
-export function Authenticaion(actionType, formInput) {
+import { links } from "../assets/Vars";
+
+//Logic 
+
+export function Authenticaion(actionType, formInput , navigate) {
     return new Promise((resolve) => {
         if (actionType == 'login') {
             signInWithEmailAndPassword(auth, formInput.email, formInput.password).then((usercredential) => {
                 const user = usercredential.user
+                navigate(links.home.root)
                 resolve(user)
             }).catch((error) => {
               resolve(error)
@@ -15,6 +20,7 @@ export function Authenticaion(actionType, formInput) {
             createUserWithEmailAndPassword(auth, formInput.email, formInput.password).then((usercredential) => {
                 const user = usercredential.user
                 writeDataInDB('/users/'+user.uid+'/info' , formInput)
+                navigate(links.home.root)
                 resolve(user)
             }).catch((error) => {
               resolve(error)

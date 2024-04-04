@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { Authenticaion } from "../../Common/Authfunction"
 import image from './img/image.png'
 
+//Ready
 
 const Login = () => {
     const [email, setEmail] = useState('')

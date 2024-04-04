@@ -18,22 +18,29 @@ import RootLayout from "./Pages/Primary/Root-layout"
 import ChatView from "./Pages/Secondary/ChatView"
 //Other people profile page 
 import OthersProfile from "./Pages/Secondary/OthersProfile"
+import ErrorPage from "./Pages/ErrorPage"
+import SecondaryLayout from "./Pages/Secondary/SecondaryLayout"
 
-function App() {
+
+import { links } from "./assets/Vars"
+function App() { 
     const router = createBrowserRouter(
         createRoutesFromElements(
             <Route>
-                <Route path='/auth' element={<Auth />}>
-                    <Route path="/auth/login" element={<Login />}> </Route>
-                    <Route path="/auth/signup" element={<SignUp />}> </Route>
+                <Route path={links.auth.root} element={<Auth />}>
+                    <Route path={links.auth.login} element={<Login />}> </Route>
+                    <Route path={links.auth.signup} element={<SignUp />}> </Route>
                 </Route >
-                <Route path="/" element={<RootLayout />}>
-                    <Route path='/' element={<Profile />}> </Route>
-                    <Route path="/inbox" element={<Inbox />}> </Route>
-                    <Route path="/others" element={<Others />}></Route>
+                <Route path={links.home.root} element={<RootLayout />} errorElement={<ErrorPage />}>
+                    <Route path={links.home.root} element={<Profile />}> </Route>
+                    <Route path={links.home.inbox} element={<Inbox />}> </Route>
+                    <Route path={links.home.others} element={<Others />}></Route>
+                    <Route path="*" element={<ErrorPage />}> </Route>
                 </Route>
-                <Route path="/inbox/:chatID" element={<ChatView />}> </Route>
-                <Route path="/others/:uid" element={<OthersProfile />}> </Route>
+                <Route path={links.sec.root} element={<SecondaryLayout/>}>
+                    <Route path={links.sec.inbox} element={<ChatView />}> </Route>
+                    <Route path={links.sec.others} element={<OthersProfile />}> </Route>
+                </Route>
             </Route >
         )
     )
