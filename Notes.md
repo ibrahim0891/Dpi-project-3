@@ -1,6 +1,6 @@
 
 # Notes from boss (Ridoy)
-    Designer  will write notes here.
+    jibon kintu ektai
 
 # Notes from employe (ibrahim)
     Developer will write notes here.
@@ -30,3 +30,5 @@ Please DO NOT modify anything of these pages unless you know what you are  doing
 
 ## Notice
 **If you accidently break anything please contact me before commiting changes to github**
+
+// ami parmu na 😁
