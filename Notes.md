@@ -12,7 +12,7 @@ For your design range I will place some *flag comment* in the component so that 
 - Experimental 
 - Under development
 - Ready 
-- Logic
+- Logics
 
 ### Experimental
 > Experimental pages are almost ready pages .
