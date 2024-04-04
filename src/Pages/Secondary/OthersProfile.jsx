@@ -5,6 +5,7 @@ import { links } from "../../assets/Vars";
 const OthersProfile = () => {
     const uid = useParams();
     const uidnumber = uid['uid']
+    console.log(uidnumber);
     return (
         <div>
             <BackButton buttonLink={`/others`} buttonText={'Back'}/>

@@ -8,9 +8,9 @@ const Others = () => {
         <div>
             <h1> Others people page</h1>
             links will be replaced <br />
-            <Link to={links.sec.modOhers+1}> People 1 </Link>
-            <Link to={links.sec.modOhers+2}> People 2 </Link>
-            <Link to={links.sec.modOhers+3}> People 3</Link>
+            <Link to={links.sec.modOthers+1}> People 1 </Link>
+            <Link to={links.sec.modOthers+2}> People 2 </Link>
+            <Link to={links.sec.modOthers+3}> People 3</Link>
         </div>
     )
 }

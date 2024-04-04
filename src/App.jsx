@@ -37,7 +37,7 @@ function App() {
                     <Route path={links.home.others} element={<Others />}></Route>
                     <Route path="*" element={<ErrorPage />}> </Route>
                 </Route>
-                <Route path={links.sec.root} element={<SecondaryLayout/>}>
+                <Route path={links.sec.root} element={<SecondaryLayout/>} errorElement={<ErrorPage/>}>
                     <Route path={links.sec.inbox} element={<ChatView />}> </Route>
                     <Route path={links.sec.others} element={<OthersProfile />}> </Route>
                 </Route>

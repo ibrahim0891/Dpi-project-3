@@ -15,11 +15,11 @@ const links = {
     sec : {
         root: '/sec',
         inbox : '/sec/inbox/:chatID',
-        others : '/sec/inbox/:uid',
+        others : '/sec/others/:uid',
         //mod links are used to provide parameters to routes
         //mod means modifiable
         modInbox: '/sec/inbox/', 
-        modOhers: '/sec/others/'
+        modOthers: '/sec/others/'
     }
 }
 
