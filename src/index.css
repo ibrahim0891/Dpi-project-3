@@ -9,5 +9,5 @@
 }
 
 #root{
-    @apply max-w-[360px] m-auto mt-12 
+    @apply max-w-[360px] m-auto mt-12 shadow-lg
 }

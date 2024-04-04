@@ -26,7 +26,7 @@ const Login = () => {
     }
     return (
         <div className=" ">
-            <form action="" className="border  px-8 py-12 m-auto shadow-lg">
+            <form action="" className="border  px-8 py-12 m-auto">
                 <h1 className="font-thin text-3xl text-center"> DPI PROJECT 3 </h1>
                 <div className="">
                     <img className='h-3/4' src={image} alt="" />

@@ -10,7 +10,7 @@ import { links } from "../../assets/Vars";
 import { useNavigate } from "react-router-dom";
 const Auth = () => {
     const navigate = useNavigate()
-    const [splash, setSplashScreen] = useState(null)
+    // const [splash, setSplashScreen] = useState(null)
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {

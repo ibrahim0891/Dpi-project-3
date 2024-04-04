@@ -26,7 +26,7 @@ These pages goes under various tests. Once these pages are ready you can decorat
 
 ### Logics
 > File marked with this flags are solely responsible for handleling functional logic that makes the frontend communicate with backend and also manage the intection between other components. 
-Please DO NOT modify anything of these pages unless you know what you doing. 
+Please DO NOT modify anything of these pages unless you know what you are  doing. 
 
 ## Notice
 **If you accidently break anything please contact me before commiting changes to github**
