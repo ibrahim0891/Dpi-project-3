@@ -16,16 +16,19 @@ const Login = () => {
     Authenticaion('login',credential)
   }
   return (
-    <form action="" className="border p-5 flex flex-col justify-center items-center">
+    <div className="flex w-4/5 justify-center ">
+      <div className="w-2/4 "><img src="img/image.png" alt="" /></div>
+      <form action="" className="border w-2/4 p-5 ">
         <label htmlFor="">Enter email</label>
-        <input type="text" onChange={(e)=>{ setEmail(e.target.value)}}/>
+        <input type="text" className="border" onChange={(e)=>{ setEmail(e.target.value)}}/><br/>
         <label htmlFor="">Enter password</label>
         <input type="password" onChange={(e)=>{ setPassword(e.target.value)}}/>
         <button onClick={handleLogin}> Log in </button>
         <div>
             <p>New here? <Link to="/auth/signup">Sign up </Link></p>
         </div>
-    </form>
+      </form>
+    </div>
   )
 }
 export default Login
