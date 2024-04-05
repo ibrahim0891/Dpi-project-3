@@ -8,6 +8,10 @@
 ## Important note
 For your design range I will place some *flag comment* in the component so that you can understand the safe zone for safe modification so that you don't break anything. 
 
+# current task
+- [ ] Others.jsx
+- [ ] OthersPofile.jsx
+
 #### These flags are: 
 - Experimental 
 - Under development
@@ -31,9 +35,6 @@ Please DO NOT modify anything of these pages unless you know what you are  doing
 ## Prototype Design available
 > This flags means that the page has some functional feature . You can style the elements of the page so that it looks good temporarily. But these are not final componentes . These will be changed once new feature added.
 
-# current task
-- [ ] Others.jsx
-- [ ] OthersPofile.jsx
 
 
 ## Notice
