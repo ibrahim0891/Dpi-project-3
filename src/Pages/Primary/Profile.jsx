@@ -1,35 +1,40 @@
-import { signOut } from "firebase/auth" 
-import { auth } from "../../../firebase"
+//React
 import { useNavigate } from "react-router-dom"
-import { useState } from "react"
-import { updateData } from "../../Common/Database"
+import { useEffect, useState } from "react"
+
+//Firebase
+import { auth, database } from "../../../firebase"
+import { signOut } from "firebase/auth" 
+import { child, get, ref } from "firebase/database"
+
 
 //Under development
 
 const Profile = () => {
     const navigate = useNavigate()
+    const [userData, setUserData] = useState({})
     const handleSignOut = (e) => {
         e.preventDefault()
         signOut(auth).then(() => {
             navigate('/auth/login')
         })
-    }
-    const [info , setInfo ] = useState('')
-    const updateDB = (e) => {
-      e.preventDefault()
-      let myObj = {
-        data : info
-      }
-      let path = `users/${auth.currentUser.uid}/info`
-      updateData(path, myObj)
-    }
+    } 
+    
+    useEffect(() => {
+        const path = 'users/' + auth.currentUser.uid + '/info'
+        console.log(path);
+        get(child(ref(database), path))
+            .then((snapshot) => {
+                setUserData(snapshot.val())
+            })
+    }, [])
     return (
         <div>
-            <h1> Profile </h1>
-            {/* this input is only for test . no need to style Here */}
-            <input type="text" onChange={(e)=>{setInfo(e.target.value)}}/>
-            <button onClick={(e)=> updateDB(e)}> Update DB</button>
-            <button onClick={(e)=> handleSignOut(e)}>Sign out</button>
+            {userData ? <div>
+                <h1 className="font-thin text-xl text-center"> {userData.fname} </h1>
+                <p className="font-thin text-sm text-center">{userData.email} </p>
+            </div> : "Loading..."}
+            <button onClick={(e) => handleSignOut(e)}>Sign out</button>
         </div>
     )
 }

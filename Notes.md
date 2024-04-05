@@ -28,6 +28,14 @@ These pages goes under various tests. Once these pages are ready you can decorat
 > File marked with this flags are solely responsible for handleling functional logic that makes the frontend communicate with backend and also manage the intection between other components. 
 Please DO NOT modify anything of these pages unless you know what you are  doing. 
 
+## Prototype Design available
+> This flags means that the page has some functional feature . You can style the elements of the page so that it looks good temporarily. But these are not final componentes . These will be changed once new feature added.
+
+# current task
+- [ ] Others.jsx
+- [ ] OthersPofile.jsx
+
+
 ## Notice
 **If you accidently break anything please contact me before commiting changes to github**
 
