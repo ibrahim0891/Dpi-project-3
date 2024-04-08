@@ -46,7 +46,7 @@ const Profile = () => {
 						</div>
 					</div>
 					<div className="flex justify-around text-center my-3 cursor-pointer ">
-						<div className="bg-gray-200 w-5/6 mx-1 hover:shadow-md">
+						<div className="bg-gray-200 w-5/6 mr-1 hover:shadow-md">
 							<h1>Followers</h1>
 							<h3>00</h3>
 						</div>
@@ -54,7 +54,7 @@ const Profile = () => {
 							<h1>Posts</h1>
 							<h3>00</h3>
 						</div>
-						<div className="bg-gray-200 w-5/6 mx-1 hover:shadow-md">
+						<div className="bg-gray-200 w-5/6 ml-1 hover:shadow-md">
 							<h1>Favourite</h1>
 							<h3>00</h3>
 						</div>
