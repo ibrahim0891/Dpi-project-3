@@ -1,15 +1,15 @@
-//React
+// React
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-//Firebase
+// Firebase
 import { auth, database } from "../../../firebase";
 import { signOut } from "firebase/auth";
 import { child, get, ref } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons"; // Corrected import
 
-//Under development
+// Under development
 
 const Profile = () => {
 	const navigate = useNavigate();
@@ -30,15 +30,16 @@ const Profile = () => {
 			setUserData(snapshot.val());
 		});
 	}, []);
+
 	return (
 		<div>
 			{userData ? (
 				<div>
 					<div>
-						<FontAwesomeIcon icon={["fas", "coffee"]} />
+						<FontAwesomeIcon className="text-6xl" icon={faUser} /> {/* Corrected icon usage */}
 					</div>
-					<h1 className="font-thin text-xl text-center"> {userData.fname} </h1>
-					<p className="font-thin text-sm text-center">{userData.email} </p>
+					<h1 className="font-thin text-xl text-center">{userData.fname}</h1>
+					<p className="font-thin text-sm text-center">{userData.email}</p>
 				</div>
 			) : (
 				"Loading..."
