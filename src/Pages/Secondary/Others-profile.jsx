@@ -17,16 +17,17 @@ const OthersProfile = () => {
     const uid = useParams();
     const uidnumber = uid['uid']
     const [userData, setUserData] = useState('')
-
+    let [isConnected , setIsConnected] = useState(false)
 
     useEffect(() => {
         get(child(ref(database), `/users/${uidnumber}/info`)).then((snapshot) => {
             let data = snapshot.val()
             setUserData(data)
         })
-        get(child(ref(database),`/connections/${auth.currentUser.uid}`)).then((snapshot) => {
+        let currentUser = localStorage.getItem('currentUser')
+        get(child(ref(database),`/connections/${currentUser}/${uidnumber}`)).then((snapshot) => {
           if(snapshot.exists()){
-            console.log(snapshot.val());
+             setIsConnected(true)
           }
           else{
             console.log('error');
@@ -59,12 +60,15 @@ const OthersProfile = () => {
                     </div>
                 </div>
                 <div className="p-2 my-2 flex justify-start gap-2">
-                    <Link
+                    {
+                        isConnected? <Link
                         className=" "
                         to={links.sec.modInbox + uidnumber}>
                         Message
-                    </Link>
-                    <button onClick={(e) => sendRequest(e)}> Connect </button>
+                    </Link> :<button onClick={(e) => sendRequest(e)}> Connect </button>
+                    }
+                    
+                    
                 </div>
             </div>
         </div>
