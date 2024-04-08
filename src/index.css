@@ -11,3 +11,6 @@
     @apply max-w-[360px] m-auto mt-12 shadow-lg
 }
  
+.activeTab{
+    @apply bg-gray-500 text-white
+}

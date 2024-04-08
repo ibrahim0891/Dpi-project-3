@@ -1,9 +1,10 @@
 import { useParams, Link } from "react-router-dom"
 import BackButton from "../Components/BackButton";
 import { links } from "../../assets/Vars";
-import { child, get, ref } from "firebase/database";
-import { database } from "../../../firebase";
+import { child, get, ref, set } from "firebase/database";
+import { auth, database } from "../../../firebase";
 import { useEffect, useState } from "react";
+import TimeStamp from "../../Common/TimeStamp";
 
 
 // prototype design availabel
@@ -21,17 +22,31 @@ const OthersProfile = () => {
             setUserData(data) 
         })
     }, [])
+
+    const sendRequest = (e) => {
+      e.preventDefault()
+      let createRequestUID = auth.currentUser.uid.slice(0,6)
+      set(ref(database,`/requests/${uidnumber}/${createRequestUID}`),{
+        requestorUID : auth.currentUser.uid,
+        timeStamp : TimeStamp(),
+        status: 'pending'
+      }).then(() => {
+        console.log('Request sent');
+      })
+    }
     return (
         <div>
             <BackButton buttonLink={`/others`} buttonText={'Back'} />
             <div className="p-6">
                 <h1 className=""> {userData.fname} </h1>
                 <p className="">{userData.email} </p>
-                <Link
+                {/* <Link
                     className=" "
                     to={links.sec.modInbox + uidnumber}>
                     Message {userData.fname}
-                </Link> 
+                </Link>  */}
+
+                <button onClick={(e)=>sendRequest(e)}> Connect </button>
             </div>
         </div>
     )

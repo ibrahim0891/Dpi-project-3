@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { links } from "../../assets/Vars"
+import { links } from "../../../assets/Vars"
 
 
 //under development

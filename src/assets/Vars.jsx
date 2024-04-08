@@ -4,7 +4,12 @@
 const links = {
     home: {
         root : '/',
-        inbox : '/inbox',
+        inbox : {
+            chatLayout : '/chat-root/',
+            inbox : '/chat-root/inbox',
+            request: 'chat-root/requests',
+            contacts : 'chat-root/contacts'
+        },
         others : '/others'
     },
     auth: {

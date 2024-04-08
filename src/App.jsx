@@ -9,31 +9,39 @@ import SignUp from "./Pages/Authentication/Signup"
 
 
 //Home page 
-import Inbox from "./Pages/Primary/Inbox"
+import ChatLayout from "./Pages/Primary/Chat/Chat-layout"
+
 import Others from "./Pages/Primary/Others"
 import Profile from "./Pages/Primary/Profile"
 import RootLayout from "./Pages/Primary/Root-layout"
 
 //chatview 
-import ChatView from "./Pages/Secondary/ChatView"
+import ChatView from "./Pages/Secondary/thread"
 //Other people profile page 
-import OthersProfile from "./Pages/Secondary/OthersProfile"
-import ErrorPage from "./Pages/ErrorPage"
-import SecondaryLayout from "./Pages/Secondary/SecondaryLayout"
+import OthersProfile from "./Pages/Secondary/Others-profile"
+import ErrorPage from "./Pages/Error-page"
+import SecondaryLayout from "./Pages/Secondary/Secondary-layout"
 
 
 import { links } from "./assets/Vars"
+import MessageRequest from "./Pages/Primary/Chat/Message-request"
+import Contacts from "./Pages/Primary/Chat/Contacts"
+import Inbox from "./Pages/Primary/Chat/Inbox"
 function App() { 
     const router = createBrowserRouter(
         createRoutesFromElements(
-            <Route>
+            <Route path="/">
                 <Route path={links.auth.root} element={<Auth />}>
                     <Route path={links.auth.login} element={<Login />}> </Route>
                     <Route path={links.auth.signup} element={<SignUp />}> </Route>
                 </Route >
                 <Route path={links.home.root} element={<RootLayout />} errorElement={<ErrorPage />}>
                     <Route path={links.home.root} element={<Profile />}> </Route>
-                    <Route path={links.home.inbox} element={<Inbox />}> </Route>
+                    <Route path={links.home.inbox.chatLayout} element={<ChatLayout />}> 
+                        <Route path={links.home.inbox.request} element={<MessageRequest/>}></Route>
+                        <Route path={links.home.inbox.contacts} element={<Contacts/>}></Route>
+                        <Route path={links.home.inbox.inbox} element={<Inbox/>}></Route>
+                    </Route>
                     <Route path={links.home.others} element={<Others />}></Route>
                     <Route path="*" element={<ErrorPage />}> </Route>
                 </Route>
