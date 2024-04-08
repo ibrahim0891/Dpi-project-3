@@ -33,7 +33,7 @@ const Others = () => {
         <div className="">
             <h1 className="text-2xl font-semibold mb-2"> See who else here: </h1> 
         {otherUser? otherUser.map((value) => 
-          <Link className="block border-b-1 p-4 hover:bg-gray-100" key={value.uid} to={links.sec.modOthers + value.uid}>{value.info.fname}</Link>
+          <Link className="border-b-1 p-4 hover:bg-gray-100 flex items-center" key={value.uid} to={links.sec.modOthers + value.uid}>{value.info.fname} <div className="w-2 h-2 rounded bg-green-400 ml-2"></div></Link>
         ): 'Loading...' }
         </div>
     )
