@@ -7,7 +7,7 @@ import { auth, database } from "../../../firebase";
 import { signOut } from "firebase/auth";
 import { child, get, ref } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons"; 
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 // Under development
 
@@ -35,13 +35,18 @@ const Profile = () => {
 		<div>
 			{userData ? (
 				<div>
-					<div className="flex justify-center">
+					<div className="flex items-center">
 						<div className=" w-20 h-20 my-3 border rounded-full flex justify-center items-center">
 							<FontAwesomeIcon className="text-6xl " icon={faUser} />
-						</div> 
+						</div>
+						<div className="ml-3">
+							<h1 className="font-medium text-xl ">
+								{userData.fname}
+							</h1>
+							<p className="font-thin text-sm text-center">{userData.email}</p>
+						</div>
 					</div>
-					<h1 className="font-thin text-xl text-center">{userData.fname}</h1>
-					<p className="font-thin text-sm text-center">{userData.email}</p>
+					<div></div>
 				</div>
 			) : (
 				"Loading..."
