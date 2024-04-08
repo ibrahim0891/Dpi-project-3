@@ -1,4 +1,4 @@
-import { get, ref, onValue, child } from "firebase/database"
+import { get, ref, onValue, child, set, update } from "firebase/database"
 import { useEffect, useState } from "react"
 import { auth, database } from "../../../../firebase"
 import { Link } from "react-router-dom"
@@ -35,13 +35,17 @@ const MessageRequest = () => {
 
     const handleDecline = (e, requestorUID) => {
         e.preventDefault()
-        console.log("Declining request for ", requestorUID);
-        // Code to decline request will go here
-        // just remove the request from request node so that this request don't appear in frontend again 
+        let requestId = requestorUID.slice(0,6)
+        let requestRef = ref(database, `/requests/${auth.currentUser.uid}/${requestId}`)
+        set(requestRef, null)
     }
     const handleAccept = (e, requestorUID) => {
         e.preventDefault()
-        console.log("Accepting request for ", requestorUID);
+        let connectRef = ref(database, `/connections/${auth.currentUser.uid}`)
+        update(connectRef, {
+          [requestorUID]: true
+        })
+        handleDecline(e , requestorUID)
         // code to Accept request will go here.
         // call firebase funcion to make a new node named 'connection' in the root of rtdb .
         // In this node there will be a child node for each user conncetions . childe node name will be the uid of 
@@ -66,9 +70,7 @@ const MessageRequest = () => {
                         requestList.map((request, index) =>
                             <div key={index} className=" flex flex-col gap-4 border-b p-4">
                                 <Link className="bg-white border p-4 w-full hover:shadow-md flex space-between justify-center" to={links.sec.modOthers + request.requestorUID}>
-
                                     {request.fname + ' ' + request.lname}
-
                                 </Link>
                                 <div>
                                     <button onClick={(e) => handleDecline(e, request.requestorUID)} className="bg-red-50 text-red-900 hover:bg-red-200 p-2"> Decline </button>

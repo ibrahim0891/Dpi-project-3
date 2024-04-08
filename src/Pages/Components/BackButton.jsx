@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft, faChevronLeft } from "@fortawesome/free-solid-svg-icons"
 //Ready 
 
-const BackButton = ({ buttonLink, buttonText }) => {
+const BackButton = ({ buttonLink }) => {
     return (
         <Link to={buttonLink} className="block bg-gray-100 text-gray-700 p-2">
             <button className="py-2 px-4">

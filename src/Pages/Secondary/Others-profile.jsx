@@ -24,6 +24,14 @@ const OthersProfile = () => {
             let data = snapshot.val()
             setUserData(data)
         })
+        get(child(ref(database),`/connections/${auth.currentUser.uid}`)).then((snapshot) => {
+          if(snapshot.exists()){
+            console.log(snapshot.val());
+          }
+          else{
+            console.log('error');
+          }
+        })
     }, [])
 
     const sendRequest = (e) => {
@@ -50,13 +58,14 @@ const OthersProfile = () => {
                         <p className="font-thin text-sm text-center">{userData.email}</p>
                     </div>
                 </div>
-                <Link
-                    className=" "
-                    to={links.sec.modInbox + uidnumber}>
-                    Message {userData.fname}
-                </Link> 
-
-                <button onClick={(e) => sendRequest(e)}> Connect </button>
+                <div className="p-2 my-2 flex justify-start gap-2">
+                    <Link
+                        className=" "
+                        to={links.sec.modInbox + uidnumber}>
+                        Message
+                    </Link>
+                    <button onClick={(e) => sendRequest(e)}> Connect </button>
+                </div>
             </div>
         </div>
     )
