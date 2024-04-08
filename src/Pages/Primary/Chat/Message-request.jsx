@@ -39,12 +39,20 @@ const MessageRequest = () => {
     return (
         <div>
             <h1>Message Requests</h1>
-            <div className="bg-gray-50 border p-2 flex gap-2">
+            <div className="bg-gray-50 border p-2 flex flex-col gap-2">
                 {requestList ?
                     (requestList.length === 0 ?
                         <p>No request!</p> :
                         requestList.map((request, index) =>
-                            <Link key={index} className="bg-white border p-4 block w-full hover:shadow-md" to={links.sec.modOthers + request.requestorUID}> {request.fname + ' ' + request.lname}</Link>
+                            <Link key={index} className="bg-white border p-4 w-full hover:shadow-md flex space-between" to={links.sec.modOthers + request.requestorUID}>
+                                <div className="w-2/3">
+                                    {request.fname + ' ' + request.lname}
+                                </div>
+                                <div className="flex gap-2">
+                                    <button className="bg-red-50 hover:bg-red-200 p-2"> Decline </button>
+                                    <button className="bg-green-50 hover:bg-green-200 p-2"> Accept </button>
+                                </div>
+                            </Link>
                         )) :
                     'loading'}
             </div>
