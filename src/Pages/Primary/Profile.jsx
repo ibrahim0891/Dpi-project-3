@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 
 //Firebase
 import { auth, database } from "../../../firebase"
-import { signOut } from "firebase/auth" 
+import { signOut } from "firebase/auth"
 import { child, get, ref } from "firebase/database"
 
 
@@ -16,12 +16,14 @@ const Profile = () => {
     const handleSignOut = (e) => {
         e.preventDefault()
         signOut(auth).then(() => {
+            localStorage.removeItem('currentUser')
             navigate('/auth/login')
         })
-    } 
-    
+    }
+
     useEffect(() => {
-        const path = 'users/' + auth.currentUser.uid + '/info'
+        let currentUser = localStorage.getItem('currentUser')
+        const path = 'users/' + currentUser + '/info'
         console.log(path);
         get(child(ref(database), path))
             .then((snapshot) => {

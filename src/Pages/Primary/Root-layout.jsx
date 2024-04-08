@@ -14,17 +14,19 @@ const RootLayout = () => {
         onAuthStateChanged(auth, (user) => {
             if (!user) {
                 navigate('/auth/login')
+            }else{
+                localStorage.setItem('currentUser', user.uid)
             }
         })
     }, [])
     return (
         <div>
-            <nav className="bg-gray-800 text-white flex space-between">
-                <NavLink className='p-4 w-1/3 text-nowrap text-center ' to='/'> Profile </NavLink>
-                <NavLink className='p-4 w-1/3 text-nowrap text-center ' to='/others'> People </NavLink>
-                <NavLink className='p-4 w-1/3 text-nowrap text-center ' to={links.home.inbox.chatLayout}> Inbox </NavLink>
+            <nav className="bg-gray-100 text-gray-900 flex space-between">
+                <NavLink className='m-2 p-2 rounded-md w-1/3 text-nowrap text-center ' to='/'> Profile </NavLink>
+                <NavLink className='m-2 p-2 rounded-md w-1/3 text-nowrap text-center ' to='/others'> People </NavLink>
+                <NavLink className='m-2 p-2 rounded-md w-1/3 text-nowrap text-center ' to={links.home.inbox.chatLayout}> Inbox </NavLink>
             </nav>
-            <div className="p-6">
+            <div className=" p-4 ">
                 <Outlet />
             </div>
         </div>
