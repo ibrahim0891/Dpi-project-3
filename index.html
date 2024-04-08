@@ -13,7 +13,7 @@
         </h1>
         <div class="md:max-w-[360px] m-auto  shadow-lg md:ring-[12px] mt-6 md:rounded-[48px] overflow-auto md:ring-gray-800 h-[720px]">
             <div class="statusbar">
-                <span> 9:41 </span>
+                <span id="currentTime"></span>
                 <span class="notch p-1"> <span class="text-black hover:transition-all block rounded-full"> Dynamic dip </span> </span>
                 <span>  8G  </span>
             </div>
@@ -23,6 +23,27 @@
             <span>iPhone 16</span>
         </div>
         <script type="module" src="/src/main.jsx"></script>
+        <script>
+            function updateTime() {
+                const currentTime = new Date();
+                const hours = formatTime(currentTime.getHours());
+                const minutes = formatTime(currentTime.getMinutes());
+                const seconds = formatTime(currentTime.getSeconds());
+        
+                // Update the content of the span with the current time
+                document.getElementById("currentTime").textContent = `${hours}:${minutes}:${seconds}`;
+            }
+        
+            // Format single-digit time values with leading zeros
+            function formatTime(timeValue) {
+                return timeValue < 10 ? `0${timeValue}` : timeValue;
+            }
+        
+            // Call updateTime initially and then every second
+            updateTime();
+            setInterval(updateTime, 1000);
+        </script>
+        
     </body>
 
 </html>
