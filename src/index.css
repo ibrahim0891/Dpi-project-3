@@ -10,8 +10,7 @@ body{
     @apply h-screen mt-4
 }
 .statusbar{
-    @apply bg-gray-100 min-h-14 w-full 
-    flex items-center justify-between text-gray-900 px-6 font-extrabold
+    @apply bg-gray-100 min-h-14 w-full  items-center justify-between text-gray-900 px-6 font-extrabold hidden md:flex
 }
 .notch{
     @apply bg-black w-[136px] h-8  rounded-full block m-auto  duration-300 flex items-center justify-center
