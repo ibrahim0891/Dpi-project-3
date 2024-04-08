@@ -50,6 +50,9 @@ const MessageRequest = () => {
         // connected with currently logged in user. 
 
         // After updating connection nodes , remove the request node so that it does not show in request list again.
+        // then go to constact.jsx file and fetch the connected user uid list and then fetch information to show there 
+        // name in the contact page. then link them to the message page , so that when user clikc on any of his contact 
+        // it automatically redirect them to message page with prefilled uid of that contact.
     }
 
 
