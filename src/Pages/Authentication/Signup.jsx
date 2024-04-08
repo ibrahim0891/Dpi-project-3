@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Authenticaion } from "../../Common/Authfunction"
 import { useNavigate } from "react-router-dom"
-import image from "./img/bg.jpg"
+import image from "../../assets/img/signup-bg.jpg"
 
 //Ready 
 
