@@ -18,6 +18,7 @@ const OthersProfile = () => {
     const uidnumber = uid['uid']
     const [userData, setUserData] = useState('')
     let [isConnected , setIsConnected] = useState(false)
+    let [isRequestPending , setIsRequestPending] = useState(false)
 
     useEffect(() => {
         get(child(ref(database), `/users/${uidnumber}/info`)).then((snapshot) => {
@@ -28,6 +29,15 @@ const OthersProfile = () => {
         get(child(ref(database),`/connections/${currentUser}/${uidnumber}`)).then((snapshot) => {
           if(snapshot.exists()){
              setIsConnected(true)
+          }
+          else{
+            console.log('error');
+          }
+        })
+        get(child(ref(database),`/requests/${currentUser}/${uidnumber.slice(0,6)}`)).then((snapshot) => {
+          if(snapshot.exists()){
+            //  setIsRequestPending(true)
+            console.log(snapshot.val());
           }
           else{
             console.log('error');
@@ -61,11 +71,11 @@ const OthersProfile = () => {
                 </div>
                 <div className="p-2 my-2 flex justify-start gap-2">
                     {
-                        isConnected? <Link
+                        isConnected ? <Link
                         className=" "
                         to={links.sec.modInbox + uidnumber}>
                         Message
-                    </Link> :<button onClick={(e) => sendRequest(e)}> Connect </button>
+                    </Link> : isRequestPending? 'Requested' : <button onClick={(e) => sendRequest(e)}> Connect </button> 
                     }
                     
                     

@@ -27,7 +27,6 @@ const Profile = () => {
 	useEffect(() => {
 		let currentUser = localStorage.getItem("currentUser");
 		const path = "users/" + currentUser + "/info";
-		console.log(path);
 		get(child(ref(database), path)).then((snapshot) => {
 			setUserData(snapshot.val());
 		});
@@ -49,11 +48,11 @@ const Profile = () => {
 							<h1 className="font-medium text-xl ">{userData.fname}</h1>
 							<p className="font-thin text-sm text-left">{userData.email}</p>
 						</div>
-						<div className="mr-1">
-							<button className="flex">
+						<div className="mr-4">
+							<button className="flex items-center">
 								<div>
 									<FontAwesomeIcon
-										className=""
+										className="p-2"
 										icon={faPenNib}></FontAwesomeIcon>
 								</div>
 								Edit
@@ -61,11 +60,11 @@ const Profile = () => {
 						</div>
 					</div>
 					<div className="flex justify-around text-center my-3 cursor-pointer ">
-						<div className="bg-gray-200 w-5/6 mr-1 hover:shadow-md">
+						<div className="bg-gray-200 w-1/3 mr-1 hover:shadow-md p-2">
 							<h1>Posts</h1>
 							<h3>00</h3>
 						</div>
-						<div className="bg-gray-200 w-5/6 mx-1 hover:shadow-md">
+						<div className="bg-gray-200 w-1/3 mx-1 hover:shadow-md p-2">
 							<h1>Followers</h1>
 							<h3>00</h3>
 						</div>
@@ -79,7 +78,7 @@ const Profile = () => {
 			) : (
 				"Loading..."
 			)}
-			<button onClick={(e) => handleSignOut(e)}>Sign out</button>
+			<button className="bg-gray-100 block p-4 mt-4 w-full" onClick={(e) => handleSignOut(e)}>Sign out</button>
 		</div>
 	);
 };

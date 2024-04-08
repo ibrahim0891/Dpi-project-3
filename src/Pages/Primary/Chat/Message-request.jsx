@@ -42,8 +42,12 @@ const MessageRequest = () => {
     const handleAccept = (e, requestorUID) => {
         e.preventDefault()
         let connectRef = ref(database, `/connections/${auth.currentUser.uid}`)
+        let connectRef2 = ref(database, `/connections/${requestorUID}`)
         update(connectRef, {
           [requestorUID]: true
+        })
+        update(connectRef2, {
+          [auth.currentUser.uid]: true
         })
         handleDecline(e , requestorUID)
         // code to Accept request will go here.
