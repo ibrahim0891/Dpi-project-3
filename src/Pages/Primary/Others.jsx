@@ -31,9 +31,9 @@ const Others = () => {
     }, []);
     return (
         <div className="">
-            <h1 className=" "> See who else here: (links are clickable) </h1> 
+            <h1 className="text-2xl font-semibold mb-2"> See who else here: </h1> 
         {otherUser? otherUser.map((value) => 
-          <Link className="" key={value.uid} to={links.sec.modOthers + value.uid}>{value.info.fname}</Link>
+          <Link className="block py-2 px-2 text-xl font-medium my-2 bg-gray-200 hover:bg-gray-100" key={value.uid} to={links.sec.modOthers + value.uid}> {value.info.fname}</Link>
         ): 'Loading...' }
         </div>
     )

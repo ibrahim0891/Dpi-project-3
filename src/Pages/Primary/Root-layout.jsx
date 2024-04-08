@@ -23,7 +23,7 @@ const RootLayout = () => {
                 <NavLink className='p-4 w-1/3 text-nowrap text-center ' to='/others'> People </NavLink>
                 <NavLink className='p-4 w-1/3 text-nowrap text-center ' to='/inbox'> Inbox </NavLink>
             </nav>
-            <div className="p-6">
+            <div className="p-6 bg-slate-500">
                 <Outlet />
             </div>
         </div>
