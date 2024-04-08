@@ -5,4 +5,4 @@ const SplashPage = () => {
     <h1> this is a splash page </h1>
   )
 }
-export default SplashPage
+export default SplashPage 
