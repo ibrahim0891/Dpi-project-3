@@ -9,12 +9,12 @@
     </head>
 
     <body>
-        <h1 class="max-w-[360px] mt-12 m-auto p-6 bg-gray-100"> We don't have enough current to make a desktop page!
+        <h1 class="max-w-[360px] mt-12 m-auto p-6 bg-gray-100 hidden md:block "> We don't have enough current to make a desktop page! Resize to see effect!
         </h1>
         <div class="md:max-w-[360px] m-auto  shadow-lg md:ring-[12px] mt-6 md:rounded-[48px] overflow-auto md:ring-gray-800 h-[720px]">
             <div class="statusbar">
                 <span id="currentTime"></span>
-                <span class="notch p-1"> <span class="text-black hover:transition-all block rounded-full"> Dynamic dip </span> </span>
+                <span class="notch p-1"> <span class="text-black hover:transition-all block rounded-full"> Dynamic Island </span> </span>
                 <span>  8G  </span>
             </div>
             <div id="root"></div>
@@ -31,7 +31,7 @@
                 const seconds = formatTime(currentTime.getSeconds());
         
                 // Update the content of the span with the current time
-                document.getElementById("currentTime").textContent = `${hours}:${minutes}:${seconds}`;
+                document.getElementById("currentTime").textContent = `${hours}:${minutes}`;
             }
         
             // Format single-digit time values with leading zeros
