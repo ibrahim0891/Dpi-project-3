@@ -8,6 +8,7 @@ import { signOut } from "firebase/auth";
 import { child, get, ref } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faPenNib } from "@fortawesome/free-solid-svg-icons";
 import image from "./img/profile-bg.jpg";
 
 // Under development
@@ -36,22 +37,29 @@ const Profile = () => {
 		<div>
 			{userData ? (
 				<div>
-					<div className="flex items-center bg-center bg-cover bg-no-repeat" style={{backgroundImage:"url("+image+")"}}>
-						<div className=" w-20 h-20 mx-3 my-3 border rounded-full flex justify-center items-center bg-white">
-							<FontAwesomeIcon className="text-6xl " icon={faUser} />
+					<div
+						className="flex items-center bg-center bg-cover bg-no-repeat"
+						style={{ backgroundImage: "url(" + image + ")" }}>
+						<div className="w-1/4 flex justify-center">
+							<div className=" w-16 h-16  my-3 border rounded-full flex justify-center items-center bg-white">
+								<FontAwesomeIcon className="text-4xl " icon={faUser} />
+							</div>
 						</div>
-						<div className="ml-3">
+						<div className="ml-3 w-4/6">
 							<h1 className="font-medium text-xl ">{userData.fname}</h1>
-							<p className="font-thin text-sm text-center">{userData.email}</p>
+							<p className="font-thin text-sm text-left">{userData.email}</p>
+						</div>
+						<div className="mr-1">
+							<button className="flex"><div><FontAwesomeIcon className="" icon={faPenNib}></FontAwesomeIcon></div>Edit</button>
 						</div>
 					</div>
 					<div className="flex justify-around text-center my-3 cursor-pointer ">
-						<div className="bg-gray-200 w-5/6 mr-1 hover:shadow-md">
-							<h1>Followers</h1>
+					<div className="bg-gray-200 w-5/6 mr-1 hover:shadow-md">
+							<h1>Posts</h1>
 							<h3>00</h3>
 						</div>
 						<div className="bg-gray-200 w-5/6 mx-1 hover:shadow-md">
-							<h1>Posts</h1>
+							<h1>Followers</h1>
 							<h3>00</h3>
 						</div>
 						<div className="bg-gray-200 w-5/6 ml-1 hover:shadow-md">
