@@ -50,18 +50,26 @@ const Profile = () => {
 							<p className="font-thin text-sm text-left">{userData.email}</p>
 						</div>
 						<div className="mr-1">
-							<button className="flex"><div><FontAwesomeIcon className="" icon={faPenNib}></FontAwesomeIcon></div>Edit</button>
+							<button className="flex">
+								<div>
+									<FontAwesomeIcon
+										className=""
+										icon={faPenNib}></FontAwesomeIcon>
+								</div>
+								Edit
+							</button>
 						</div>
 					</div>
 					<div className="flex justify-around text-center my-3 cursor-pointer ">
 						<div className="bg-gray-200 w-5/6 mr-1 hover:shadow-md">
-							<h1>Followers</h1>
-							<h3>00</h3>
-						</div>
-						<div className="bg-gray-200 w-5/6 mx-1 hover:shadow-md">
 							<h1>Posts</h1>
 							<h3>00</h3>
 						</div>
+						<div className="bg-gray-200 w-5/6 mx-1 hover:shadow-md">
+							<h1>Followers</h1>
+							<h3>00</h3>
+						</div>
+
 						<div className="bg-gray-200 w-1/3 ml-1 hover:shadow-md p-2">
 							<h1>Favourite</h1>
 							<h3>00</h3>
@@ -71,7 +79,7 @@ const Profile = () => {
 			) : (
 				"Loading..."
 			)}
-			<button onClick={(e) => handleSignOut(e)}>Sign out</button> 
+			<button onClick={(e) => handleSignOut(e)}>Sign out</button>
 		</div>
 	);
 };
