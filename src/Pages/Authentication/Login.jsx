@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Authenticaion } from "../../Common/Authfunction"
-import image from './img/image.png'
+import image from '../../assets/img/loginbg.png'
 
 //Ready
 

@@ -9,7 +9,7 @@ import { child, get, ref } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faPenNib } from "@fortawesome/free-solid-svg-icons";
-import image from "./img/profile-bg.jpg";
+import image from "../";
 
 // Under development
 
@@ -54,15 +54,15 @@ const Profile = () => {
 						</div>
 					</div>
 					<div className="flex justify-around text-center my-3 cursor-pointer ">
-					<div className="bg-gray-200 w-5/6 mr-1 hover:shadow-md">
-							<h1>Posts</h1>
-							<h3>00</h3>
-						</div>
-						<div className="bg-gray-200 w-5/6 mx-1 hover:shadow-md">
+						<div className="bg-gray-200 w-5/6 mr-1 hover:shadow-md">
 							<h1>Followers</h1>
 							<h3>00</h3>
 						</div>
-						<div className="bg-gray-200 w-5/6 ml-1 hover:shadow-md">
+						<div className="bg-gray-200 w-5/6 mx-1 hover:shadow-md">
+							<h1>Posts</h1>
+							<h3>00</h3>
+						</div>
+						<div className="bg-gray-200 w-1/3 ml-1 hover:shadow-md p-2">
 							<h1>Favourite</h1>
 							<h3>00</h3>
 						</div>
@@ -71,7 +71,7 @@ const Profile = () => {
 			) : (
 				"Loading..."
 			)}
-			<button onClick={(e) => handleSignOut(e)}>Sign out</button>
+			<button onClick={(e) => handleSignOut(e)}>Sign out</button> 
 		</div>
 	);
 };
