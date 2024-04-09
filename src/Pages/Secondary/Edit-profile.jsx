@@ -19,5 +19,3 @@ const EditPofile = () => {
     </div>
   )
 }
-
-export default EditPofile
