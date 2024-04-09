@@ -3,6 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+
+::-webkit-scrollbar {
+    display: none;
+}
+
 .active {
     @apply bg-gray-500 text-white border-b-4
 }

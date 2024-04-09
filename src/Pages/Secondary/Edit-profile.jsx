@@ -18,7 +18,7 @@ const EditPofile = () => {
 						<FontAwesomeIcon
 							className="text-black-600 text-lg cursor-pointer absolute bottom-1 right-20 p-2 bg-slate-200 rounded-full"
 							icon={faCamera}></FontAwesomeIcon>
-						<input type="file" name="profile" id="" className="hidden" />
+						<input type="file" name="profile" id="" className="" />
 					</div>
 				</div>
         <br />
