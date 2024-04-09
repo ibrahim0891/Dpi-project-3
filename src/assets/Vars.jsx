@@ -20,6 +20,7 @@ const links = {
     sec : {
         root: '/sec',
         inbox : '/sec/inbox/:chatID',
+        editProfile: '/sec/profile/edit',
         others : '/sec/others/:uid',
         //mod links are used to provide parameters to routes
         //mod means modifiable

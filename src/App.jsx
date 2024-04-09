@@ -27,6 +27,7 @@ import { links } from "./assets/Vars"
 import MessageRequest from "./Pages/Primary/Chat/Message-request"
 import Contacts from "./Pages/Primary/Chat/Contacts"
 import Inbox from "./Pages/Primary/Chat/Inbox"
+import EditPofile from "./Pages/Secondary/Edit-profile"
 function App() { 
     const router = createBrowserRouter(
         createRoutesFromElements(
@@ -48,6 +49,7 @@ function App() {
                 <Route path={links.sec.root} element={<SecondaryLayout/>} errorElement={<ErrorPage/>}>
                     <Route path={links.sec.inbox} element={<ChatView />}> </Route>
                     <Route path={links.sec.others} element={<OthersProfile />}> </Route>
+                    <Route path={links.sec.editProfile} element={<EditPofile/>}> </Route>
                 </Route>
             </Route >
         )
