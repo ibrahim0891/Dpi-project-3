@@ -49,7 +49,7 @@ const Profile = () => {
 							<p className="font-thin text-sm text-left">{userData.email}</p>
 						</div>
 						<div className="mr-4">
-							<button className="flex items-center">
+							<button className="flex items-center" id="edit-button">
 								<div>
 									<FontAwesomeIcon
 										className="p-2"
@@ -79,6 +79,11 @@ const Profile = () => {
 				"Loading..."
 			)}
 			<button className="bg-gray-100 block p-4 mt-4 w-full" onClick={(e) => handleSignOut(e)}>Sign out</button>
+
+			{/* edit area */}
+			<div id="edit-section">
+
+			</div>
 		</div>
 	);
 };
