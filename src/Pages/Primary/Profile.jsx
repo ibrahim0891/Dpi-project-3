@@ -32,58 +32,66 @@ const Profile = () => {
 		});
 	}, []);
 
+	// document.getElementById("edit-button").addEventListener("click", () => {
+	// 	document.getElementById("edit-section").style.display = "block";
+	// 	document.getElementById("mainProfilePage").style.display = "none";
+	// });
+
 	return (
 		<div>
-			{userData ? (
-				<div>
-					<div
-						className="flex items-center bg-center bg-cover bg-no-repeat"
-						style={{ backgroundImage: "url(" + image + ")" }}>
-						<div className="w-1/4 flex justify-center">
-							<div className=" w-16 h-16  my-3 border rounded-full flex justify-center items-center bg-white">
-								<FontAwesomeIcon className="text-4xl " icon={faUser} />
+			<div id="mainProfilePage">
+				{userData ? (
+					<div>
+						<div
+							className="flex items-center bg-center bg-cover bg-no-repeat"
+							style={{ backgroundImage: "url(" + image + ")" }}>
+							<div className="w-1/4 flex justify-center">
+								<div className=" w-16 h-16  my-3 border rounded-full flex justify-center items-center bg-white">
+									<FontAwesomeIcon className="text-4xl " icon={faUser} />
+								</div>
+							</div>
+							<div className="ml-3 w-4/6">
+								<h1 className="font-medium text-xl ">{userData.fname}</h1>
+								<p className="font-thin text-sm text-left">{userData.email}</p>
+							</div>
+							<div className="mr-4">
+								<button className="flex items-center" id="edit-button">
+									<div>
+										<FontAwesomeIcon
+											className="p-2"
+											icon={faPenNib}></FontAwesomeIcon>
+									</div>
+									Edit
+								</button>
 							</div>
 						</div>
-						<div className="ml-3 w-4/6">
-							<h1 className="font-medium text-xl ">{userData.fname}</h1>
-							<p className="font-thin text-sm text-left">{userData.email}</p>
-						</div>
-						<div className="mr-4">
-							<button className="flex items-center" id="edit-button">
-								<div>
-									<FontAwesomeIcon
-										className="p-2"
-										icon={faPenNib}></FontAwesomeIcon>
-								</div>
-								Edit
-							</button>
+						<div className="flex justify-around text-center my-3 cursor-pointer ">
+							<div className="bg-gray-200 w-1/3 mr-1 hover:shadow-md p-2">
+								<h1>Posts</h1>
+								<h3>00</h3>
+							</div>
+							<div className="bg-gray-200 w-1/3 mx-1 hover:shadow-md p-2">
+								<h1>Followers</h1>
+								<h3>00</h3>
+							</div>
+
+							<div className="bg-gray-200 w-1/3 ml-1 hover:shadow-md p-2">
+								<h1>Favourite</h1>
+								<h3>00</h3>
+							</div>
 						</div>
 					</div>
-					<div className="flex justify-around text-center my-3 cursor-pointer ">
-						<div className="bg-gray-200 w-1/3 mr-1 hover:shadow-md p-2">
-							<h1>Posts</h1>
-							<h3>00</h3>
-						</div>
-						<div className="bg-gray-200 w-1/3 mx-1 hover:shadow-md p-2">
-							<h1>Followers</h1>
-							<h3>00</h3>
-						</div>
-
-						<div className="bg-gray-200 w-1/3 ml-1 hover:shadow-md p-2">
-							<h1>Favourite</h1>
-							<h3>00</h3>
-						</div>
-					</div>
-				</div>
-			) : (
-				"Loading..."
-			)}
-			<button className="bg-gray-100 block p-4 mt-4 w-full" onClick={(e) => handleSignOut(e)}>Sign out</button>
-
-			{/* edit area */}
-			<div id="edit-section">
-
+				) : (
+					"Loading..."
+				)}
+				<button
+					className="bg-gray-100 block p-4 mt-4 w-full"
+					onClick={(e) => handleSignOut(e)}>
+					Sign out
+				</button>
 			</div>
+			{/* edit area */}
+			<div id="edit-section" className="hidden"></div>
 		</div>
 	);
 };
