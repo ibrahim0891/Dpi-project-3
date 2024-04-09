@@ -33,7 +33,11 @@ const EditPofile = () => {
         <textarea name="Address" id="" className="w-full focus:outline-none focus:shadow-md resize-none" />  {/*value={userData.Address}*/}
         <div>
           <h2 className="text-lg my-2">Skills</h2>
-          <input type="checkbox" name="web designer" id="" value= "web designer" className="mr-2"/> Web Designer
+          <input type="checkbox" name="web designer" id="" value= "web designer" className="mr-2"/> Web Designer <br />
+          <input type="checkbox" name="web designer" id="" value= "web designer" className="mr-2"/> Web Designer <br />
+          <input type="checkbox" name="web designer" id="" value= "web designer" className="mr-2"/> Web Designer <br />
+          <input type="checkbox" name="web designer" id="" value= "web designer" className="mr-2"/> Web Designer <br />
+          <input type="checkbox" name="web designer" id="" value= "web designer" className="mr-2"/> Web Designer <br />
         </div>
         
         <button className="bg-white shadow-md block p-4 mt-4 w-full">Update</button>
