@@ -29,7 +29,7 @@ const RootLayout = () => {
     return (
         <div>
             <div className="bg-gray-100 flex justify-center p-4">
-                <h1> Boss level messaging web app</h1>
+                { user? <p> {user.fname} is currently logged in!</p> : <p>Loading...</p>}
             </div>
             <nav className="bg-gray-100 text-gray-900 flex space-between">
                 <NavLink className='m-2 p-2 hover:bg-gray-200 hover:text-black rounded-md w-1/3 text-nowrap text-center ' to='/'> Profile </NavLink>

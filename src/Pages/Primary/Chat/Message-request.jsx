@@ -1,4 +1,4 @@
-import { get, ref, onValue, child, set, update } from "firebase/database"
+import { get, ref, onValue, child} from "firebase/database"
 import { useEffect, useState } from "react"
 import { auth, database } from "../../../../firebase"
 import { Link } from "react-router-dom"
