@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { auth, database } from "../../../../firebase"
 import { Link } from "react-router-dom"
 import { links } from "../../../assets/Vars"
+import { handleAccept, handleDecline } from "../../../Common/Accept&Decline"
 const MessageRequest = () => {
     let [requestList, setRequestList] = useState(null);
     useEffect(() => {
@@ -32,41 +33,11 @@ const MessageRequest = () => {
         }
 
     }, [])
-
-    const handleDecline = (e, requestorUID) => {
-        e.preventDefault()
-        let requestId = requestorUID.slice(0,6)
-        let requestRef = ref(database, `/requests/${auth.currentUser.uid}/${requestId}`)
-        set(requestRef, null)
-    }
-    const handleAccept = (e, requestorUID) => {
-        e.preventDefault()
-        let connectRef = ref(database, `/connections/${auth.currentUser.uid}`)
-        let connectRef2 = ref(database, `/connections/${requestorUID}`)
-        update(connectRef, {
-          [requestorUID]: true
-        })
-        update(connectRef2, {
-          [auth.currentUser.uid]: true
-        })
-        handleDecline(e , requestorUID)
-        // code to Accept request will go here.
-        // call firebase funcion to make a new node named 'connection' in the root of rtdb .
-        // In this node there will be a child node for each user conncetions . childe node name will be the uid of 
-        // currently logged in user id.
-        // under that child node there will be another childe node that will store all the uid of the user who are 
-        // connected with currently logged in user. 
-
-        // After updating connection nodes , remove the request node so that it does not show in request list again.
-        // then go to constact.jsx file and fetch the connected user uid list and then fetch information to show there 
-        // name in the contact page. then link them to the message page , so that when user clikc on any of his contact 
-        // it automatically redirect them to message page with prefilled uid of that contact.
-    }
-
+ 
 
     return (
         <div>
-            <h1 className="p-4 my-4 text-center bg-gray-100" >Message Requests <br /> <span className="text-sm"> (Accept and Decline is not functional yet!)</span> </h1>
+            <h1 className="p-4 my-4 text-center bg-gray-100" >Message Requests </h1>
             <div className="bg-gray-50 border p-2 flex flex-col gap-2">
                 {requestList ?
                     (requestList.length === 0 ?
