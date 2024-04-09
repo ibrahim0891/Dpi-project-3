@@ -8,7 +8,7 @@ import { signOut } from "firebase/auth";
 import { child, get, ref } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { faPenNib } from "@fortawesome/free-solid-svg-icons";
+// import { faPenNib } from "@fortawesome/free-solid-svg-icons";
 import image from "../../assets/img/profile-bg.jpg";
 import { links } from "../../assets/Vars";
 
