@@ -11,13 +11,14 @@ const EditPofile = () => {
             <BackButton
                 buttonLink={links.home.root}
                 titlebarText={"Edit profile"}></BackButton>
+
             <div className="p-4 m-4 bg-gray-100 ">
                 <div className="relative">
                     <div className="flex justify-center">
                         <img className="w-2/4 rounded-full" src={profile} alt="" />
                         <FontAwesomeIcon
                             className="text-black-600 text-lg cursor-pointer absolute bottom-1 right-20 p-2 bg-slate-200 rounded-full"
-                            icon={faCamera}></FontAwesomeIcon>
+                            icon={faCamera} onClick={og}></FontAwesomeIcon>
                         <input type="file" name="profile" id="" className="hidden" />
                     </div>
                 </div>

@@ -40,7 +40,7 @@ const Contacts = () => {
           <div className="p-4 bg-gray-50 hover:bg-gray-100 " key={connection.uid}>
             <Link to={links.sec.modOthers+ connection.uid}> {connection.fname} {connection.lname} </Link>
           </div>
-        )) : <p>No connections</p>}
+        )) : "Loading..."}
      </div>
   )
 }
