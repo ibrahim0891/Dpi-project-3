@@ -6,10 +6,11 @@ import { useEffect, useState } from "react";
 import { auth, database } from "../../../firebase";
 import { signOut } from "firebase/auth";
 import { child, get, ref } from "firebase/database";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faUser } from "@fortawesome/free-solid-svg-icons";
 // import { faPenNib } from "@fortawesome/free-solid-svg-icons";
 import image from "../../assets/img/profile-bg.jpg";
+import profile from "../../assets/img/default-profile.jpg";
 import { links } from "../../assets/Vars";
 
 // Under development
@@ -46,8 +47,8 @@ const Profile = () => {
                         className="flex items-center bg-center bg-cover bg-no-repeat"
                         style={{ backgroundImage: "url(" + image + ")" }}>
                         <div className="w-1/4 flex justify-center">
-                            <div className=" w-16 h-16  my-3 border rounded-full flex justify-center items-center bg-white">
-                                <FontAwesomeIcon className="text-4xl " icon={faUser} />
+                            <div className=" w-16 h-16  my-3 border rounded-full flex justify-center items-center overflow-hidden bg-white">
+                                <img src={profile} alt="" className=""/>
                             </div>
                         </div>
                         <div className="ml-3 w-4/6">
