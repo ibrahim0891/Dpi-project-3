@@ -22,7 +22,7 @@ const OthersProfile = () => {
     let [isConnected, setIsConnected] = useState(false)
     let [isRequestPending, setIsRequestPending] = useState(false)
 
-    let [ requestHandle ,setRequestHandle ] = useState(false)
+    let [requestHandle, setRequestHandle] = useState(false)
     useEffect(() => {
         get(child(ref(database), `/users/${uidnumber}/info`)).then((snapshot) => {
             let data = snapshot.val()
@@ -30,6 +30,7 @@ const OthersProfile = () => {
         })
         let currentUser = localStorage.getItem('currentUser')
 
+        // check if currently loggin in user has request from this user
         onValue(ref(database, `/connections/${currentUser}/${uidnumber}`), (snapshot) => {
             if (snapshot.exists()) {
                 setIsConnected(true)
@@ -39,10 +40,11 @@ const OthersProfile = () => {
             }
         })
 
+        // check if currently loggin in user sent request to this user
         let slice = localStorage.getItem('currentUser').slice(0, 6)
         let a = `/requests/${uidnumber}/${slice}`
         onValue(ref(database, a), (snapshot) => {
-            if (snapshot.exists()) { 
+            if (snapshot.exists()) {
                 setIsRequestPending(true)
                 console.log('already requested');
             }
@@ -52,15 +54,16 @@ const OthersProfile = () => {
             }
         })
 
-        
+
+        // check if this user sent request to currently logged in user . if yes show accept and decline button  else show connect button with connect function 
         let slice2 = uidnumber.slice(0, 6)
         onValue(ref(database, `/requests/${auth.currentUser.uid}/${slice2}`), (snapshot) => {
-             if(snapshot.exists()){
+            if (snapshot.exists()) {
                 setRequestHandle(true)
-             }
-             else{
+            }
+            else {
                 setRequestHandle(false)
-             }
+            }
         })
     }, [])
 
@@ -76,7 +79,7 @@ const OthersProfile = () => {
         })
     }
 
-    let InProfileRequestHandle = ({ruid}) => {
+    let InProfileRequestHandle = ({ ruid }) => {
         return (
             <div>
                 <button onClick={(e) => handleDecline(e, ruid)} className="bg-red-50 text-red-900 hover:bg-red-200 p-2"> Decline </button>
@@ -99,15 +102,17 @@ const OthersProfile = () => {
                 </div>
                 <div className="p-2 my-2 flex justify-start gap-2">
                     {
-                        isConnected ? <Link
-                            className=" "
-                            to={links.sec.modInbox + uidnumber}>
-                            Message
-                        </Link> : (isRequestPending ? 'Requested' : (requestHandle? <InProfileRequestHandle ruid={uidnumber}/>:<button onClick={(e) => sendRequest(e)}> Connect </button> ))
+                        isConnected ?
+                            <Link className=" " to={links.sec.modInbox + uidnumber}> Message </Link> :
+                            (isRequestPending ?
+                                'Requested' :
+                                (requestHandle ?
+                                    <InProfileRequestHandle ruid={uidnumber} /> :
+                                    <button onClick={(e) => sendRequest(e)}> Connect </button>))
                     }
 
                 </div>
-            </div> 
+            </div>
         </div>
     )
 }
