@@ -34,10 +34,10 @@ const EditPofile = () => {
         <div>
           <h2 className="text-lg my-2">Skills</h2>
           <input type="checkbox" name="web designer" id="" value= "web designer" className="mr-2"/> Web Designer <br />
-          <input type="checkbox" name="web designer" id="" value= "web designer" className="mr-2"/> Web Designer <br />
-          <input type="checkbox" name="web designer" id="" value= "web designer" className="mr-2"/> Web Designer <br />
-          <input type="checkbox" name="web designer" id="" value= "web designer" className="mr-2"/> Web Designer <br />
-          <input type="checkbox" name="web designer" id="" value= "web designer" className="mr-2"/> Web Designer <br />
+          <input type="checkbox" name="web designer" id="" value= "web Developer" className="mr-2"/> Web Developer <br />
+          <input type="checkbox" name="web designer" id="" value= "UI designer" className="mr-2"/> UI Designer <br />
+          <input type="checkbox" name="web designer" id="" value= "APP developer" className="mr-2"/> APP Developer <br />
+          <input type="checkbox" name="web designer" id="" value= "AI expert" className="mr-2"/> AI expert <br />
         </div>
         
         <button className="bg-white shadow-md block p-4 mt-4 w-full">Update</button>
