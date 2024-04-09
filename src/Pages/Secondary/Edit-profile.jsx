@@ -31,9 +31,14 @@ const EditPofile = () => {
 				<input type="number" name="Phone" id="" className="w-full  focus:outline-none focus:shadow-md"/>  {/*value={userData.Phone}*/}
         <h2 className="text-lg my-2">Edit your Address</h2>
         <textarea name="Address" id="" className="w-full focus:outline-none focus:shadow-md resize-none" />  {/*value={userData.Address}*/}
-        <select>
+
+        {/* <select>
           <option value="Web Developer">Web Developer</option>
-        </select>
+          <option value="Web Developer">Frontend Developer</option>
+          <option value="Web Developer">Web Developer</option>
+          <option value="Web Developer">Web Developer</option>
+          <option value="Web Developer">Web Developer</option>
+        </select> */}
         <button className="bg-white shadow-md block p-4 mt-4 w-full">Update</button>
 			</div>
 		</div>
