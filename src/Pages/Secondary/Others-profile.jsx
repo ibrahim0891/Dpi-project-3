@@ -105,16 +105,16 @@ const OthersProfile = () => {
                 <div className="p-2 my-2 flex justify-start gap-2">
                     {
                         isConnected ?
-                            <div>
-                                <Link className=" " to={links.sec.modInbox + uidnumber}> Message </Link>
-                                <button onClick={(e) => handleDisconnect(e , uidnumber)}> Disconnect </button>
+                            <div className="flex items-center justify-between p-2 gap-2">
+                                <Link className=" p-4 bg-gray-100" to={links.sec.modInbox + uidnumber}> Message </Link>
+                                <button className='p-4 bg-gray-100' onClick={(e) => handleDisconnect(e , uidnumber)}> Disconnect </button>
                             </div>
                             :
                             (isRequestPending ?
                                 'Requested' :
                                 (requestHandle ?
                                     <InProfileRequestHandle ruid={uidnumber} /> :
-                                    <button onClick={(e) => sendRequest(e)}> Connect </button>))
+                                    <button className="p-4 mt-2 " onClick={(e) => sendRequest(e)}> Connect </button>))
                     }
 
                 </div>
