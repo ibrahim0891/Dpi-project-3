@@ -11,7 +11,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 import image from "../../assets/img/profile-bg.jpg"
 
-import { handleAccept, handleDecline } from "../../Common/Accept&Decline";
+import { handleAccept, handleDecline, handleDisconnect } from "../../Common/Accept&Decline";
 // prototype design availabel
 //under development 
 
@@ -87,6 +87,8 @@ const OthersProfile = () => {
             </div>
         )
     }
+
+   
     return (
         <div>
             <BackButton buttonLink={`/others`} titlebarText={`${userData.fname}'s Profile`} />
@@ -103,7 +105,11 @@ const OthersProfile = () => {
                 <div className="p-2 my-2 flex justify-start gap-2">
                     {
                         isConnected ?
-                            <Link className=" " to={links.sec.modInbox + uidnumber}> Message </Link> :
+                            <div>
+                                <Link className=" " to={links.sec.modInbox + uidnumber}> Message </Link>
+                                <button onClick={(e) => handleDisconnect(e , uidnumber)}> Disconnect </button>
+                            </div>
+                            :
                             (isRequestPending ?
                                 'Requested' :
                                 (requestHandle ?

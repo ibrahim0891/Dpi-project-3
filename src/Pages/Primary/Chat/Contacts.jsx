@@ -6,8 +6,7 @@ import { links } from "../../../assets/Vars";
 
 const Contacts = () => {
     let [connectionList, setConnectionList] = useState(null);
-    useEffect(() => {
-        let currentUser = localStorage.getItem('currentUser')
+    useEffect(() => { 
         onValue(ref(database, `/connections/${auth.currentUser.uid}`), (snapshot) => {
             let data = snapshot.val()
             let temp = []
@@ -16,11 +15,9 @@ const Contacts = () => {
             }
             
             getConnectionList(temp).then((info) => {
-                setConnectionList(info)
-                console.log(info);
+                setConnectionList(info) 
             })
         })
-
         async function getConnectionList(connections) {
             let connectionInfoList = []
             for (let connection of connections) {

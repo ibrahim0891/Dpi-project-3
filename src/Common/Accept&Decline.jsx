@@ -20,5 +20,16 @@ const handleAccept = (e, requestorUID) => {
     })
     handleDecline(e , requestorUID)
 }
+const handleDisconnect = (e, uidnumber) => {
+  e.preventDefault()
+  let connectRef = ref(database, `/connections/${auth.currentUser.uid}`)
+    let connectRef2 = ref(database, `/connections/${uidnumber}`)
+    update(connectRef, {
+      [uidnumber]: null
+    })
+    update(connectRef2, {
+      [auth.currentUser.uid]: null
+    })
+}
 
-export { handleDecline, handleAccept }
+export { handleDecline, handleAccept , handleDisconnect}
