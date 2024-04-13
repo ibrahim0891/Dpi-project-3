@@ -48,7 +48,7 @@ const Profile = () => {
                         style={{ backgroundImage: "url(" + image + ")" }}>
                         <div className="w-1/4 flex justify-center">
                             <div className=" w-16 h-16  my-3 border rounded-full flex justify-center items-center overflow-hidden bg-white">
-                                <img src={profile} alt="" className=""/>
+                                <img src={userData.avater} alt="" className=""/>
                             </div>
                         </div>
                         <div className="ml-3 w-4/6">

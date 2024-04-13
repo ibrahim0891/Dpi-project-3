@@ -3,12 +3,28 @@ import { Link } from "react-router-dom"
 import { Authenticaion } from "../../Common/Authfunction"
 import image from '../../assets/img/loginbg.png'
 
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth"
+import { writeDataInDB } from "../../Common/Database"
 //Ready
 
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [authResponse, setAuthResponse] = useState('')
+
+    let googleSignIn = () => {
+        const provider = new GoogleAuthProvider()
+        const auth = getAuth()
+        signInWithPopup(auth, provider).then((result) => {
+            writeDataInDB('/users/'+result.user.uid+'/info' , {
+                email: result.user.email,
+                fname: result.user.displayName,
+                avater : result.user.photoURL
+            })
+        }).catch((error) => {
+            console.log(error, error.code);
+        })
+    }
     const handleLogin = (e) => {
         e.preventDefault()
         const credential = {
@@ -24,6 +40,8 @@ const Login = () => {
         e.preventDefault();
         setAuthResponse('')
     }
+
+
     return (
         <div className=" ">
             <form action="" className="border  px-8 py-12 m-auto">
@@ -58,6 +76,9 @@ const Login = () => {
 
                 <div className="pt-4 text-center">
                     <p className="">New here? <Link className="text-blue-600 hover:underline " to="/auth/signup">Sign up </Link></p>
+                </div>
+                <div className="pt-4 text-center" onClick={googleSignIn}>
+                    <span> Sign in with google</span>
                 </div>
             </form>
         </div>

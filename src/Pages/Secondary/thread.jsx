@@ -79,7 +79,7 @@ const ChatView = () => {
     return (
         <div className="h-full bg-red-700">
             {receiver ? <div className="flex flex-col h-fit bg-green-200 justify-between ">
-                <BackButton titlebarText={"Messaging to " + receiver.fname + ' ' + receiver.lname} buttonLink={links.home.inbox.chatLayout} />
+                <BackButton titlebarText={"Messaging to " + receiver.fname } buttonLink={links.home.inbox.chatLayout} />
 
                 <div className=" bg-gray-50 " >
                     {messsages ? Object.keys(messsages).map((objKeys) =>

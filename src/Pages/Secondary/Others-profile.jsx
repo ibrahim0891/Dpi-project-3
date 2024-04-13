@@ -95,7 +95,9 @@ const OthersProfile = () => {
             <div className="p-6">
                 <div className="flex items-center bg-center bg-cover bg-no-repeat" style={{ backgroundImage: "url(" + image + ")" }}>
                     <div className=" w-20 h-20 mx-3 my-3 border rounded-full flex justify-center items-center bg-white">
-                        <FontAwesomeIcon className="text-6xl " icon={faUser} />
+                        {
+                            userData.avater? <img src={userData.avater} className="w-full h-full rounded-full"/> : <FontAwesomeIcon className="text-6xl" icon={faUser} />
+                        } 
                     </div>
                     <div className="ml-3">
                         <h1 className="font-medium text-xl ">{userData.fname}</h1>
