@@ -63,7 +63,11 @@ const Login = () => {
                     <span className="text-md ">Sign in with Google</span>
                 </div>
                 <div className="text-center py-4 text-lg"> or </div>
-                <div className=" flex flex-col p-6 shadow-md border rounded-md">
+                <div className=" flex flex-col p-6 shadow-md border rounded-md relative">
+                    <div className="absolute top-0 left-0 bg-gray-700/90 text-white font-bold text-md h-full w-full text-center flex items-center justify-center flex-col gap-2 p-6"> 
+                    <h1 className="text-xl "> We're sorry </h1>
+                       <span className="font-medium "> Our emaill and password login methode is under ongoing development. </span> <span className="text-[12px] block w-2/3 "> Please use Google Sign in for now.</span>
+                    </div>
                     <label className="py-2 font-bold text-md" htmlFor="">Enter email</label>
                     <input
                         type="text"
