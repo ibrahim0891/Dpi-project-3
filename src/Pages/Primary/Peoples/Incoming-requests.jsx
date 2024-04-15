@@ -4,7 +4,7 @@ import { auth, database } from "../../../../firebase"
 import { Link } from "react-router-dom"
 import { links } from "../../../assets/Vars"
 import { handleAccept, handleDecline } from "../../../Common/Accept&Decline"
-const MessageRequest = () => {
+const IncomingRequests = () => {
     let [requestList, setRequestList] = useState(null);
     useEffect(() => {
 
@@ -61,5 +61,5 @@ const MessageRequest = () => {
         </div>
     )
 }
-export default MessageRequest
+export default IncomingRequests
 

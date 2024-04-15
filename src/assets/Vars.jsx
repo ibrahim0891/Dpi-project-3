@@ -10,6 +10,12 @@ const links = {
             request: 'chat-root/requests',
             contacts : 'chat-root/contacts'
         },
+        peoples : {
+            peopleLayout : '/people-root',
+            others : 'pople-root/others',
+            incomingRequest : 'people-root/requests',
+            outgoingRequest : 'people-root/sent-requests'
+        },
         others : '/others'
     },
     auth: {

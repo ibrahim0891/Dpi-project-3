@@ -11,7 +11,7 @@ const Inbox = () => {
 
     let [threadList, setThreadList] = useState(null)
     useEffect(() => {
-        onValue(ref(database, `/threadList/${auth.currentUser.uid}`), (snapshot) => {
+        onValue(ref(database, `/threadList/${localStorage.getItem('currentUser')}`), (snapshot) => {
             let data = snapshot.val()
             let temp = []
             for (let i in data) {

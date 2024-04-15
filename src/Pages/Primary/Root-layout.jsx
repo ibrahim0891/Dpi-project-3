@@ -33,7 +33,7 @@ const RootLayout = () => {
             </div>
             <nav className="bg-gray-100 text-gray-900 flex space-between">
                 <NavLink className='m-2 p-2 hover:bg-gray-200 hover:text-black rounded-md w-1/3 text-nowrap text-center ' to='/'> Profile </NavLink>
-                <NavLink className='m-2 p-2 hover:bg-gray-200 hover:text-black rounded-md w-1/3 text-nowrap text-center ' to='/others'> People </NavLink>
+                <NavLink className='m-2 p-2 hover:bg-gray-200 hover:text-black rounded-md w-1/3 text-nowrap text-center ' to={links.home.peoples.peopleLayout}> People </NavLink>
                 <NavLink className='m-2 p-2 hover:bg-gray-200 hover:text-black rounded-md w-1/3 text-nowrap text-center ' to={links.home.inbox.chatLayout}> Inbox </NavLink>
             </nav>
             <div className=" p-4 ">

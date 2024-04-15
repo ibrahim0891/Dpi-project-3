@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "fire
 import { auth, database } from "../../firebase";
 import { writeDataInDB } from "./Database";
 import { links } from "../assets/Vars"; 
+import { setOnline } from "./SetActiveStatue";
 
 //Logic 
 
@@ -10,7 +11,7 @@ export function Authenticaion(actionType, formInput , navigate) {
         if (actionType == 'login') {
             signInWithEmailAndPassword(auth, formInput.email, formInput.password).then((usercredential) => {
                 const user = usercredential.user
-                 
+                 setOnline(localStorage.getItem('currentUser'))
                 navigate(links.home.root) 
             }).catch((error) => {
               resolve(error)

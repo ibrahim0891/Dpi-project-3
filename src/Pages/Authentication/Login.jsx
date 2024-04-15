@@ -5,11 +5,8 @@ import image from '../../assets/img/loginbg.png'
 
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth"
 import { writeDataInDB } from "../../Common/Database" 
-import googleLogo from '../../assets/img/google-logo.png';
-import { ref, set } from "firebase/database"
-import { database } from "../../../firebase"
-
-//Ready
+import googleLogo from '../../assets/img/google-logo.png'; 
+import { setOnline } from "../../Common/SetActiveStatue"
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -25,9 +22,7 @@ const Login = () => {
                 fname: result.user.displayName,
                 avater: result.user.photoURL
             })
-            set(ref(database, '/status/' + localStorage.getItem('currentUser')), {
-                online: true
-            }) 
+            setOnline(result.user.uid)
         }).catch((error) => {
             console.log(error, error.code);
         })
@@ -40,9 +35,7 @@ const Login = () => {
         }
         Authenticaion('login', credential).then((res) => {
             setAuthResponse(res)
-            set(ref(database, '/status/' + localStorage.getItem('currentUser')), {
-                online: true
-            }) 
+            setOnline(localStorage.getItem('currentUser'))
             // console.log(res);
         })
     }

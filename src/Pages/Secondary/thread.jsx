@@ -17,6 +17,7 @@ const ChatView = () => {
     const [messsages, setMessages] = useState([])
     const [firstMessage, setFirstMessge] = useState('')
 
+    const [isActive , setIsActive] = useState(false)
     const autoScroller = useRef(null)
     let currentUID = localStorage.getItem('currentUser')
 
@@ -26,8 +27,7 @@ const ChatView = () => {
     }
     
     
-    let threadID = generateThreadID(currentUID, chatIDnumber)
-    console.log(threadID);
+    let threadID = generateThreadID(currentUID, chatIDnumber) 
     let message = {
         sender: currentUID,
         message: messageContent,
@@ -47,6 +47,9 @@ const ChatView = () => {
                 setFirstMessge('Say hi to ' + receiver.fname)
             }
         })  
+        onValue(ref(database,'/users/'+chatIDnumber+'/info/activeStatus'),(snapshot) => {
+          setIsActive(snapshot.val())
+        })
     }, [])
 
 
@@ -81,7 +84,9 @@ const ChatView = () => {
     return (
         <div className="h-full bg-red-700">
             {receiver ? <div className="flex flex-col h-fit bg-green-200 justify-between ">
-                <BackButton titlebarText={"Messaging to " + receiver.fname } buttonLink={links.home.inbox.chatLayout} />
+                  
+                <BackButton titlebarText={"Messaging to " + receiver.fname } buttonLink={links.home.inbox.chatLayout} additionalInfo={isActive && isActive['online']}/>
+                
 
                 <div className=" bg-gray-50 min-h-[550px] " >
                     {messsages ? Object.keys(messsages).map((objKeys) =>

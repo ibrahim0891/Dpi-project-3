@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom"
-import { links } from "../../assets/Vars"
+import { links } from "../../../assets/Vars"
 import { useEffect, useState } from "react"
 import { child, get, ref } from "firebase/database"
-import { auth, database } from "../../../firebase"
+import { auth, database } from "../../../../firebase"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 //Under development

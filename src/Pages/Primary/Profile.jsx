@@ -13,6 +13,7 @@ import image from "../../assets/img/profile-bg.jpg";
 import profile from "../../assets/img/default-profile.jpg";
 import { links } from "../../assets/Vars";
 import TimeStamp from "../../Common/TimeStamp";
+import { setOffline } from "../../Common/SetActiveStatue";
 
 // Under development
 
@@ -22,10 +23,7 @@ const Profile = () => {
     const handleSignOut = (e) => {
         e.preventDefault();
         signOut(auth).then(() => {
-            set(ref(database, '/status/' + localStorage.getItem('currentUser')), {
-                online: false,
-                lastActive : TimeStamp()
-            })
+            setOffline(localStorage.getItem('currentUser'));
             localStorage.removeItem("currentUser");
             navigate("/auth/login");
 

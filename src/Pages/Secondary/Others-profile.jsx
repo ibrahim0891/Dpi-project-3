@@ -91,7 +91,7 @@ const OthersProfile = () => {
    
     return (
         <div>
-            <BackButton buttonLink={`/others`} titlebarText={`${userData.fname}'s Profile`} />
+            <BackButton buttonLink={links.home.peoples.peopleLayout} titlebarText={`${userData.fname}'s Profile`} />
             <div className="p-6">
                 <div className="flex items-center bg-center bg-cover bg-no-repeat" style={{ backgroundImage: "url(" + image + ")" }}>
                     <div className=" w-20 h-20 mx-3 my-3 border rounded-full flex justify-center items-center bg-white">

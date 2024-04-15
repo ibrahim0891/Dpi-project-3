@@ -1,7 +1,7 @@
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../firebase";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { links } from "../../assets/Vars";
 
@@ -9,8 +9,7 @@ import { links } from "../../assets/Vars";
 
 import { useNavigate } from "react-router-dom";
 const Auth = () => {
-    const navigate = useNavigate()
-    // const [splash, setSplashScreen] = useState(null)
+    const navigate = useNavigate() 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
