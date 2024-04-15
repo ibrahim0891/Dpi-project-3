@@ -33,7 +33,7 @@ const PeopleLayout = () => {
     ];
     
     return (
-        <div className="md:flex w-full ">
+        <div className="md:flex w-full md:h-full ">
             <nav className='flex md:flex-col md:w-1/4 bg-gray-100 p-2 justify-between gap-2 text-center'>
                 {tabs.map((tab, index) => (
                     <Link
@@ -46,7 +46,7 @@ const PeopleLayout = () => {
                     </Link>
                 ))}
             </nav>
-            <div className="md:w-3/4 p-4">
+            <div className="md:w-3/4 px-4">
 
             <Outlet></Outlet>
             </div>

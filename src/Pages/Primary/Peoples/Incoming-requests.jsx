@@ -37,7 +37,7 @@ const IncomingRequests = () => {
 
     return (
         <div>
-            <h1 className="p-4 my-4 text-center bg-gray-100" >Message Requests </h1>
+            <h1 className="p-4 mb-4 text-center bg-gray-100" >Message Requests </h1>
             <div className="bg-gray-50 border p-2 flex flex-col gap-2">
                 {requestList ?
                     (requestList.length === 0 ?

@@ -47,8 +47,7 @@ const Profile = () => {
         <div>
             {userData ? (
                 <div>
-                    <div
-                        className="flex items-center bg-center bg-cover bg-no-repeat"
+                    <div className="flex items-center bg-center bg-cover bg-no-repeat md:aspect-[4/1]"
                         style={{ backgroundImage: "url(" + image + ")" }}>
                         <div className="w-1/4 flex justify-center">
                             <div className=" w-16 h-16  my-3 border rounded-full flex justify-center items-center overflow-hidden bg-white">
