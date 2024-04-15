@@ -7,6 +7,8 @@ import { database } from "../../../firebase";
 import TimeStamp from "../../Common/TimeStamp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faLink } from "@fortawesome/free-solid-svg-icons";
+import { faFaceSmile } from "@fortawesome/free-solid-svg-icons";
 
 
 const ChatView = () => {
@@ -98,9 +100,11 @@ const ChatView = () => {
                         </div>
                     ) : firstMessage ? firstMessage : 'Loading...'}
                 </div>
-                <form className="flex bg-gray-200 items-center justify-between sticky bottom-0">
-                    <textarea className="resize-none border w-full" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} onKeyDown={handleKeyDown}></textarea>
-                    <button className="p-4" onClick={(e)=> send(e)}> <FontAwesomeIcon icon={faPaperPlane} /> </button>
+                <form className="flex bg-gray-200 items-center justify-between px-2 sticky bottom-0 ">
+                    <FontAwesomeIcon icon={faLink} className="py-4 px-2"></FontAwesomeIcon>
+                    <textarea className="ml-1 resize-none border w-full" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} onKeyDown={handleKeyDown}></textarea>
+                    <FontAwesomeIcon icon={faFaceSmile} className="px-2"></FontAwesomeIcon>
+                    <button className="py-4 px-2" onClick={(e)=> send(e)}> <FontAwesomeIcon icon={faPaperPlane} /> </button>
                 </form>
             </div> : <div className="flex items-center justify-center w-full p-6 text center"> Loading image will go here </div>}
 
