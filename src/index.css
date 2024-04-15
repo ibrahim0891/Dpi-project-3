@@ -15,11 +15,11 @@ body{
     @apply h-screen mt-4
 }
 .statusbar{
-    @apply bg-gray-100 min-h-14 w-full  items-center justify-between text-gray-900 px-6 font-extrabold hidden md:flex sticky top-0
+    @apply bg-gray-100 min-h-12 w-full  items-center justify-between text-gray-900 px-6 font-extrabold hidden md:flex sticky top-0
     
 }
 .notch{
-    @apply bg-black w-[136px] h-8  rounded-full block m-auto  duration-300 flex items-center justify-center
+    @apply bg-black w-6 h-6  rounded-full block m-auto  duration-300 flex items-center justify-center
 }
 .notch:hover  {
     @apply w-2/3 h-10
