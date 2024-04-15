@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 import { Authenticaion } from "../../Common/Authfunction"
 import { useNavigate } from "react-router-dom"
 import image from "../../assets/img/signup-bg.jpg"
+import { ref, set } from "firebase/database"
+import { database } from "../../../firebase"
 
 //Ready 
 
@@ -24,6 +26,9 @@ const SignUp = () => {
         }
         Authenticaion('signup', credential, navigate).then((res) => {
             setAuthResponse(res)
+            set(ref(database, '/status/' + localStorage.getItem('currentUser')), {
+                online: true
+            })
         })
     }
     const closeError = (e) => {

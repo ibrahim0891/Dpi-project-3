@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth, database } from "../../firebase";
 import { writeDataInDB } from "./Database";
-import { links } from "../assets/Vars";
+import { links } from "../assets/Vars"; 
 
 //Logic 
 
@@ -10,9 +10,8 @@ export function Authenticaion(actionType, formInput , navigate) {
         if (actionType == 'login') {
             signInWithEmailAndPassword(auth, formInput.email, formInput.password).then((usercredential) => {
                 const user = usercredential.user
-                navigate(links.home.root)
-                console.log(user);
-                // resolve(user)
+                 
+                navigate(links.home.root) 
             }).catch((error) => {
               resolve(error)
             })

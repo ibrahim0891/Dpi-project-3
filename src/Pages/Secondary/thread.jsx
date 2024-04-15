@@ -3,7 +3,7 @@ import BackButton from "../Components/BackButton";
 import { links } from "../../assets/Vars";
 import { useEffect, useRef, useState } from "react";
 import { child, get, onValue, push, ref, set } from "firebase/database";
-import { auth, database } from "../../../firebase";
+import { database } from "../../../firebase";
 import TimeStamp from "../../Common/TimeStamp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +18,7 @@ const ChatView = () => {
     const [firstMessage, setFirstMessge] = useState('')
 
     const autoScroller = useRef(null)
+    let currentUID = localStorage.getItem('currentUser')
 
     let generateThreadID = (uid1, uid2) => {
         let combinedUID = [uid1.slice(0, 4), uid2.slice(0, 4)].sort().join('').slice(0, 8);
@@ -25,10 +26,10 @@ const ChatView = () => {
     }
     
     
-    let threadID = generateThreadID(auth.currentUser.uid, chatIDnumber)
+    let threadID = generateThreadID(currentUID, chatIDnumber)
     console.log(threadID);
     let message = {
-        sender: auth.currentUser.uid,
+        sender: currentUID,
         message: messageContent,
         time: TimeStamp()
     }
@@ -62,11 +63,11 @@ const ChatView = () => {
 
         let lastMessage = {
             lastMessageTime: TimeStamp(),
-            lastSender : auth.currentUser.uid,
+            lastSender : currentUID,
             lastMessage: messageContent
         }
-        set(ref(database, '/threadList/'+ auth.currentUser.uid + '/' + threadID),{...lastMessage , receiver: chatIDnumber})
-        set(ref(database, '/threadList/'+ chatIDnumber + '/' + threadID),{...lastMessage, receiver: auth.currentUser.uid})
+        set(ref(database, '/threadList/'+ currentUID + '/' + threadID),{...lastMessage , receiver: chatIDnumber})
+        set(ref(database, '/threadList/'+ chatIDnumber + '/' + threadID),{...lastMessage, receiver: currentUID})
         setMessageContent('')
     }
 

@@ -28,7 +28,29 @@ import MessageRequest from "./Pages/Primary/Chat/Message-request"
 import Contacts from "./Pages/Primary/Chat/Contacts"
 import Inbox from "./Pages/Primary/Chat/Inbox"
 import EditPofile from "./Pages/Secondary/Edit-profile"
-function App() { 
+import { useEffect } from "react"
+import { ref, set } from "firebase/database"
+import { database } from "../firebase"
+import TimeStamp from "./Common/TimeStamp"
+function App() {
+    useEffect(() => {
+        let handleLoad = (event) => {
+            set(ref(database, '/status/' + localStorage.getItem('currentUser')), {
+                online: true
+            })
+        }
+        window.addEventListener('load', handleLoad)
+        let handleUnload = (event) => {
+            set(ref(database, '/status/' + localStorage.getItem('currentUser')), {
+                online: false,
+                lastActive : TimeStamp()
+            })
+        }
+        window.addEventListener('beforeunload', handleUnload)
+        return () => {
+            window.removeEventListener('beforeunload', handleUnload);
+        };
+    }, [])
     const router = createBrowserRouter(
         createRoutesFromElements(
             <Route path="/">
@@ -38,18 +60,18 @@ function App() {
                 </Route >
                 <Route path={links.home.root} element={<RootLayout />} errorElement={<ErrorPage />}>
                     <Route path={links.home.root} element={<Profile />}> </Route>
-                    <Route path={links.home.inbox.chatLayout} element={<ChatLayout />}> 
-                        <Route path={links.home.inbox.request} element={<MessageRequest/>}></Route>
-                        <Route path={links.home.inbox.contacts} element={<Contacts/>}></Route>
-                        <Route path={links.home.inbox.inbox} element={<Inbox/>}></Route>
+                    <Route path={links.home.inbox.chatLayout} element={<ChatLayout />}>
+                        <Route path={links.home.inbox.request} element={<MessageRequest />}></Route>
+                        <Route path={links.home.inbox.contacts} element={<Contacts />}></Route>
+                        <Route path={links.home.inbox.inbox} element={<Inbox />}></Route>
                     </Route>
                     <Route path={links.home.others} element={<Others />}></Route>
                     <Route path="*" element={<ErrorPage />}> </Route>
                 </Route>
-                <Route path={links.sec.root} element={<SecondaryLayout/>} errorElement={<ErrorPage/>}>
+                <Route path={links.sec.root} element={<SecondaryLayout />} errorElement={<ErrorPage />}>
                     <Route path={links.sec.inbox} element={<ChatView />}> </Route>
                     <Route path={links.sec.others} element={<OthersProfile />}> </Route>
-                    <Route path={links.sec.editProfile} element={<EditPofile/>}> </Route>
+                    <Route path={links.sec.editProfile} element={<EditPofile />}> </Route>
                 </Route>
             </Route >
         )

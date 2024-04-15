@@ -5,13 +5,14 @@ import { useEffect, useState } from "react";
 // Firebase
 import { auth, database } from "../../../firebase";
 import { signOut } from "firebase/auth";
-import { child, get, ref } from "firebase/database";
+import { child, get, ref, set } from "firebase/database";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faUser } from "@fortawesome/free-solid-svg-icons";
 // import { faPenNib } from "@fortawesome/free-solid-svg-icons";
 import image from "../../assets/img/profile-bg.jpg";
 import profile from "../../assets/img/default-profile.jpg";
 import { links } from "../../assets/Vars";
+import TimeStamp from "../../Common/TimeStamp";
 
 // Under development
 
@@ -21,8 +22,13 @@ const Profile = () => {
     const handleSignOut = (e) => {
         e.preventDefault();
         signOut(auth).then(() => {
+            set(ref(database, '/status/' + localStorage.getItem('currentUser')), {
+                online: false,
+                lastActive : TimeStamp()
+            })
             localStorage.removeItem("currentUser");
             navigate("/auth/login");
+
         });
     };
 
