@@ -42,7 +42,7 @@ const Contacts = () => {
             {connectionList ? connectionList.map(connection => (
                 <div className="p-4 bg-gray-50 hover:bg-gray-100 flex " key={connection.uid}>
                     <Link  className="w-full" to={links.sec.modOthers + connection.uid}> {connection.fname} {connection.lname} </Link> 
-                    <span className="text-sm"> {connection.activeStatus.online =='Active now' ? 'Active now' : 'Last online: ' +  connection.activeStatus.lastActive}</span>
+                    <span className="text-sm"> {connection.activeStatus.online =='Active now' ? <div className="w-2 h-2 rounded bg-green-400 ml-2"> </div>: 'Last online: ' +  connection.activeStatus.lastActive }</span>
                 </div>                                                                                                                                              
             )) : "Loading..."}
         </div>
