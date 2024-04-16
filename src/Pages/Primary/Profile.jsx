@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 // Firebase
 import { auth, database } from "../../../firebase";
 import { signOut } from "firebase/auth";
-import { child, get, ref, set } from "firebase/database";
+import { child, get, ref } from "firebase/database";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faUser } from "@fortawesome/free-solid-svg-icons";
 // import { faPenNib } from "@fortawesome/free-solid-svg-icons";
