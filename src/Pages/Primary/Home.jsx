@@ -16,7 +16,7 @@ let Home = () => {
   return (
     <div>
       <div className="post m-4 flex justify-between items-center">
-        <div className=" w-8 h-8  m-3 border rounded-full flex justify-center items-center overflow-hidden bg-white">
+        <div className="w-12 aspect-square m-3 border rounded-full flex justify-center items-center overflow-hidden bg-white">
          {userData && <img src={userData.avater} alt="" className=""/>} 
         </div>
         <div >
