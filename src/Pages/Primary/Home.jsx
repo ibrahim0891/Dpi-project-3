@@ -3,7 +3,12 @@
 let Home = () => {
   return (
     <div>
-      Home Page
+      <div className="post">
+
+      </div>
+      <div className="body">
+        
+      </div>
     </div>
   )
 }
