@@ -36,6 +36,7 @@ const Profile = () => {
         get(child(ref(database), path)).then((snapshot) => {
             setUserData(snapshot.val());
         });
+        
     }, []);
 
     // document.getElementById("edit-button").addEventListener("click", () => {
