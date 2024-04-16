@@ -31,7 +31,7 @@ let Home = () => {
 			</div>
 			<div className="body">
 				<div className="">
-					<div className=" w-1/12  m-3  flex justify-center items-center overflow-hidden ">
+					<div title={userData.fname} className=" w-1/12  m-3  flex justify-center items-center overflow-hidden ">
 						{userData && (
 							<img
 								src={userData.avater}
@@ -40,6 +40,9 @@ let Home = () => {
 							/>
 						)}
 					</div>
+          <div>
+            h
+          </div>
 				</div>
 			</div>
 		</div>
