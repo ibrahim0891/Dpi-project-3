@@ -2,7 +2,7 @@
 import { useParams, Link } from "react-router-dom"
 import BackButton from "../Components/BackButton";
 import { links } from "../../assets/Vars";
-import { child, get, onValue, ref, set } from "firebase/database";
+import { child, get, onValue, push, ref, set, update } from "firebase/database";
 import { auth, database } from "../../../firebase";
 import { useEffect, useState } from "react";
 import TimeStamp from "../../Common/TimeStamp";
@@ -66,16 +66,29 @@ const OthersProfile = () => {
             }
         })
     }, [])
+    let createRequestUID = auth.currentUser.uid.slice(0, 6)
 
     const sendRequest = (e) => {
         e.preventDefault()
-        let createRequestUID = auth.currentUser.uid.slice(0, 6)
         set(ref(database, `/requests/${uidnumber}/${createRequestUID}`), {
             requestorUID: auth.currentUser.uid,
             timeStamp: TimeStamp(),
             status: 'pending'
         }).then(() => {
             console.log('Request sent');
+        })
+
+        update(ref(database ,`/sentRequestList/${auth.currentUser.uid}`),{
+          [uidnumber.slice(0,4)] : uidnumber
+        })
+    }
+    let deleteRequest = (e) => {
+        e.preventDefault()
+        set(ref(database, `/requests/${uidnumber}/${createRequestUID}`), null).then(() => {
+            console.log('Request sent');
+        })
+        update(ref(database ,`/sentRequestList/${auth.currentUser.uid}`),{
+          [uidnumber.slice(0,4)] : null
         })
     }
 
@@ -88,7 +101,7 @@ const OthersProfile = () => {
         )
     }
 
-   
+
     return (
         <div>
             <BackButton buttonLink={links.home.peoples.peopleLayout} titlebarText={`${userData.fname}'s Profile`} />
@@ -96,8 +109,8 @@ const OthersProfile = () => {
                 <div className="flex items-center bg-center bg-cover bg-no-repeat" style={{ backgroundImage: "url(" + image + ")" }}>
                     <div className=" w-20 h-20 mx-3 my-3 border rounded-full flex justify-center items-center bg-white">
                         {
-                            userData.avater? <img src={userData.avater} className="w-full h-full rounded-full"/> : <FontAwesomeIcon className="text-6xl" icon={faUser} />
-                        } 
+                            userData.avater ? <img src={userData.avater} className="w-full h-full rounded-full" /> : <FontAwesomeIcon className="text-6xl" icon={faUser} />
+                        }
                     </div>
                     <div className="ml-3">
                         <h1 className="font-medium text-xl ">{userData.fname}</h1>
@@ -109,11 +122,14 @@ const OthersProfile = () => {
                         isConnected ?
                             <div className="flex items-center justify-between p-2 gap-2">
                                 <Link className=" p-4 bg-gray-100" to={links.sec.modInbox + uidnumber}> Message </Link>
-                                <button className='p-4 bg-gray-100' onClick={(e) => handleDisconnect(e , uidnumber)}> Disconnect </button>
+                                <button className='p-4 bg-gray-100' onClick={(e) => handleDisconnect(e, uidnumber)}> Disconnect </button>
                             </div>
                             :
                             (isRequestPending ?
-                                'Requested' :
+                                <div className="flex gap-4">
+                                    <p> Request sent </p>
+                                    <button onClick={(e)=>{deleteRequest(e)}}> Cancel request </button>
+                                </div>:
                                 (requestHandle ?
                                     <InProfileRequestHandle ruid={uidnumber} /> :
                                     <button className="p-4 mt-2 " onClick={(e) => sendRequest(e)}> Connect </button>))

@@ -1,4 +1,4 @@
-import { onValue, ref, get, child } from "firebase/database";
+ import { onValue, ref, get, child } from "firebase/database";
 import { useEffect, useState } from "react";
 import { database, auth } from "../../../../firebase";
 import { Link } from "react-router-dom";
@@ -20,8 +20,7 @@ const Contacts = () => {
             })
         })
         async function getConnectionList(connections) {
-            let connectionInfoList = []
-            console.log(connections);
+            let connectionInfoList = [] 
             for (let connection of connections) {
                 await get(child(ref(database), `/users/${connection}/info`)).then((snapshot) => {
                     const data = snapshot.val();
