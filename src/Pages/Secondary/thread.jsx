@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom"
 import BackButton from "../Components/BackButton";
 import { links } from "../../assets/Vars";
 import { useEffect, useRef, useState } from "react";
-import { child, get, onValue, push, ref, set } from "firebase/database";
+import { child, get, onValue, push, ref, runTransaction, set } from "firebase/database";
 import { database } from "../../../firebase";
 import TimeStamp from "../../Common/TimeStamp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -63,10 +63,10 @@ const ChatView = () => {
     
     let send = (e) => {
         e.preventDefault()
-        let newMessageID = push(ref(database, '/chats')).key
-        set(ref(database, '/chats/' + threadID + "/" + newMessageID), message)
-
-        let lastMessage = {
+        if (messageContent !== ''){
+            let newMessageID = push(ref(database, '/chats')).key
+            set(ref(database, '/chats/' + threadID + "/" + newMessageID), message)
+            let lastMessage = {
             lastMessageTime: TimeStamp(),
             lastSender : currentUID,
             lastMessage: messageContent
@@ -74,6 +74,11 @@ const ChatView = () => {
         set(ref(database, '/threadList/'+ currentUID + '/' + threadID),{...lastMessage , receiver: chatIDnumber})
         set(ref(database, '/threadList/'+ chatIDnumber + '/' + threadID),{...lastMessage, receiver: currentUID})
         setMessageContent('')
+        }else{
+            alert('Please enter a message to send')
+            return null
+        }
+        
     }
 
     const handleKeyDown = (e) => {
@@ -84,13 +89,10 @@ const ChatView = () => {
     };
  
     return (
-        <div className="h-full bg-red-700">
-            {receiver ? <div className="flex flex-col h-fit bg-green-200 justify-between ">
-                  
+        <div className="h-screen bg-red-700">
+            {receiver ? <div className="flex flex-col bg-green-200 justify-between h-full ">
                 <BackButton titlebarText={"Messaging to " + receiver.fname } buttonLink={links.home.inbox.chatLayout} additionalInfo={isActive && isActive['online']}/>
-                
-
-                <div className=" bg-gray-50 min-h-[550px] " >
+                <div className=" bg-gray-50 h-full " >
                     {messsages ? Object.keys(messsages).map((objKeys) =>
                         <div className={messsages[objKeys].sender == chatIDnumber ? '' : 'text-right'} key={objKeys}>
                             <p className="px-4 py-2 m-2 rounded-sm inline-block bg-slate-200">{messsages[objKeys].message}
@@ -102,7 +104,7 @@ const ChatView = () => {
                 </div>
                 <form className="flex bg-gray-200 items-center justify-between px-2 sticky bottom-0 ">
                     <FontAwesomeIcon icon={faLink} className="py-4 px-2"></FontAwesomeIcon>
-                    <textarea className="ml-1 resize-none border w-full" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} onKeyDown={handleKeyDown}></textarea>
+                    <textarea className="ml-1 resize-none border w-full" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} onKeyDown={handleKeyDown} required={true}></textarea>
                     <FontAwesomeIcon icon={faFaceSmile} className="px-2"></FontAwesomeIcon>
                     <button className="py-4 px-2" onClick={(e)=> send(e)}> <FontAwesomeIcon icon={faPaperPlane} /> </button>
                 </form>

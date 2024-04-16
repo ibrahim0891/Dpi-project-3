@@ -4,6 +4,7 @@
 const links = {
     home: {
         root : '/',
+        profile: '/profile' ,
         inbox : {
             chatLayout : '/chat-root/',
             inbox : '/chat-root/inbox',

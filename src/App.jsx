@@ -35,6 +35,7 @@ import PeopleLayout from "./Pages/Primary/Peoples/People-layout"
 
 import IncomingRequests from "./Pages/Primary/Peoples/Incoming-requests"
 import OutgoingRequests from "./Pages/Primary/Peoples/Outgoing-requests"
+import Home from "./Pages/Primary/Home"
 function App() {
     useEffect(() => {
         const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -71,7 +72,8 @@ function App() {
                     <Route path={links.auth.signup} element={<SignUp />}> </Route>
                 </Route >
                 <Route path={links.home.root} element={<RootLayout />} errorElement={<ErrorPage />}>
-                    <Route path={links.home.root} element={<Profile />}> </Route>
+                    <Route path={links.home.root} element={<Home />}> </Route>
+                    <Route path={links.home.profile} element={<Profile />}> </Route>
                     <Route path={links.home.inbox.chatLayout} element={<ChatLayout />}>
                         <Route path={links.home.inbox.request} element={<MessageRequest />}></Route>
                         <Route path={links.home.inbox.contacts} element={<Contacts />}></Route>
