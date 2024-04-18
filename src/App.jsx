@@ -62,7 +62,7 @@ function App() {
             window.addEventListener('beforeunload', handleUnload)
 
         }
-
+        setOnline(localStorage.getItem('currentUser'))
     }, [])
     const router = createBrowserRouter(
         createRoutesFromElements(

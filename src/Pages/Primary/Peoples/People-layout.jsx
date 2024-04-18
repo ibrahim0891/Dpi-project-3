@@ -27,7 +27,7 @@ const PeopleLayout = () => {
     }
 
     const tabs = [
-        { label: 'Peoples', path: links.home.peoples.peopleLayout },
+        { label: 'Peoples', path: links.home.peoples.others },
         { label: 'Received ', path: links.home.peoples.incomingRequest},
         { label: 'sent', path: links.home.peoples.outgoingRequest }
     ];

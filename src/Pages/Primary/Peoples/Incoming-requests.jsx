@@ -4,6 +4,7 @@ import { auth, database } from "../../../../firebase"
 import { Link } from "react-router-dom"
 import { links } from "../../../assets/Vars"
 import { handleAccept, handleDecline } from "../../../Common/Accept&Decline"
+import LoaderIcon from "../../../Common/Loader-icon"
 const IncomingRequests = () => {
     let [requestList, setRequestList] = useState(null);
     useEffect(() => {
@@ -54,7 +55,7 @@ const IncomingRequests = () => {
                             </div>
 
                         )) :
-                    'loading'}
+                        <LoaderIcon customClasses='mt-16 static'></LoaderIcon>}
             </div>
 
 

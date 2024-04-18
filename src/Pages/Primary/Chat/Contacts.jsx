@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { database, auth } from "../../../../firebase";
 import { Link } from "react-router-dom";
 import { links } from "../../../assets/Vars";
+import LoaderIcon from "../../../Common/Loader-icon";
 
 const Contacts = () => {
     let [connectionList, setConnectionList] = useState(null);
@@ -38,12 +39,15 @@ const Contacts = () => {
     }, [])
     return (
         <div className="mt-2">
+            <div className="py-2 text-xl font-thin">
+                <h2> { connectionList == null || connectionList.length == 0  ? "Apni ekhono karo sathe connected non." : 'Apnar sathe connected sobaike dekhon ek jaygay!! '}</h2>
+            </div>
             {connectionList ? connectionList.map(connection => (
                 <div className="p-4 bg-gray-50 hover:bg-gray-100 flex " key={connection.uid}>
                     <Link  className="w-full" to={links.sec.modOthers + connection.uid}> {connection.fname} {connection.lname} </Link> 
-                    <span className="text-sm"> {connection.activeStatus.online =='Active now' ? <div className="w-2 h-2 rounded bg-green-400 ml-2"> </div>: 'Last online: ' +  connection.activeStatus.lastActive }</span>
+                    {/* <span className="text-sm"> {connection.activeStatus.online =='Active now' ? <div className="w-2 h-2 rounded bg-green-400 ml-2"> </div>: 'Last online: ' +  connection.activeStatus.lastActive }</span> */}
                 </div>                                                                                                                                              
-            )) : "Loading..."}
+            )) : <LoaderIcon customClasses='mt-16 static'></LoaderIcon>}
         </div>
     )
 }

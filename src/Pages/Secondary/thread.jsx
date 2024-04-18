@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
 import { faFaceSmile } from "@fortawesome/free-solid-svg-icons";
+import LoaderIcon from "../../Common/Loader-icon";
 
 
 const ChatView = () => {
@@ -89,18 +90,18 @@ const ChatView = () => {
     };
  
     return (
-        <div className="h-screen bg-red-700">
+        <div className="h-screen relative">
             {receiver ? <div className="flex flex-col bg-green-200 justify-between h-full ">
                 <BackButton titlebarText={"Messaging to " + receiver.fname } buttonLink={links.home.inbox.chatLayout} additionalInfo={isActive && isActive['online']}/>
-                <div className=" bg-gray-50 h-full " >
-                    {messsages ? Object.keys(messsages).map((objKeys) =>
+                <div className=" bg-gray-50 h-full relative " >
+                    {messsages? Object.keys(messsages).map((objKeys) =>
                         <div className={messsages[objKeys].sender == chatIDnumber ? '' : 'text-right'} key={objKeys}>
                             <p className="px-4 py-2 m-2 rounded-sm inline-block bg-slate-200">{messsages[objKeys].message}
                             
                             {messsages ? <div ref={autoScroller}> </div> :  null }
                             </p>
                         </div>
-                    ) : firstMessage ? firstMessage : 'Loading...'}
+                    ) : firstMessage ? firstMessage : <LoaderIcon></LoaderIcon>}
                 </div>
                 <form className="flex bg-gray-200 items-center justify-between px-2 sticky bottom-0 ">
                     <FontAwesomeIcon icon={faLink} className="py-4 px-2"></FontAwesomeIcon>
@@ -108,7 +109,8 @@ const ChatView = () => {
                     <FontAwesomeIcon icon={faFaceSmile} className="px-2"></FontAwesomeIcon>
                     <button className="py-4 px-2" onClick={(e)=> send(e)}> <FontAwesomeIcon icon={faPaperPlane} /> </button>
                 </form>
-            </div> : <div className="flex items-center justify-center w-full p-6 text center"> Loading image will go here </div>}
+            </div> : 
+            <LoaderIcon className='absolute top-0 left-0 h-full'> </LoaderIcon> }
 
         </div>
     )

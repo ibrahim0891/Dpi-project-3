@@ -11,7 +11,7 @@ export function Authenticaion(actionType, formInput , navigate) {
         if (actionType == 'login') {
             signInWithEmailAndPassword(auth, formInput.email, formInput.password).then((usercredential) => {
                 const user = usercredential.user
-                 setOnline(localStorage.getItem('currentUser'))
+                 setOnline(user.uid)
                 navigate(links.home.root) 
             }).catch((error) => {
               resolve(error)
@@ -21,6 +21,7 @@ export function Authenticaion(actionType, formInput , navigate) {
             createUserWithEmailAndPassword(auth, formInput.email, formInput.password).then((usercredential) => {
                 const user = usercredential.user
                 writeDataInDB('/users/'+user.uid+'/info' , formInput)
+                setOnline(user.uid)
                 navigate(links.home.root)
                 // resolve(user)
             }).catch((error) => {

@@ -21,8 +21,7 @@ const Login = () => {
                 email: result.user.email,
                 fname: result.user.displayName,
                 avater: result.user.photoURL
-            })
-            setOnline(result.user.uid)
+            }) 
         }).catch((error) => {
             console.log(error, error.code);
         })
@@ -34,9 +33,8 @@ const Login = () => {
             password: password
         }
         Authenticaion('login', credential).then((res) => {
-            setAuthResponse(res)
-            setOnline(localStorage.getItem('currentUser'))
-            // console.log(res);
+            setAuthResponse(res) 
+             
         })
     }
     const closeError = (e) => {

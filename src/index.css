@@ -12,11 +12,14 @@
 .active {
     @apply bg-gray-500 text-white border-b-4
 }
+.active:hover{
+    @apply bg-gray-600 text-white !important
+}
 body{
     @apply bg-gray-50
 }
 .statusbar{
-    @apply bg-gray-100 min-h-12 w-full  items-center justify-between text-gray-900 px-6 font-extrabold hidden md:flex sticky top-0
+    @apply bg-gray-100 min-h-12 w-full  items-center justify-between text-gray-900 px-6 font-extrabold hidden sticky top-0
     
 }
 .notch{

@@ -5,6 +5,7 @@ import { child, get, ref } from "firebase/database"
 import { auth, database } from "../../../../firebase"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import LoaderIcon from "../../../Common/Loader-icon"
 //Under development
 // prototype design availabel
 
@@ -39,7 +40,7 @@ const Others = () => {
                    {value.info.avater? <img src={value.info.avater}/> : <FontAwesomeIcon className="text-2xl " icon={faUser} />} 
                 </div> {value.info.fname} 
                 </Link>
-            ) : 'Loading...'}
+            ) : <LoaderIcon customClasses='mt-16 static'></LoaderIcon>}
         </div>
     )
 }
