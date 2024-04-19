@@ -24,6 +24,8 @@ const Login = () => {
             }) 
         }).catch((error) => {
             console.log(error, error.code);
+        }).finally(() => {
+            
         })
     }
     const handleLogin = (e) => {

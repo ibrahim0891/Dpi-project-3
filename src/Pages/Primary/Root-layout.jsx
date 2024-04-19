@@ -40,15 +40,15 @@ const RootLayout = () => {
                 <NavLink className='m-2 p-4 hover:bg-gray-200  hover:text-black rounded-md w-1/3 text-nowrap text-center ' to='/'>
                     <FontAwesomeIcon icon={faHome}></FontAwesomeIcon>
                 </NavLink>
-                <NavLink className='m-2 p-4 hover:bg-gray-200  hover:text-black rounded-md w-1/3 text-nowrap text-center ' to={links.home.profile}> 
-                <FontAwesomeIcon icon={faUserCircle}> </FontAwesomeIcon>
-                 </NavLink>
-                <NavLink className='m-2 p-4 hover:bg-gray-200  hover:text-black rounded-md w-1/3 text-nowrap text-center ' to={links.home.peoples.peopleLayout}> 
-                <FontAwesomeIcon icon={faUserGroup}></FontAwesomeIcon>
-                 </NavLink>
-                <NavLink className='m-2 p-4 hover:bg-gray-200  hover:text-black rounded-md w-1/3 text-nowrap text-center ' to={links.home.inbox.chatLayout}> 
-                 <FontAwesomeIcon icon={faInbox}></FontAwesomeIcon>
-                 </NavLink>
+                <NavLink className='m-2 p-4 hover:bg-gray-200  hover:text-black rounded-md w-1/3 text-nowrap text-center ' to={links.home.profile}>
+                    <FontAwesomeIcon icon={faUserCircle}> </FontAwesomeIcon>
+                </NavLink>
+                <NavLink className='m-2 p-4 hover:bg-gray-200  hover:text-black rounded-md w-1/3 text-nowrap text-center ' to={links.home.peoples.peopleLayout}>
+                    <FontAwesomeIcon icon={faUserGroup}></FontAwesomeIcon>
+                </NavLink>
+                <NavLink className='m-2 p-4 hover:bg-gray-200  hover:text-black rounded-md w-1/3 text-nowrap text-center ' to={links.home.inbox.chatLayout}>
+                    <FontAwesomeIcon icon={faInbox}></FontAwesomeIcon>
+                </NavLink>
             </nav>
             <div className=" p-4 ">
                 <Outlet />

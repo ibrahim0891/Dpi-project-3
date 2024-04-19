@@ -5,6 +5,7 @@ import { database } from "../../../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faComment } from "@fortawesome/free-solid-svg-icons";
+import { setOnline } from "../../Common/SetActiveStatue";
 
 let Home = () => {
     let [userData, setUserData] = useState("");
@@ -14,6 +15,7 @@ let Home = () => {
         get(child(ref(database), path)).then((snapshot) => {
             setUserData(snapshot.val());
         });
+        setOnline(localStorage.getItem('currentUser'))
     }, []);
     return (
         <div className=" m-4">
