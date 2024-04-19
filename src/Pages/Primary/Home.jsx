@@ -1,7 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { child, get, ref } from "firebase/database";
 import { useEffect, useState } from "react";
-import { database } from "../../../firebase";
+import { auth, database } from "../../../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faComment } from "@fortawesome/free-solid-svg-icons";
@@ -15,7 +15,7 @@ let Home = () => {
         get(child(ref(database), path)).then((snapshot) => {
             setUserData(snapshot.val());
         });
-        setOnline(localStorage.getItem('currentUser'))
+        setOnline(localStorage.getItem(auth.currentUser.uid))
     }, []);
     return (
         <div className=" m-4">
