@@ -22,6 +22,7 @@ const Login = () => {
                 fname: result.user.displayName,
                 avater: result.user.photoURL
             }) 
+            setOnline(result.user.uid)
         }).catch((error) => {
             console.log(error, error.code);
         }).finally(() => {

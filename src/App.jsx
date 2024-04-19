@@ -35,34 +35,38 @@ import PeopleLayout from "./Pages/Primary/Peoples/People-layout"
 
 import IncomingRequests from "./Pages/Primary/Peoples/Incoming-requests"
 import OutgoingRequests from "./Pages/Primary/Peoples/Outgoing-requests"
-import Home from "./Pages/Primary/Home"
+import Home from "./Pages/Primary/Home" 
 function App() {
     useEffect(() => {
         const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-        if (isMobileDevice && document.visibilityState) {
-            const handleVisibilityChange = () => {
-                if (document.visibilityState === 'hidden') {
-                    // User has switched to a different tab or minimized the browser
-                    setOffline(localStorage.getItem('currentUser'))
-                } else {
-                    // User has returned to the tab or maximized the browser
+        if (localStorage.getItem('currentUser') != null) {
+            if (isMobileDevice && document.visibilityState) {
+                const handleVisibilityChange = () => {
+                    if (document.visibilityState === 'hidden') {
+                        // User has switched to a different tab or minimized the browser
+                        setOffline(localStorage.getItem('currentUser'))
+                    } else {
+                        // User has returned to the tab or maximized the browser
+                        setOnline(localStorage.getItem('currentUser'))
+                    }
+                }
+                document.addEventListener('visibilitychange', handleVisibilityChange)
+            } else {
+                let handleLoad = () => {
                     setOnline(localStorage.getItem('currentUser'))
                 }
-            }
-            document.addEventListener('visibilitychange', handleVisibilityChange)
-        } else {
-            let handleLoad = () => {
-                setOnline(localStorage.getItem('currentUser'))
-            }
-            window.addEventListener('load', handleLoad)
-            let handleUnload = () => {
-                setOffline(localStorage.getItem('currentUser'))
-            }
-            window.addEventListener('beforeunload', handleUnload)
+                window.addEventListener('load', handleLoad)
+                let handleUnload = () => {
+                    setOffline(localStorage.getItem('currentUser'))
+                }
+                window.addEventListener('beforeunload', handleUnload)
 
+            }
+            setOnline(localStorage.getItem('currentUser'))
+        } else {
+            console.log('no user');
         }
-        setOnline(localStorage.getItem('currentUser'))
+
     }, [])
     const router = createBrowserRouter(
         createRoutesFromElements(
@@ -81,9 +85,9 @@ function App() {
                     </Route>
                     <Route path={links.home.peoples.peopleLayout} element={<PeopleLayout />}>
                         <Route path={links.home.peoples.incomingRequest} element={<IncomingRequests />}> </Route>
-                        <Route path={links.home.peoples.outgoingRequest} element={ <OutgoingRequests/>}> </Route>
-                        <Route path={links.home.peoples.others} element={ <Others/>}> </Route>
-                    </Route> 
+                        <Route path={links.home.peoples.outgoingRequest} element={<OutgoingRequests />}> </Route>
+                        <Route path={links.home.peoples.others} element={<Others />}> </Route>
+                    </Route>
                     <Route path="*" element={<ErrorPage />}> </Route>
                 </Route>
                 <Route path={links.sec.root} element={<SecondaryLayout />} errorElement={<ErrorPage />}>

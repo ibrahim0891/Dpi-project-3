@@ -27,7 +27,7 @@ const SignUp = () => {
         }
         Authenticaion('signup', credential, navigate).then((res) => {
             setAuthResponse(res)
-            setOnline(localStorage.getItem('currentUser'))
+            // setOnline(localStorage.getItem('currentUser'))
         })
     }
     const closeError = (e) => {

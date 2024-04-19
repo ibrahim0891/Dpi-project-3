@@ -15,7 +15,7 @@ let Home = () => {
         get(child(ref(database), path)).then((snapshot) => {
             setUserData(snapshot.val());
         });
-        setOnline(localStorage.getItem(auth.currentUser.uid))
+        // setOnline(localStorage.getItem(auth.currentUser.uid))
     }, []);
     return (
         <div className=" m-4">
