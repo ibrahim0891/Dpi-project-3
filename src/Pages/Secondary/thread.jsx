@@ -3,7 +3,7 @@ import BackButton from "../Components/BackButton";
 import { links } from "../../assets/Vars";
 import { useEffect, useRef, useState } from "react";
 import { child, get, onValue, push, ref, runTransaction, set } from "firebase/database";
-import { database } from "../../../firebase";
+import { auth, database } from "../../../firebase";
 import TimeStamp from "../../Common/TimeStamp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -20,7 +20,7 @@ const ChatView = () => {
     const [messsages, setMessages] = useState([])
     const [firstMessage, setFirstMessge] = useState('')
 
-    const [isActive , setIsActive] = useState(false)
+    const [isActive, setIsActive] = useState(false)
     const autoScroller = useRef(null)
     let currentUID = localStorage.getItem('currentUser')
 
@@ -28,16 +28,16 @@ const ChatView = () => {
         let combinedUID = [uid1.slice(0, 4), uid2.slice(0, 4)].sort().join('').slice(0, 8);
         return combinedUID;
     }
-    
-    
-    let threadID = generateThreadID(currentUID, chatIDnumber) 
+
+
+    let threadID = generateThreadID(currentUID, chatIDnumber)
     let message = {
         sender: currentUID,
         message: messageContent,
         time: TimeStamp()
     }
 
-
+    let [typing , setTyping] = useState(null)
     useEffect(() => {
         get(child(ref(database), `/users/${chatIDnumber}/info`)).then((snapshot) => {
             setReceiver(snapshot.val())
@@ -49,38 +49,49 @@ const ChatView = () => {
             else {
                 setFirstMessge('Say hi to ' + receiver.fname)
             }
-        })  
-        onValue(ref(database,'/users/'+chatIDnumber+'/info/activeStatus'),(snapshot) => {
-          setIsActive(snapshot.val())
+        })
+        onValue(ref(database, '/users/' + chatIDnumber + '/info/activeStatus'), (snapshot) => {
+            setIsActive(snapshot.val())
+        })
+
+        onValue(ref(database,`/typingState/${threadID}/${chatIDnumber.slice(0, 4)}`),(snapshot) => {
+          if(snapshot.exists()){
+            setTyping(snapshot.val())
+          } else {
+            setTyping(null)
+          }
         })
     }, [])
 
 
     useEffect(() => {
-        if(autoScroller.current){
+        if (autoScroller.current) {
             autoScroller.current.scrollIntoView({ behavior: "smooth" })
         }
-    },[messsages,[]])
-    
+    }, [messsages, []])
+
     let send = (e) => {
         e.preventDefault()
-        if (messageContent !== ''){
+        if (messageContent !== '') {
             let newMessageID = push(ref(database, '/chats')).key
             set(ref(database, '/chats/' + threadID + "/" + newMessageID), message)
             let lastMessage = {
-            lastMessageTime: TimeStamp(),
-            lastSender : currentUID,
-            lastMessage: messageContent
-        }
-        set(ref(database, '/threadList/'+ currentUID + '/' + threadID),{...lastMessage , receiver: chatIDnumber})
-        set(ref(database, '/threadList/'+ chatIDnumber + '/' + threadID),{...lastMessage, receiver: currentUID})
-        setMessageContent('')
-        }else{
+                lastMessageTime: TimeStamp(),
+                lastSender: currentUID,
+                lastMessage: messageContent
+            }
+            set(ref(database, '/threadList/' + currentUID + '/' + threadID), { ...lastMessage, receiver: chatIDnumber })
+            set(ref(database, '/threadList/' + chatIDnumber + '/' + threadID), { ...lastMessage, receiver: currentUID })
+            setMessageContent('')
+        } else {
             alert('Please enter a message to send')
             return null
         }
-        
+
     }
+
+
+    // set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData) 
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -88,29 +99,78 @@ const ChatView = () => {
             send(e);
         }
     };
- 
+
+
+
+    const typingStart = (e) => {
+        let typingIndicatorData = {
+            typer: localStorage.getItem('currentUser'),
+            isTyping: true,
+            typeContent: 'typing started'
+        }
+        set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData);
+        console.log('focus');
+    }
+    const typingEnd = (e) => {
+        let input = e.target.value;
+        let typingIndicatorData = {
+            typer: localStorage.getItem('currentUser'),
+            isTyping: false,
+            typeContent: 'typing end'
+        }
+        set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData);
+        console.log('blue');
+    }
+
+    const handleInputChange = (e) => {
+        let input = e.target.value
+        setMessageContent(input)
+
+        if (input.legth == 0 || e.target.value == '') {
+            let typingIndicatorData = {
+                typer: localStorage.getItem('currentUser'),
+                isTyping: false,
+                typeContent: 'typing end'
+            }
+            set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData)
+        }
+    }
     return (
         <div className="h-screen relative">
-            {receiver ? <div className="flex flex-col bg-green-200 justify-between h-full ">
-                <BackButton titlebarText={"Messaging to " + receiver.fname } buttonLink={links.home.inbox.chatLayout} additionalInfo={isActive && isActive['online']}/>
-                <div className=" bg-gray-50 h-full relative " >
-                    {messsages? Object.keys(messsages).map((objKeys) =>
+            {receiver ?
+             <div className="flex flex-col bg-green-200 justify-between h-screen ">
+                <BackButton titlebarText={"Messaging to " + receiver.fname} buttonLink={links.home.inbox.chatLayout} additionalInfo={isActive && isActive['online']} />
+                <div className=" bg-gray-50 h-full flex-1 overflow-auto" >
+                    {messsages ? Object.keys(messsages).map((objKeys) =>
                         <div className={messsages[objKeys].sender == chatIDnumber ? '' : 'text-right'} key={objKeys}>
                             <p className="px-4 py-2 m-2 rounded-sm inline-block bg-slate-200">{messsages[objKeys].message}
-                            
-                            {messsages ? <div ref={autoScroller}> </div> :  null }
+
+                                {messsages ? <div ref={autoScroller}> </div> : null}
                             </p>
                         </div>
                     ) : firstMessage ? firstMessage : <LoaderIcon></LoaderIcon>}
                 </div>
-                <form className="flex bg-gray-200 items-center justify-between px-2 sticky bottom-0 ">
-                    <FontAwesomeIcon icon={faLink} className="py-4 px-2"></FontAwesomeIcon>
-                    <textarea className="ml-1 resize-none border w-full" value={messageContent} onChange={(e) => setMessageContent(e.target.value)} onKeyDown={handleKeyDown} required={true}></textarea>
-                    <FontAwesomeIcon icon={faFaceSmile} className="px-2"></FontAwesomeIcon>
-                    <button className="py-4 px-2" onClick={(e)=> send(e)}> <FontAwesomeIcon icon={faPaperPlane} /> </button>
+                <form className=" bg-gray-200 items-center justify-between px-2 sticky bottom-0 ">
+                    <div className="w-full p-1 text-sm bg-white text-blue-900 flex items-center justify-center"> 
+                    { typing ? ( typing.isTyping? <div className="flex items-center justify-center gap-4"> <LoaderIcon customClasses={'w-4 h-4 relative'}></LoaderIcon>  <span> `${typing.typer} is typing...` </span> </div>: ' not typing ' ) : ' ' }
+                    </div>
+                    <div className="flex items-center justify-between">
+                        <FontAwesomeIcon icon={faLink} className="py-4 px-2"></FontAwesomeIcon>
+                        <textarea
+                            className="ml-1 resize-none border w-full"
+                            value={messageContent}
+                            onFocus={(e) => { typingStart(e) }}
+                            onBlur={typingEnd}
+                            onChange={(e) => handleInputChange(e)}
+                            onKeyDown={handleKeyDown}
+                            required={true}>
+                        </textarea>
+                        <FontAwesomeIcon icon={faFaceSmile} className="px-2"></FontAwesomeIcon>
+                        <button className="py-4 px-2" onClick={(e) => send(e)}> <FontAwesomeIcon icon={faPaperPlane} /> </button>
+                    </div>
                 </form>
-            </div> : 
-            <LoaderIcon className='absolute top-0 left-0 h-full'> </LoaderIcon> }
+            </div> :
+                <LoaderIcon className='absolute top-0 left-0 h-full'> </LoaderIcon>}
 
         </div>
     )
