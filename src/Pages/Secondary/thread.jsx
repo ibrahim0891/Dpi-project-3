@@ -112,7 +112,7 @@ const ChatView = () => {
         let typingIndicatorData = {
             typer: localStorage.getItem('currentUser'),
             isTyping: true,
-            typeContent: 'waiting'
+            typeContent: 'is about to type a message'
         }
         set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData);
         console.log('focus');
@@ -137,7 +137,7 @@ const ChatView = () => {
             let typingIndicatorData = {
                 typer: localStorage.getItem('currentUser'),
                 isTyping: true,
-                typeContent: ' is waiting for a reply'
+                typeContent: 'cleared all text!'
             }
             set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData)
         }
