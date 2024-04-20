@@ -97,6 +97,12 @@ const ChatView = () => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             send(e);
+            let typingIndicatorData = {
+                typer: localStorage.getItem('currentUser'),
+                isTyping: true,
+                typeContent: 'is waiting for a reply'
+            }
+            set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData);
         }
     };
 
@@ -106,7 +112,7 @@ const ChatView = () => {
         let typingIndicatorData = {
             typer: localStorage.getItem('currentUser'),
             isTyping: true,
-            typeContent: 'typing started'
+            typeContent: 'waiting'
         }
         set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData);
         console.log('focus');
@@ -130,8 +136,8 @@ const ChatView = () => {
         if (input.legth == 0 || e.target.value == '') {
             let typingIndicatorData = {
                 typer: localStorage.getItem('currentUser'),
-                isTyping: false,
-                typeContent: ''
+                isTyping: true,
+                typeContent: ' is waiting for a reply'
             }
             set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData)
         }
@@ -139,7 +145,7 @@ const ChatView = () => {
             let typingIndicatorData = {
                 typer: localStorage.getItem('currentUser'),
                 isTyping: true,
-                typeContent: 'thinking...'
+                typeContent: 'is thinking...'
             }
             set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData)
         }
@@ -147,7 +153,7 @@ const ChatView = () => {
             let typingIndicatorData = {
                 typer: localStorage.getItem('currentUser'),
                 isTyping: true,
-                typeContent: input
+                typeContent: ': ' + input
             }
             set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData)
         }
@@ -173,7 +179,7 @@ const ChatView = () => {
                             {typing ? (typing.isTyping ?
                                 <div className="flex items-center justify-center w-full">
                                     <img className="w-16 -mr-3" src="https://i.pinimg.com/originals/b4/4e/22/b44e229598a8bdb7f2f432f246fb0813.gif" alt="" />
-                                    <span className="inline-block  "> {receiver.fname} : {typing.typeContent}{typing.typeContent.length >=20? '...': ''} </span>
+                                    <span className="inline-block  "> {receiver.fname} {typing.typeContent}{typing.typeContent.length >=20? '...': ''} </span>
                                 </div> : null) : ' '}
                         </div>
                         <div className="flex items-center justify-between">
