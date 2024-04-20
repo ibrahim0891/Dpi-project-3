@@ -58,7 +58,7 @@ const Inbox = () => {
                             </p>
                         </Link>
                     </div>
-                ) : <LoaderIcon customClasses='mt-16 static'></LoaderIcon>}
+                ) : <LoaderIcon customClasses='mt-16 static w-full h-full'></LoaderIcon>}
             </div>
         </div>
     )

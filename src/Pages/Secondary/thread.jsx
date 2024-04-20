@@ -37,7 +37,7 @@ const ChatView = () => {
         time: TimeStamp()
     }
 
-    let [typing , setTyping] = useState(null)
+    let [typing, setTyping] = useState(null)
     useEffect(() => {
         get(child(ref(database), `/users/${chatIDnumber}/info`)).then((snapshot) => {
             setReceiver(snapshot.val())
@@ -54,12 +54,12 @@ const ChatView = () => {
             setIsActive(snapshot.val())
         })
 
-        onValue(ref(database,`/typingState/${threadID}/${chatIDnumber.slice(0, 4)}`),(snapshot) => {
-          if(snapshot.exists()){
-            setTyping(snapshot.val())
-          } else {
-            setTyping(null)
-          }
+        onValue(ref(database, `/typingState/${threadID}/${chatIDnumber.slice(0, 4)}`), (snapshot) => {
+            if (snapshot.exists()) {
+                setTyping(snapshot.val())
+            } else {
+                setTyping(null)
+            }
         })
     }, [])
 
@@ -125,52 +125,74 @@ const ChatView = () => {
     const handleInputChange = (e) => {
         let input = e.target.value
         setMessageContent(input)
+         
 
         if (input.legth == 0 || e.target.value == '') {
             let typingIndicatorData = {
                 typer: localStorage.getItem('currentUser'),
                 isTyping: false,
-                typeContent: 'typing end'
+                typeContent: ''
             }
             set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData)
         }
+        if(input.length == 1) {
+            let typingIndicatorData = {
+                typer: localStorage.getItem('currentUser'),
+                isTyping: true,
+                typeContent: 'thinking...'
+            }
+            set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData)
+        }
+        if(input.length > 5) {
+            let typingIndicatorData = {
+                typer: localStorage.getItem('currentUser'),
+                isTyping: true,
+                typeContent: input
+            }
+            set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData)
+        }
+
     }
     return (
         <div className="h-screen relative">
             {receiver ?
-             <div className="flex flex-col bg-green-200 justify-between h-screen ">
-                <BackButton titlebarText={"Messaging to " + receiver.fname} buttonLink={links.home.inbox.chatLayout} additionalInfo={isActive && isActive['online']} />
-                <div className=" bg-gray-50 h-full flex-1 overflow-auto" >
-                    {messsages ? Object.keys(messsages).map((objKeys) =>
-                        <div className={messsages[objKeys].sender == chatIDnumber ? '' : 'text-right'} key={objKeys}>
-                            <p className="px-4 py-2 m-2 rounded-sm inline-block bg-slate-200">{messsages[objKeys].message}
+                <div className="flex flex-col bg-green-200 justify-between h-screen ">
+                    <BackButton titlebarText={"Messaging to " + receiver.fname} buttonLink={links.home.inbox.chatLayout} additionalInfo={isActive && isActive['online']} />
+                    <div className=" bg-gray-50 h-full flex-1 overflow-auto" >
+                        {messsages ? Object.keys(messsages).map((objKeys) =>
+                            <div className={messsages[objKeys].sender == chatIDnumber ? '' : 'text-right'} key={objKeys}>
+                                <p className="px-4 py-2 m-2 rounded-sm inline-block bg-slate-200">{messsages[objKeys].message}
 
-                                {messsages ? <div ref={autoScroller}> </div> : null}
-                            </p>
+                                    {messsages ? <div ref={autoScroller}> </div> : null}
+                                </p>
+                            </div>
+                        ) : firstMessage ? firstMessage : <LoaderIcon></LoaderIcon>}
+                    </div>
+                    <form className=" bg-gray-200 items-center justify-between sticky bottom-0 ">
+                        <div className="w-full text-sm flex items-center bg-white ">
+                            {typing ? (typing.isTyping ?
+                                <div className="flex items-center justify-center gap-4 m-1 w-full">
+                                    <LoaderIcon customClasses={'w-4 h-4 relative bg-green-900'} iconWidth={'w-4'}></LoaderIcon>
+                                    <span className="inline-block  "> {receiver.fname} : {typing.typeContent}</span>
+                                </div> : null) : ' '}
                         </div>
-                    ) : firstMessage ? firstMessage : <LoaderIcon></LoaderIcon>}
-                </div>
-                <form className=" bg-gray-200 items-center justify-between px-2 sticky bottom-0 ">
-                    <div className="w-full p-1 text-sm bg-white text-blue-900 flex items-center justify-center"> 
-                    { typing ? ( typing.isTyping? <div className="flex items-center justify-center gap-4"> <LoaderIcon customClasses={'w-4 h-4 relative'}></LoaderIcon>  <span> `${typing.typer} is typing...` </span> </div>: ' not typing ' ) : ' ' }
-                    </div>
-                    <div className="flex items-center justify-between">
-                        <FontAwesomeIcon icon={faLink} className="py-4 px-2"></FontAwesomeIcon>
-                        <textarea
-                            className="ml-1 resize-none border w-full"
-                            value={messageContent}
-                            onFocus={(e) => { typingStart(e) }}
-                            onBlur={typingEnd}
-                            onChange={(e) => handleInputChange(e)}
-                            onKeyDown={handleKeyDown}
-                            required={true}>
-                        </textarea>
-                        <FontAwesomeIcon icon={faFaceSmile} className="px-2"></FontAwesomeIcon>
-                        <button className="py-4 px-2" onClick={(e) => send(e)}> <FontAwesomeIcon icon={faPaperPlane} /> </button>
-                    </div>
-                </form>
-            </div> :
-                <LoaderIcon className='absolute top-0 left-0 h-full'> </LoaderIcon>}
+                        <div className="flex items-center justify-between">
+                            <FontAwesomeIcon icon={faLink} className="py-4 px-2"></FontAwesomeIcon>
+                            <textarea
+                                className="ml-1 resize-none border w-full"
+                                value={messageContent}
+                                onFocus={(e) => { typingStart(e) }}
+                                onBlur={typingEnd}
+                                onChange={(e) => handleInputChange(e)}
+                                onKeyDown={handleKeyDown}
+                                required={true}>
+                            </textarea>
+                            <FontAwesomeIcon icon={faFaceSmile} className="px-2"></FontAwesomeIcon>
+                            <button className="py-4 px-2" onClick={(e) => send(e)}> <FontAwesomeIcon icon={faPaperPlane} /> </button>
+                        </div>
+                    </form>
+                </div> :
+                <LoaderIcon className='absolute top-0 left-0 h-full' customClasses={'w-full h-full'}> </LoaderIcon>}
 
         </div>
     )
