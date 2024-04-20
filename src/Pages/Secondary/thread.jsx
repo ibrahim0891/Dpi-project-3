@@ -143,7 +143,7 @@ const ChatView = () => {
             }
             set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData)
         }
-        if(input.length > 5) {
+        if(input.length > 5 &&  input.length <= 20) {
             let typingIndicatorData = {
                 typer: localStorage.getItem('currentUser'),
                 isTyping: true,
@@ -171,9 +171,9 @@ const ChatView = () => {
                     <form className=" bg-gray-200 items-center justify-between sticky bottom-0 ">
                         <div className="w-full text-sm flex items-center bg-white ">
                             {typing ? (typing.isTyping ?
-                                <div className="flex items-center justify-center gap-4 m-1 w-full">
-                                    <LoaderIcon customClasses={'w-4 h-4 relative bg-green-900'} iconWidth={'w-4'}></LoaderIcon>
-                                    <span className="inline-block  "> {receiver.fname} : {typing.typeContent}</span>
+                                <div className="flex items-center justify-center w-full">
+                                    <img className="w-16 -mr-3" src="https://i.pinimg.com/originals/b4/4e/22/b44e229598a8bdb7f2f432f246fb0813.gif" alt="" />
+                                    <span className="inline-block  "> {receiver.fname} : {typing.typeContent}{typing.typeContent.length >=20? '...': ''} </span>
                                 </div> : null) : ' '}
                         </div>
                         <div className="flex items-center justify-between">
