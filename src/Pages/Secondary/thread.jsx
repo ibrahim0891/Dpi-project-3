@@ -221,15 +221,25 @@ const ChatView = () => {
                             </div>
                         ) : firstMessage ? firstMessage : <LoaderIcon></LoaderIcon>}
                     </div>
-                    <form className=" bg-gray-100 items-center justify-between sticky bottom-0 p-2 messageInputShadow text-xl text-blue-800">
-                        <div className="w-full text-sm flex items-start">
-                            {typing ? (typing.isTyping ?
+                    <div className="w-full text-sm flex items-start px-6 w-full bg-white pb-2">
+                        {typing ? (typing.isTyping ?
+                            <div className="flex items-center justify-start w-full">
+                                {receiver.avater ?
+                                    <img src={receiver.avater} alt={receiver.fname} className="w-10 h-10 rounded-full mr-2 z-10" /> :
+                                    <img
+                                        src='https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?size=338&ext=jpg&ga=GA1.1.1700460183.1712793600&semt=ais'
+                                        className="w-8 aspect-square rounded-full mr-2 z-10"
+                                    />
+                                }
                                 <div className="flex items-center justify-start w-full">
-                                    <img className="w-16 -mr-3" src="https://i.pinimg.com/originals/90/ad/7c/90ad7c4dac1bceb3359b732146062441.gif" alt="" />
-                                    {/* <img className="w-16 -mr-3" src="https://i.pinimg.com/originals/b4/4e/22/b44e229598a8bdb7f2f432f246fb0813.gif" alt="" /> */}
-                                    <span className="inline-block  "> {receiver.fname} {typing.typeContent}{typing.typeContent.length >= 20 ? '...' : ''} </span>
-                                </div> : null) : ' '}
-                        </div>
+                                    <span className="inline-block text-blue-900 z-10 ml-2"> 
+                                    {receiver.fname} {typing.typeContent} {typing.typeContent.length >= 20 ? '...' : ''} 
+                                    </span>
+                                    <img className="w-16 -mx-3" src="https://i.pinimg.com/originals/90/ad/7c/90ad7c4dac1bceb3359b732146062441.gif" alt="" />
+                                </div>
+                            </div> : null) : ' '}
+                    </div>
+                    <form className=" bg-gray-100 items-center justify-between sticky bottom-0 p-2 messageInputShadow text-xl text-blue-800">
                         <div className="flex items-center justify-between">
                             <FontAwesomeIcon icon={faLink} className="p-4"></FontAwesomeIcon>
                             <textarea
