@@ -243,7 +243,7 @@ const ChatView = () => {
                         <div className="flex items-center justify-between">
                             <FontAwesomeIcon icon={faLink} className="p-4"></FontAwesomeIcon>
                             <textarea
-                                className="ml-1 resize-none border block w-full h-14 rounded-full px-6 pt-3 focus:outline-none text-md "
+                                className="ml-1 resize-none border block w-full h-14 rounded-full px-6 pt-3 focus:outline-none text-[16px] "
                                 value={messageContent}
                                 onFocus={(e) => { typingStart(e) }}
                                 onBlur={typingEnd}
