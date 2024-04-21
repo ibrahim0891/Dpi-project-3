@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import BackButton from "../Components/BackButton";
 import { links } from "../../assets/Vars";
 import { useEffect, useRef, useState } from "react";
@@ -6,7 +6,7 @@ import { child, get, onValue, push, ref, runTransaction, set } from "firebase/da
 import { auth, database } from "../../../firebase";
 import TimeStamp from "../../Common/TimeStamp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faPaperPlane, faTrash, faUser, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
 import { faFaceSmile } from "@fortawesome/free-solid-svg-icons";
 import LoaderIcon from "../../Common/Loader-icon";
@@ -131,7 +131,7 @@ const ChatView = () => {
     const handleInputChange = (e) => {
         let input = e.target.value
         setMessageContent(input)
-         
+
 
         if (input.legth == 0 || e.target.value == '') {
             let typingIndicatorData = {
@@ -141,7 +141,7 @@ const ChatView = () => {
             }
             set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData)
         }
-        if(input.length == 1) {
+        if (input.length == 1) {
             let typingIndicatorData = {
                 typer: localStorage.getItem('currentUser'),
                 isTyping: true,
@@ -149,7 +149,7 @@ const ChatView = () => {
             }
             set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData)
         }
-        if(input.length > 5 &&  input.length <= 20) {
+        if (input.length > 5 && input.length <= 20) {
             let typingIndicatorData = {
                 typer: localStorage.getItem('currentUser'),
                 isTyping: true,
@@ -163,38 +163,87 @@ const ChatView = () => {
         <div className="h-screen relative">
             {receiver ?
                 <div className="flex flex-col bg-green-200 justify-between h-screen ">
-                    <BackButton titlebarText={"Messaging to " + receiver.fname} buttonLink={links.home.inbox.chatLayout} additionalInfo={isActive && isActive['online']} />
-                    <div className=" bg-gray-50 h-full flex-1 overflow-auto" >
-                        {messsages ? Object.keys(messsages).map((objKeys) =>
-                            <div className={messsages[objKeys].sender == chatIDnumber ? '' : 'text-right'} key={objKeys}>
-                                <p className="px-4 py-2 m-2 rounded-sm inline-block bg-slate-200">{messsages[objKeys].message}
+                    <div className="sticky top-0 md:top-14 bg-gray-100 text-gray-700 p-2 flex items-center justify-between z-10 shadow-md ">
+                        <div className="flex items-center justify-between w-full">
+                            <div className="flex items-center justify-center">
+                                <Link to={links.home.inbox.chatLayout}>
+                                    <button className="py-2 px-4 pr-2">
+                                        <FontAwesomeIcon icon={faChevronLeft} className="mr-2" />
+                                    </button>
+                                </Link>
+                                <Link to={links.sec.modOthers + chatIDnumber}>
+                                    <div className="flex items-center py-2">
+                                        {receiver.avater ?
+                                            <img src={receiver.avater} alt={receiver.fname} className="w-10 h-10 rounded-full mr-2" /> :
+                                            <img
+                                                src='https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?size=338&ext=jpg&ga=GA1.1.1700460183.1712793600&semt=ais'
+                                                className="w-10 aspect-square rounded-full mr-2"
+                                            />
+                                        }
+                                        <div className="text-lg ml-2">
+                                            <span> {receiver.fname} </span>
+                                            <div className="text-sm flex items-center justify-start">
+                                                {isActive['online'] == 'Active now' ?
+                                                    <div className="w-3 mr-2 aspect-square bg-green-700 rounded-full animate-pulse"></div> :
+                                                    <div className="w-3 mr-2 aspect-square bg-red-700 rounded-full "></div>
+                                                }
+                                                {isActive && isActive['online']}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Link>
+                            </div>
 
+                            <div className="p-4 rounded-lg hover:bg-white hover:shadow-lg">
+                                <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div className=" bg-gray-50 h-full flex-1 overflow-auto p-4 pb-2" >
+                        {messsages ? Object.keys(messsages).map((objKeys) =>
+                            <div className={messsages[objKeys].sender == chatIDnumber ? 'flex items-end p-2' : ' flex justify-end p-2' + ''} key={objKeys}>
+                                {receiver.avater ?
+                                    <img src={messsages[objKeys].sender == chatIDnumber && receiver.avater}
+                                        className={messsages[objKeys].sender == chatIDnumber ? 'w-8 aspect-square rounded-full mr-2' : 'hidden'}
+                                        alt=""
+                                    /> :
+                                    <img src='https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?size=338&ext=jpg&ga=GA1.1.1700460183.1712793600&semt=ais'
+                                        className={messsages[objKeys].sender == chatIDnumber ? 'w-8 aspect-square rounded-full mr-2' : 'hidden'}
+                                        alt=""
+                                    />
+                                }
+
+                                <p className={(messsages[objKeys].sender == chatIDnumber ? 'bg-blue-100' : 'bg-gray-100 max-w-[320px] ') + ' max-w-2/3 px-4 py-2 border rounded-lg'}>
+                                    {messsages[objKeys].message}
                                     {messsages ? <div ref={autoScroller}> </div> : null}
                                 </p>
                             </div>
                         ) : firstMessage ? firstMessage : <LoaderIcon></LoaderIcon>}
                     </div>
-                    <form className=" bg-gray-200 items-center justify-between sticky bottom-0 ">
-                        <div className="w-full text-sm flex items-center bg-white ">
+                    <form className=" bg-gray-100 items-center justify-between sticky bottom-0 p-2 messageInputShadow text-xl text-blue-800">
+                        <div className="w-full text-sm flex items-start">
                             {typing ? (typing.isTyping ?
-                                <div className="flex items-center justify-center w-full">
-                                    <img className="w-16 -mr-3" src="https://i.pinimg.com/originals/b4/4e/22/b44e229598a8bdb7f2f432f246fb0813.gif" alt="" />
-                                    <span className="inline-block  "> {receiver.fname} {typing.typeContent}{typing.typeContent.length >=20? '...': ''} </span>
+                                <div className="flex items-center justify-start w-full">
+                                    <img className="w-16 -mr-3" src="https://i.pinimg.com/originals/90/ad/7c/90ad7c4dac1bceb3359b732146062441.gif" alt="" />
+                                    {/* <img className="w-16 -mr-3" src="https://i.pinimg.com/originals/b4/4e/22/b44e229598a8bdb7f2f432f246fb0813.gif" alt="" /> */}
+                                    <span className="inline-block  "> {receiver.fname} {typing.typeContent}{typing.typeContent.length >= 20 ? '...' : ''} </span>
                                 </div> : null) : ' '}
                         </div>
                         <div className="flex items-center justify-between">
-                            <FontAwesomeIcon icon={faLink} className="py-4 px-2"></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faLink} className="p-4"></FontAwesomeIcon>
                             <textarea
-                                className="ml-1 resize-none border w-full"
+                                className="ml-1 resize-none border block w-full h-14 rounded-full px-6 pt-3 focus:outline-none"
                                 value={messageContent}
                                 onFocus={(e) => { typingStart(e) }}
                                 onBlur={typingEnd}
                                 onChange={(e) => handleInputChange(e)}
                                 onKeyDown={handleKeyDown}
-                                required={true}>
+                                required={true}
+                                placeholder="Type a message...">
                             </textarea>
-                            <FontAwesomeIcon icon={faFaceSmile} className="px-2"></FontAwesomeIcon>
-                            <button className="py-4 px-2" onClick={(e) => send(e)}> <FontAwesomeIcon icon={faPaperPlane} /> </button>
+                            <FontAwesomeIcon icon={faFaceSmile} className="p-4"></FontAwesomeIcon>
+                            <button className="p-3 aspect-square hover:bg-white rounded-lg hover:shadow-md  " onClick={(e) => send(e)}> <FontAwesomeIcon icon={faPaperPlane} /> </button>
                         </div>
                     </form>
                 </div> :
