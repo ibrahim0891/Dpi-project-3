@@ -30,12 +30,11 @@ const RootLayout = () => {
     }, [])
     return (
         <div>
-            <div className="py-6 px-4 text-center text-3xl font-thin bg-gray-100">
-                <h1> Dpi-project-3 </h1>
+            <div className="flex items-center justify-between p-5">
+                <h1 className="text-lg"> Dpi-project-3 </h1>
+                <img src='' className="bg-slate-500 aspect-square w-9 rounded-full" alt="avater" />
             </div>
-            <div className="bg-green-100 text-sm text-green-900 flex justify-center p-1">
-                {user ? <p> {user.fname} is currently logged in!</p> : <p>Loading...</p>}
-            </div>
+             
             <nav className="bg-slate-200 text-gray-900 flex space-between">
                 <NavLink className='m-2 p-4 hover:bg-gray-200  hover:text-black rounded-md w-1/3 text-nowrap text-center ' to='/'>
                     <FontAwesomeIcon icon={faHome}></FontAwesomeIcon>

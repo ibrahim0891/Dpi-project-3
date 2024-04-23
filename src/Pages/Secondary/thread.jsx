@@ -249,7 +249,7 @@ const ChatView = () => {
                                 onBlur={typingEnd}
                                 onChange={(e) => handleInputChange(e)}
                                 onKeyDown={handleKeyDown}
-                                required={true}
+                                required={true}go
                                 placeholder="Type a message...">
                             </textarea>
                             <FontAwesomeIcon icon={faFaceSmile} className="p-4"></FontAwesomeIcon>
