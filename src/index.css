@@ -36,7 +36,7 @@ body{
 }
  
 .activeTab{
-    @apply bg-gray-500 text-gray-100
+    @apply text-black
 }
 
 .messageInputShadow{

@@ -16,7 +16,24 @@
                 <span>  8G  </span>
             </div>
             <div id="root"></div>
-        </div>  
+        </div>  <nav className="flex md:flex-col md:w-1/4 bg-gray-50 p-2 justify-between gap-2 text-center">
+            {tabs.map((tab, index) => (
+              <Link
+                key={index}
+                onClick={() => toggleActiveState(index)}
+                to={tab.path}
+                className={`w-1/3 md:w-full text-sm text-gray-700 p-3 rounded-sm relative ${
+                  activeTab === index ? "bg-blue-800 text-white" : "bg-blue-200"
+                }`}
+              >
+                {tab.label}
+                {tab.label === "Received " && badgeNumber ? (
+                  <Badge badgeText={badgeNumber} className="absolute top-1 right-1" />
+                ) : null}
+              </Link>
+            ))}
+          </nav>
+          
         <script type="module" src="/src/main.jsx"></script>
         <script>
             function updateTime() {

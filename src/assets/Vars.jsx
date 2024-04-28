@@ -32,7 +32,8 @@ const links = {
         //mod links are used to provide parameters to routes
         //mod means modifiable
         modInbox: '/sec/inbox/', 
-        modOthers: '/sec/others/'
+        modOthers: '/sec/others/',
+        createPost : '/sec/create-post',
     }
 }
 

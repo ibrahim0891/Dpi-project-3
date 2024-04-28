@@ -36,6 +36,7 @@ import PeopleLayout from "./Pages/Primary/Peoples/People-layout"
 import IncomingRequests from "./Pages/Primary/Peoples/Incoming-requests"
 import OutgoingRequests from "./Pages/Primary/Peoples/Outgoing-requests"
 import Home from "./Pages/Primary/Home" 
+import CreatePost from "./Pages/Secondary/Create-post"
 function App() {
     useEffect(() => {
         const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -94,6 +95,7 @@ function App() {
                     <Route path={links.sec.inbox} element={<ChatView />}> </Route>
                     <Route path={links.sec.others} element={<OthersProfile />}> </Route>
                     <Route path={links.sec.editProfile} element={<EditPofile />}> </Route>
+                    <Route path={links.sec.createPost} element={<CreatePost />}> </Route>
                 </Route>
             </Route >
         )

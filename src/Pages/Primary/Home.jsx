@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { auth, database } from "../../../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark, faHeart } from "@fortawesome/free-solid-svg-icons";
-import { faComment } from "@fortawesome/free-solid-svg-icons";
-import { setOnline } from "../../Common/SetActiveStatue";
+import { faComment } from "@fortawesome/free-solid-svg-icons"; 
+import { Link } from "react-router-dom";
+import { links } from "../../assets/Vars";
 
 let Home = () => {
     let [userData, setUserData] = useState("");
@@ -29,11 +30,14 @@ let Home = () => {
                         />
                     )}
                 </div>
-                <div className="w-10/12">
-                    <div className="w-full p-2 flex items-center text-base cursor-pointer bg-slate-200 border rounded-full h-8">
-                        What is on your mind?
+                <Link to={links.sec.createPost} className="block">
+                    <div className="w-10/12" >
+                        <div className="w-full p-2 flex items-center text-base cursor-pointer bg-slate-200 border rounded-full h-8">
+                            What is on your mind?
+                        </div>
                     </div>
-                </div>
+                </Link>
+
             </div>
 
             <br />
