@@ -5,9 +5,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faClose, faPlus } from "@fortawesome/free-solid-svg-icons"
 
 import { useEffect, useRef, useState } from "react"
+import { getDownloadURL, ref as storageRef, uploadBytes } from "firebase/storage"
+import { database, storage } from "../../../firebase"
+import { push, ref, update } from "firebase/database"
 
+import imageCompression from "browser-image-compression" 
+import timeStamp from "../../Common/TimeStamp"
 
 const CreatePost = () => {
+
     const [selectedImage, setSelectedImages] = useState([])
     const [selectedFile, setSelectedFile] = useState([])
     const fileSelect = useRef(null)
@@ -17,36 +23,114 @@ const CreatePost = () => {
             fileSelector.click()
         }
     }
+    // async function compressImage(imageFile) {
+    //     let options = {
+    //         maxSizeMB: 0.5,
+    //         maxWidthOrHeight: 600,
+    //         useWebWorker: true,
+    //     }
+    //     const compressedFile = await imageCompression(imageFile, options)
+    //     return compressedFile
+    // }
 
-    let fileSelectChange = (e) => {
+    // let fileSelectChange = (e) => {
+    //     const files = e.target.files;
+    //     const newSelectedImages = Array.from(files).filter(file =>
+    //         file && /\.(jpe?g|png|gif)$/i.test(file.name)
+    //     ).map(file => {
+    //         let localImgUrl = URL.createObjectURL(file)
+    //         return { localImgUrl, file }
+    //     });
+    //     setSelectedImages((prevImages) => [
+    //         ...prevImages,
+    //         ...newSelectedImages.map((image) => image.localImgUrl),
+    //     ]);
+    //     setSelectedFile((prevImages) => [
+    //         ...prevImages,
+    //         ...newSelectedImages.map((image) => image.file),
+    //     ])
+    // }
+
+    async function fileSelectChange(e) {
         const files = e.target.files;
-        const newSelectedImages = Array.from(files).filter(file =>
-            file && /\.(jpe?g|png|gif)$/i.test(file.name)
-        ).map(file => {
-            let localImgUrl = URL.createObjectURL(file)
-            return { localImgUrl, file }
+        const promises = []; // Array to store compression promises
+
+        // Filter valid image files
+        const validImages = Array.from(files).filter(
+            (file) => file && /\.(jpe?g|png|gif)$/i.test(file.name)
+        );
+
+        // Compress each image asynchronously
+        for (const file of validImages) {
+            const options = {
+                maxSizeMB: 0.5,
+                maxWidthOrHeight: 600,
+                useWebWorker: true,
+            };
+            promises.push(imageCompression(file, options)); // Assuming imageCompression function exists
+        }
+
+        // Wait for all compressions to finish
+        const compressedFiles = await Promise.all(promises);
+
+        // Create image objects with local URLs and compressed files
+        const newSelectedImages = compressedFiles.map((compressedFile) => {
+            const localImgUrl = URL.createObjectURL(compressedFile);
+            return { localImgUrl, file: compressedFile };
         });
-        setSelectedImages((prevImages) => [
-            ...prevImages,
-            ...newSelectedImages.map((image) => image.localImgUrl),
-        ]);
-        setSelectedFile((prevImages) => [
-            ...prevImages,
-            ...newSelectedImages.map((image) => image.file),
-        ])
+
+        // Update state arrays using spread operator and callback (assuming React)
+        setSelectedImages((prevImages) => [...prevImages, ...newSelectedImages.map((image) => image.localImgUrl)]);
+        setSelectedFile((prevFiles) => [...prevFiles, ...newSelectedImages.map((image) => image.file)]);
     }
+
+
     const handleXButtonCLick = (imageUrl, index) => {
         const updatedImages = selectedImage.filter((image) => image !== imageUrl);
         setSelectedImages(updatedImages)
-        
+
         const updatedFiles = [...selectedFile];
         updatedFiles.splice(index, 1);
         setSelectedFile(updatedFiles);
     };
 
-    useEffect(() => {
-        console.log(selectedFile);
-    }, [selectedFile]);
+    const postUniqueKey = push(ref(database, '/')).key
+
+    const [postTitle, setPostTitle] = useState('')
+    const [postBody, setPostBody] = useState('')
+    const [imageUrls, setImageUrls] = useState([])
+    let createPost = async () => {
+        let promises = []
+        selectedFile.forEach((file, index) => {
+            const postStorageRef = storageRef(storage, `${localStorage.getItem('currentUser')}/${postUniqueKey}/${file.name}`)
+            promises.push(uploadBytes(postStorageRef, file))
+
+        })
+        const uploadResults = await Promise.all(promises)
+        const downloadURLs = uploadResults.map((uploadTask) =>
+            getDownloadURL(uploadTask.ref)
+        );  
+        const resolvedDownloadURLs = await Promise.all(downloadURLs);
+        // setImageUrls(resolvedDownloadURLs)
+        console.log(resolvedDownloadURLs);
+
+        let post = {
+            authorUID : localStorage.getItem('currentUser'),
+            timestamp : timeStamp(),
+            postTitle  ,
+            postBody ,
+            images : resolvedDownloadURLs,
+            likes : 0 ,
+            comments : 0 
+        }
+
+        let postRef = ref(database, '/posts/'+ localStorage.getItem('currentUser')+ '/' +postUniqueKey)
+        update(postRef,post).then(() => {
+          console.log('Posted successfully!');
+        })
+
+    }
+
     return (
         <div>
             <BackButton buttonLink={links.home.root} titlebarText={`Create a new post!`} />
@@ -58,10 +142,12 @@ const CreatePost = () => {
                         placeholder="Title"
                         className="p-4 border-b rounded-md w-full shadow text-2xl font-bold block placeholder-gray-400"
                         title="Set a title for your post!"
+                        onChange={(e) => { setPostTitle(e.target.value) }}
                     />
                     <textarea
                         placeholder="Unleash your idea..."
-                        className="text-md font-light p-4 border shadow  w-full resize-none block aspect-video focus:outline-0">
+                        className="text-md font-light p-4 border shadow  w-full resize-none block aspect-video focus:outline-0"
+                        onChange={(e) => { setPostBody(e.target.value) }}>
                     </textarea>
                     <h3 className="font-bold text-xl text-gray-500 my-4 "> Add images</h3>
                     <div className="flex flex-wrap">
@@ -76,11 +162,11 @@ const CreatePost = () => {
                         }
                         <div className="border shadow-md flex items-center justify-center w-1/4 aspect-square hover:text-gray-600 hover:shadow-lg" title="Add an image" onClick={clickUpload}>
                             <FontAwesomeIcon icon={faPlus} className="font-bold text-3xl text-gray-300"></FontAwesomeIcon>
-                            <input type="file" ref={fileSelect} accept="image/jpeg, image/png, image/gif" onChange={fileSelectChange} className="hidden" />
+                            <input type="file" ref={fileSelect} accept="image/jpeg, image/png, image/gif" multiple onChange={fileSelectChange} className="hidden" />
                         </div>
                     </div>
                     <div className="pt-4">
-                        <button className="bg-gray-600 text-white block w-full text-md text-center py-4 px-2 rounded-md hover:bg-gray-500 "> Publish </button>
+                        <button className="bg-gray-600 text-white block w-full text-md text-center py-4 px-2 rounded-md hover:bg-gray-500 " onClick={createPost}> Publish </button>
                     </div>
                 </div>
             </div>

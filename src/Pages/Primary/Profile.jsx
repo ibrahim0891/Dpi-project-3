@@ -14,12 +14,14 @@ import profile from "../../assets/img/default-profile.jpg";
 import { links } from "../../assets/Vars";
 import TimeStamp from "../../Common/TimeStamp";
 import { setOffline } from "../../Common/SetActiveStatue";
+import Post from "../Components/Post";
 
 // Under development
 
 const Profile = () => {
     const navigate = useNavigate();
     const [userData, setUserData] = useState({});
+    let [posts, setPosts] = useState([])
     const handleSignOut = (e) => {
         e.preventDefault();
         signOut(auth).then(() => {
@@ -30,29 +32,50 @@ const Profile = () => {
         });
     };
 
+    let [authorData, setAuthorData] = useState('')
+    let [imageArray, setImageArray] = useState([])
     useEffect(() => {
         let currentUser = localStorage.getItem("currentUser");
         const path = "users/" + currentUser + "/info";
         get(child(ref(database), path)).then((snapshot) => {
             setUserData(snapshot.val());
         });
-        
+        get(child(ref(database), '/posts/' + currentUser)).then((snapshot) => {
+            if (snapshot.exists) {
+                // console.log(snapshot.val());
+                const newPosts = [];
+                snapshot.forEach((childSnapshot) => {
+                    const postID = childSnapshot.key
+                    const postData = childSnapshot.val();
+                    newPosts.push({ ...postData, id: postID });
+                });
+                setPosts(newPosts);
+                console.log(newPosts);
+            } else {
+                console.log("No posts found for this user.");
+            }
+        });
     }, []);
 
+    let deletePost = (e , postID) => {
+      e.preventDefault()
+      console.log(postID);
+      console.log('/posts/'+localStorage.getItem('currentUser')+'/'+postID);
+    }
     // document.getElementById("edit-button").addEventListener("click", () => {
     // 	document.getElementById("edit-section").style.display = "block";
     // 	document.getElementById("mainProfilePage").style.display = "none";
     // });
 
     return (
-        <div>
+        <div className="">
             {userData ? (
-                <div>
+                <div className="slideIn">
                     <div className="flex items-center bg-center bg-cover bg-no-repeat md:aspect-[4/1]"
                         style={{ backgroundImage: "url(" + image + ")" }}>
                         <div className="w-1/4 flex justify-center">
                             <div className=" w-16 h-16  my-3 border rounded-full flex justify-center items-center overflow-hidden bg-white">
-                                <img src={userData.avater} alt="" className=""/>
+                                <img src={userData.avater} alt="" className="" />
                             </div>
                         </div>
                         <div className="ml-3 w-4/6">
@@ -84,6 +107,15 @@ const Profile = () => {
             ) : (
                 "Loading..."
             )}
+            <div className="space-y-6 ">
+                {posts ? posts.map((post, index) =>
+                    <div key={index}>
+                        <Post title={post.postTitle} timestamp={post.timestamp} authorData={post.authorUID} bodyText={post.postBody} imageArray={post.images} ></Post>
+                        <button onClick={(e)=>deletePost(e, post.postID)}> Delete post </button>
+                    </div>
+                )
+                    : "loading posts..."}
+            </div>
             <button
                 className="bg-gray-100 block p-4 mt-4 w-full"
                 onClick={(e) => handleSignOut(e)}>
