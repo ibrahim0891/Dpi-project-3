@@ -10,10 +10,10 @@
 }
 
 .active {
-    @apply bg-gray-500 text-white border-b-4
+    @apply border bg-white shadow-lg
 }
 .active:hover{
-    @apply bg-gray-600 text-white !important
+    @apply  !important
 }
 body{
     @apply bg-gray-50
@@ -36,7 +36,7 @@ body{
 }
  
 .activeTab{
-    @apply text-black
+    
 }
 
 .messageInputShadow{

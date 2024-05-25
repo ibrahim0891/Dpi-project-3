@@ -29,7 +29,7 @@ const ChatLayout = () => {
                         key={index}
                         onClick={() => toggleActiveState(index)}
                         to={tab.path}
-                        className={`w-1/2 md:w-full text-sm bg-white p-2 rounded-lg relative ${activeTab === index ? 'activeTab' : ''}`}
+                        className={`w-1/2 md:w-full p-2 relative border rounded-md shadow-inner ${activeTab === index ? ' bg-gray-700 text-white ' : 'bg-white'}`}
                     >
                         {tab.label}
                     </Link>

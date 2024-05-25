@@ -46,14 +46,13 @@ const PeopleLayout = () => {
                     </Link>
                 ))}
             </nav> */}
-            <nav className="flex md:flex-col md:w-1/4 bg-gray-50 justify-between text-center">
+            <nav className="flex md:flex-col md:w-1/4 p-2 gap-2">
                 {tabs.map((tab, index) => (
                     <Link
                         key={index}
                         onClick={() => toggleActiveState(index)}
                         to={tab.path}
-                        className={`w-1/3 md:w-full text-sm text-gray-700 px-2 py-4 rounded-sm relative ${activeTab === index ? "bg-gray-700 text-white" : "bg-gray-200"
-                            }`}
+                        className={`w-1/3 text-center rounded-md py-2 ${activeTab === index ? "bg-gray-700 text-white" : "bg-gray-200"}`}
                     >
                         {tab.label}
                         {tab.label === "Received " && badgeNumber ? (
@@ -63,12 +62,7 @@ const PeopleLayout = () => {
                 ))}
             </nav>
 
-
-
-
-
             <div className="md:w-3/4 px-4">
-
                 <Outlet></Outlet>
             </div>
         </div>

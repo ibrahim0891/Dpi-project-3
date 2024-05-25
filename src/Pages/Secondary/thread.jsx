@@ -163,7 +163,7 @@ const ChatView = () => {
         <div className="h-screen relative">
             {receiver ?
                 <div className="flex flex-col bg-green-200 justify-between h-screen ">
-                    <div className="sticky top-0 md:top-14 bg-gray-100 text-gray-700 p-2 flex items-center justify-between z-10 shadow-md ">
+                    <div className="sticky top-0 md:top-14 bg-gray-100 text-gray-700 p-0.5 flex items-center justify-between z-10 shadow-md ">
                         <div className="flex items-center justify-between w-full">
                             <div className="flex items-center justify-center">
                                 <Link to={links.home.inbox.chatLayout}>
@@ -174,15 +174,15 @@ const ChatView = () => {
                                 <Link to={links.sec.modOthers + chatIDnumber}>
                                     <div className="flex items-center py-2">
                                         {receiver.avater ?
-                                            <img src={receiver.avater} alt={receiver.fname} className="w-10 h-10 rounded-full mr-2" /> :
+                                            <img src={receiver.avater} alt={receiver.fname} className="w-10 aspect-square rounded-full mr-1" /> :
                                             <img
                                                 src='https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?size=338&ext=jpg&ga=GA1.1.1700460183.1712793600&semt=ais'
-                                                className="w-10 aspect-square rounded-full mr-2"
+                                                className="w-10 aspect-square rounded-full mr-1"
                                             />
                                         }
-                                        <div className="text-lg ml-2">
-                                            <span> {receiver.fname} </span>
-                                            <div className="text-sm flex items-center justify-start">
+                                        <div className="text-lg ml-3 flex items-center ">
+                                            <span className="text-ms" > {receiver.fname} </span>
+                                            <div className="text-[14px] flex items-center justify-center ml-4">
                                                 {isActive['online'] == 'Active now' ?
                                                     <div className="w-3 mr-2 aspect-square bg-green-700 rounded-full animate-pulse"></div> :
                                                     <div className="w-3 mr-2 aspect-square bg-red-700 rounded-full "></div>
@@ -239,11 +239,11 @@ const ChatView = () => {
                                 </div>
                             </div> : null) : ' '}
                     </div>
-                    <form className=" bg-gray-100 items-center justify-between sticky bottom-0 p-2 messageInputShadow text-xl text-blue-800">
+                    <form className=" bg-gray-100 items-center justify-between sticky bottom-0 p-0.5 messageInputShadow text-xl text-blue-800">
                         <div className="flex items-center justify-between">
-                            <FontAwesomeIcon icon={faLink} className="p-4"></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faLink} className="p-3"></FontAwesomeIcon>
                             <textarea
-                                className="ml-1 resize-none border block w-full h-14 rounded-full px-6 pt-3 focus:outline-none text-[16px] "
+                                className="ml-1 resize-none border block w-full h-10 rounded-full px-4 pt-1 focus:outline-none text-[16px] "
                                 value={messageContent}
                                 onFocus={(e) => { typingStart(e) }}
                                 onBlur={typingEnd}

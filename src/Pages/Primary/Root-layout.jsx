@@ -28,28 +28,34 @@ const RootLayout = () => {
             setUserData(data);
         })
     }, [])
+
+    const navLinks = {
+        className: "px-4 py-3 w-full text-center rounded-md",
+        linksAndIcon: [
+            { iconName: faHome, link: '/' },
+            { iconName: faUserCircle, link: links.home.profile },
+            { iconName: faUserGroup, link: links.home.peoples.peopleLayout },
+            { iconName: faInbox, link: links.home.inbox.chatLayout }
+        ]
+    }
     return (
-        <div>
-            <div className="flex items-center justify-between p-5">
-                <h1 className="text-lg"> Dpi-project-3 </h1>
-                <img src='' className="bg-slate-500 aspect-square w-9 rounded-full" alt="avater" />
+        <div >
+            <div className="sticky top-0 z-30 bg-gray-50">
+
+                <div className="flex items-center justify-between p-5">
+                    <h1 className="text-lg"> Dpi-project-3 </h1>
+                    <img src='' className="bg-slate-500 aspect-square w-9 rounded-full" alt="avater" />
+                </div>
+
+                <nav className="flex items-center justify-around mx-2 mb-4 pb-2 ">
+                    {navLinks.linksAndIcon.map((linkIdentifier) =>
+                        <NavLink className={navLinks.className} key={linkIdentifier.link} to={linkIdentifier.link}>
+                            <FontAwesomeIcon icon={linkIdentifier.iconName}> </FontAwesomeIcon>
+                        </NavLink>
+                    )}
+                </nav>
             </div>
-             
-            <nav className="bg-slate-200 text-gray-900 flex space-between">
-                <NavLink className='m-2 p-4 hover:bg-gray-200  hover:text-black rounded-md w-1/3 text-nowrap text-center ' to='/'>
-                    <FontAwesomeIcon icon={faHome}></FontAwesomeIcon>
-                </NavLink>
-                <NavLink className='m-2 p-4 hover:bg-gray-200  hover:text-black rounded-md w-1/3 text-nowrap text-center ' to={links.home.profile}>
-                    <FontAwesomeIcon icon={faUserCircle}> </FontAwesomeIcon>
-                </NavLink>
-                <NavLink className='m-2 p-4 hover:bg-gray-200  hover:text-black rounded-md w-1/3 text-nowrap text-center ' to={links.home.peoples.peopleLayout}>
-                    <FontAwesomeIcon icon={faUserGroup}></FontAwesomeIcon>
-                </NavLink>
-                <NavLink className='m-2 p-4 hover:bg-gray-200  hover:text-black rounded-md w-1/3 text-nowrap text-center ' to={links.home.inbox.chatLayout}>
-                    <FontAwesomeIcon icon={faInbox}></FontAwesomeIcon>
-                </NavLink>
-            </nav>
-            <div className=" p-4 ">
+            <div className=" ">
                 <Outlet />
             </div>
         </div>

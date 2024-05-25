@@ -110,9 +110,7 @@ const CreatePost = () => {
         const downloadURLs = uploadResults.map((uploadTask) =>
             getDownloadURL(uploadTask.ref)
         );  
-        const resolvedDownloadURLs = await Promise.all(downloadURLs);
-        // setImageUrls(resolvedDownloadURLs)
-        console.log(resolvedDownloadURLs);
+        const resolvedDownloadURLs = await Promise.all(downloadURLs); 
 
         let post = {
             authorUID : localStorage.getItem('currentUser'),
@@ -121,7 +119,8 @@ const CreatePost = () => {
             postBody ,
             images : resolvedDownloadURLs,
             likes : 0 ,
-            comments : 0 
+            comments : 0 ,
+            postID : postUniqueKey
         }
 
         let postRef = ref(database, '/posts/'+ localStorage.getItem('currentUser')+ '/' +postUniqueKey)
