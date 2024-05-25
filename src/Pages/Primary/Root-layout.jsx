@@ -44,7 +44,7 @@ const RootLayout = () => {
 
                 <div className="flex items-center justify-between p-5">
                     <h1 className="text-lg"> Dpi-project-3 </h1>
-                    <img src='' className="bg-slate-500 aspect-square w-9 rounded-full" alt="avater" />
+                    <img src={user.avater} className="bg-slate-500 aspect-square w-9 rounded-full" alt="avater" />
                 </div>
 
                 <nav className="flex items-center justify-around mx-2 mb-4 pb-2 ">

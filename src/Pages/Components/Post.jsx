@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { database } from "../../../firebase";
 
 // eslint-disable-next-line react/prop-types 
-const Post = ({ authorData, title, bodyText, imageArray , timestamp}) => {
+const Post = ({ authorData, title, bodyText, imageArray, timestamp }) => {
     let [authorInfo, setAuthorInfo] = useState('')
     useEffect(() => {
         get(child(ref(database), '/users/' + authorData)).then((snapshot) => {
@@ -19,11 +19,11 @@ const Post = ({ authorData, title, bodyText, imageArray , timestamp}) => {
 
             <div className="text-xl flex items-center flex-col space-y-4 ">
                 {authorInfo && <img className="w-16 rounded-full border shadow-xl" src={authorInfo.info.avater} />}
-                <span>
+                <span className="text-center text-sm">
                     {authorInfo && authorInfo.info.fname} on {timestamp}
                 </span>
+                 <h1 className="text-2xl font-bold text-center "> {title} </h1>
             </div>
-            <h1 className="text-2xl font-bold text-center "> {title} </h1>
             <p className="text-sm py-3 "> {bodyText} </p>
             {imageArray ?
                 <div className="flex flex-no-wrap overflow-x-auto items-center gap-4 ">
