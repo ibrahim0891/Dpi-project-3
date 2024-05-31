@@ -11,11 +11,15 @@ import { push, ref, update } from "firebase/database"
 
 import imageCompression from "browser-image-compression" 
 import timeStamp from "../../Common/TimeStamp"
+import { useNavigate } from "react-router-dom"
 
 const CreatePost = () => {
 
     const [selectedImage, setSelectedImages] = useState([])
     const [selectedFile, setSelectedFile] = useState([])
+    const [postUploading , setPostUloading] = useState(false)
+
+    const navigate = useNavigate()
     const fileSelect = useRef(null)
     let clickUpload = () => {
         if (fileSelect.current) {
@@ -23,33 +27,7 @@ const CreatePost = () => {
             fileSelector.click()
         }
     }
-    // async function compressImage(imageFile) {
-    //     let options = {
-    //         maxSizeMB: 0.5,
-    //         maxWidthOrHeight: 600,
-    //         useWebWorker: true,
-    //     }
-    //     const compressedFile = await imageCompression(imageFile, options)
-    //     return compressedFile
-    // }
 
-    // let fileSelectChange = (e) => {
-    //     const files = e.target.files;
-    //     const newSelectedImages = Array.from(files).filter(file =>
-    //         file && /\.(jpe?g|png|gif)$/i.test(file.name)
-    //     ).map(file => {
-    //         let localImgUrl = URL.createObjectURL(file)
-    //         return { localImgUrl, file }
-    //     });
-    //     setSelectedImages((prevImages) => [
-    //         ...prevImages,
-    //         ...newSelectedImages.map((image) => image.localImgUrl),
-    //     ]);
-    //     setSelectedFile((prevImages) => [
-    //         ...prevImages,
-    //         ...newSelectedImages.map((image) => image.file),
-    //     ])
-    // }
 
     async function fileSelectChange(e) {
         const files = e.target.files;
@@ -100,6 +78,7 @@ const CreatePost = () => {
     const [postBody, setPostBody] = useState('')
     const [imageUrls, setImageUrls] = useState([])
     let createPost = async () => {
+        setPostUloading(true)
         let promises = []
         selectedFile.forEach((file, index) => {
             const postStorageRef = storageRef(storage, `${localStorage.getItem('currentUser')}/${postUniqueKey}/${file.name}`)
@@ -115,9 +94,9 @@ const CreatePost = () => {
         let post = {
             authorUID : localStorage.getItem('currentUser'),
             timestamp : timeStamp(),
-            postTitle  ,
-            postBody ,
-            images : resolvedDownloadURLs,
+            postTitle : postTitle ? postTitle : 'Nothing' ,
+            postBody : postBody ? postBody : 'Nothing in postbody',
+            images : resolvedDownloadURLs ? resolvedDownloadURLs : ['No images!'],
             likes : 0 ,
             comments : 0 ,
             postID : postUniqueKey
@@ -126,6 +105,7 @@ const CreatePost = () => {
         let postRef = ref(database, '/posts/'+ localStorage.getItem('currentUser')+ '/' +postUniqueKey)
         update(postRef,post).then(() => {
           console.log('Posted successfully!');
+          navigate('/profile')
         })
 
     }
@@ -134,12 +114,12 @@ const CreatePost = () => {
         <div>
             <BackButton buttonLink={links.home.root} titlebarText={`Create a new post!`} />
             <div className="">
-                <img src={moutainPeak} />
-                <div className="font-thin m-6 p-8 border shadow flex flex-col space-y-4">
+                <img src={moutainPeak} className="-mb-16 border-b"/>
+                <div className="font-thin m-8 flex flex-col space-y-4">
                     <input
                         type="text"
                         placeholder="Title"
-                        className="p-4 border-b rounded-md w-full shadow text-2xl font-bold block placeholder-gray-400"
+                        className="px-4 py-3 border text-center rounded-md w-full shadow text-2xl font-bold block placeholder-gray-400"
                         title="Set a title for your post!"
                         onChange={(e) => { setPostTitle(e.target.value) }}
                     />
@@ -149,7 +129,7 @@ const CreatePost = () => {
                         onChange={(e) => { setPostBody(e.target.value) }}>
                     </textarea>
                     <h3 className="font-bold text-xl text-gray-500 my-4 "> Add images</h3>
-                    <div className="flex flex-wrap">
+                    <div className="flex flex-wrap rounded-2xl overflow-hidden">
                         {selectedImage ?
                             selectedImage.map((image, index) =>
                                 <div key={index} className="relative border shadow-md flex items-center justify-center w-1/4 aspect-square hover:text-gray-600 hover:shadow-lg overflow-hidden">
@@ -165,7 +145,9 @@ const CreatePost = () => {
                         </div>
                     </div>
                     <div className="pt-4">
-                        <button className="bg-gray-600 text-white block w-full text-md text-center py-4 px-2 rounded-md hover:bg-gray-500 " onClick={createPost}> Publish </button>
+                        <button className="bg-gray-600 text-white w-full text-md text-center py-4 px-2 rounded-md hover:bg-gray-500 flex items-center justify-center " onClick={createPost}> 
+                        { postUploading ? < img className="w-6 h-6" src='https://i.gifer.com/origin/44/446bcd468478f5bfb7b4e5c804571392_w200.webp' />  :  'Publish' }
+                        </button>
                     </div>
                 </div>
             </div>

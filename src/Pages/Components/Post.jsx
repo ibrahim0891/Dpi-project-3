@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 
-import { child, get, ref } from "firebase/database";
+import { child, get, onValue, ref } from "firebase/database";
 import { useEffect, useState } from "react";
 import { database } from "../../../firebase";
 
@@ -11,7 +11,10 @@ const Post = ({ authorData, title, bodyText, imageArray, timestamp }) => {
     useEffect(() => {
         get(child(ref(database), '/users/' + authorData)).then((snapshot) => {
             setAuthorInfo(snapshot.val())
-            console.log(snapshot.val());
+             console.log(snapshot.val());
+           
+        })
+        onValue(ref(database, '/users/' + authorData ), (snapshot) => {
         })
     }, [])
     return (
@@ -36,8 +39,8 @@ const Post = ({ authorData, title, bodyText, imageArray, timestamp }) => {
                         />
                     ))}
                 </div>
-                : "Loading..."}
-            {imageArray.length > 1 ? <div>Scroll horizontally to see other images! </div> : null}
+                : null }
+            { imageArray == undefined ? null : imageArray.length > 1 ? <div>Scroll horizontally to see other images! </div> : null}
         </div>
     )
 }

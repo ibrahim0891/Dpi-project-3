@@ -11,7 +11,7 @@ const BackButton = ({ buttonLink , titlebarText , additionalInfo }) => {
                  <button className="py-2 px-4 pr-2">
                     <FontAwesomeIcon icon={faChevronLeft} className="mr-2"/>
                 </button>
-                <div className="text-lg"> {titlebarText} </div>
+                <div className="text-lg "> {titlebarText} </div>
             </div>
                
             <div className="pr-4">{additionalInfo}</div>

@@ -20,22 +20,18 @@ let Home = () => {
     }, []);
     return (
         <div className=" m-4">
-            <div className="post  flex items-center">
-                <div className=" w-1/12  m-3  flex justify-center items-center overflow-hidden ">
-                    {userData && (
+            <div className="post flex items-center shadow-md rounded-md p-4 gap-4 border">
+                <div className=" bg-red-100  flex justify-center items-center overflow-hidden ">
+                    {userData ? (
                         <img
                             src={userData.avater}
                             alt=""
-                            className="w-10 rounded-full h-10"
+                            className="w-10 bg-gray-700 rounded-full h-10"
                         />
-                    )}
+                    ): <div className="bg-gray-700 w-10 h-10 rounded-full"> </div>}
                 </div>
-                <Link to={links.sec.createPost} className="block">
-                    <div className="w-10/12" >
-                        <div className="w-full p-2 flex items-center text-base cursor-pointer bg-slate-200 border rounded-full h-8">
-                            What is on your mind?
-                        </div>
-                    </div>
+                <Link to={links.sec.createPost} className="block w-full px-4 py-2 items-center text-base cursor-pointer bg-slate-200 border rounded-lg"> 
+                        Write a new post!
                 </Link>
 
             </div>

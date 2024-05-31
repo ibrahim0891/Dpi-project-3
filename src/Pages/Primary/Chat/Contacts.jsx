@@ -47,7 +47,7 @@ const Contacts = () => {
                     <Link  className="w-full" to={links.sec.modOthers + connection.uid}> {connection.fname} {connection.lname} </Link> 
                     {/* <span className="text-sm"> {connection.activeStatus.online =='Active now' ? <div className="w-2 h-2 rounded bg-green-400 ml-2"> </div>: 'Last online: ' +  connection.activeStatus.lastActive }</span> */}
                 </div>                                                                                                                                              
-            )) : <LoaderIcon customClasses='mt-16 static'></LoaderIcon>}
+            )) : <LoaderIcon customClasses='mt-16 static w-full h-full'></LoaderIcon>}
         </div>
     )
 }

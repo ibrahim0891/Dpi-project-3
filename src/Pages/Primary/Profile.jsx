@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 // Firebase
 import { auth, database } from "../../../firebase";
 import { signOut } from "firebase/auth";
-import { child, get, ref } from "firebase/database";
+import { child, get, onValue, ref, set } from "firebase/database";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faUser } from "@fortawesome/free-solid-svg-icons";
 // import { faPenNib } from "@fortawesome/free-solid-svg-icons";
@@ -40,7 +40,23 @@ const Profile = () => {
         get(child(ref(database), path)).then((snapshot) => {
             setUserData(snapshot.val());
         });
-        get(child(ref(database), '/posts/' + currentUser)).then((snapshot) => {
+        // get(child(ref(database), '/posts/' + currentUser)).then((snapshot) => {
+        //     if (snapshot.exists) {
+        //         // console.log(snapshot.val());
+        //         const newPosts = [];
+        //         snapshot.forEach((childSnapshot) => {
+        //             const postID = childSnapshot.key
+        //             const postData = childSnapshot.val();
+        //             newPosts.push({ ...postData, id: postID });
+        //         });
+        //         setPosts(newPosts);
+        //         console.log(newPosts);
+        //     } else {
+        //         console.log("No posts found for this user.");
+        //     }
+        // });
+
+        onValue(ref(database, '/posts/' + currentUser),(snapshot) => {
             if (snapshot.exists) {
                 // console.log(snapshot.val());
                 const newPosts = [];
@@ -54,13 +70,16 @@ const Profile = () => {
             } else {
                 console.log("No posts found for this user.");
             }
-        });
+        })
     }, []);
 
     let deletePost = (e , postID) => {
       e.preventDefault()
       console.log(postID);
       console.log('/posts/'+localStorage.getItem('currentUser')+'/'+postID);
+      set(ref(database , '/posts/'+localStorage.getItem('currentUser')+'/'+postID),null).then(() => {
+        console.log("Post deleted!");
+      })
     }
     // document.getElementById("edit-button").addEventListener("click", () => {
     // 	document.getElementById("edit-section").style.display = "block";
@@ -105,7 +124,7 @@ const Profile = () => {
                     </div>
                 </div>
             ) : (
-                "Loading..."
+                "Loading something..."
             )}
             <div className="space-y-6 ">
                 {posts ? posts.map((post, index) =>
