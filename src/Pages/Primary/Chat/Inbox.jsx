@@ -43,16 +43,15 @@ const Inbox = () => {
                 {threadList ? Object.keys(threadList).map((value, index) =>
                     <div key={index} className="flex items-center gap-4 my-4">
                         <div className=" relative">
-                            <img className="w-12 aspect-square rounded-full" src={threadList[value].avater} alt="" />
+                            <img className="w-12 aspect-square rounded-md" src={threadList[value].avater} alt="" />
                             {threadList[value].activeStatus.online == 'Active now' ?
                                 <div className="w-3 aspect-square bg-lime-400 ring-2 ring-white rounded-full absolute bottom-0 right-0"></div> :
                                 <div className="w-3 aspect-square bg-red-500 ring-2 ring-white rounded-full absolute bottom-0 right-0"></div>}
                         </div>
                         <Link to={links.sec.modInbox + threadList[value].uid}>
                             <p className="text-lg font-semibold pb-1">{threadList[value].fname}</p>
-                            <p className="text-sm">
+                            <p className="text-xs">
                                 <span className="font-bold"> {threadList[value].lastSender == auth.currentUser.uid ? 'You: ' : threadList[value].fname + ': '} </span>
-
                                 {threadList[value].lastmessage.length > 12 ? threadList[value].lastmessage.slice(0, 12) + '...' : threadList[value].lastmessage} -
                                 <span className='italic'> {threadList[value].lastMessageTime} </span>
                             </p>
