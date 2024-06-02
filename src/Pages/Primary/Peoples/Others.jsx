@@ -33,12 +33,15 @@ const Others = () => {
     }, []);
     return (
         <div className="">
-            <h1 className="text-2xl font-semibold mb-2"> See who else here: </h1>
+            <h1 className="text-2xl font-semibold my-3"> See who else here: </h1>
             {otherUser ? otherUser.map((value) =>
-                <Link className="border-b-1 p-4 hover:bg-gray-100 flex items-center" key={value.uid} to={links.sec.modOthers + value.uid}><div className="w-8 h-8 mr-2 border rounded-full flex justify-center items-center overflow-hidden">
-                     
-                   {value.info.avater? <img src={value.info.avater}/> : <FontAwesomeIcon className="text-2xl " icon={faUser} />} 
-                </div> {value.info.fname} 
+                <Link className="border-b-1 p-4 hover:bg-gray-100 flex items-center flex gap-3" key={value.uid} to={links.sec.modOthers + value.uid}>
+                    {value.info.avater ? <img className="h-8 rounded-md aspect-square " src={value.info.avater} /> : <img src='https://pic.onlinewebfonts.com/thumbnails/icons_149464.svg' className="h-8 aspect-square rounded-md " alt="" />}
+                    <div>
+                        <p> {value.info.fname} </p>
+                        <p className="text-xs"> {value.info.email} </p>
+                    </div>
+
                 </Link>
             ) : <LoaderIcon customClasses='mt-16 static'></LoaderIcon>}
         </div>

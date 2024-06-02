@@ -16,6 +16,7 @@ let OutgoingRequests = () => {
                 temp.push(data[i])
             }
             getUsersInfo(temp).then((data) => {
+                console.log(data);
                 setLoadUsersData(data)
             })
         })
@@ -40,32 +41,33 @@ let OutgoingRequests = () => {
     let createRequestUID = auth.currentUser.uid.slice(0, 6)
     const deleteRequest = (e, uidnumber) => {
         e.preventDefault()
-        set(ref(database, `/requests/${uidnumber}/${createRequestUID}`), null).then(() => {  })
+        set(ref(database, `/requests/${uidnumber}/${createRequestUID}`), null).then(() => { })
         update(ref(database, `/sentRequestList/${auth.currentUser.uid}`), {
             [uidnumber.slice(0, 4)]: null
         })
     }
     return (
         <div className="bg-gray-100 p-4">
-            {loadUsersData ? 
-            <div>
-                <div className="py-6 text-xl font-thin">
-                    <h2> {loadUsersData.length == 0 ? " You have not sent request to anyone " : 'You have sent request to these peoples! '}</h2>
-                </div>
-                {
-                    loadUsersData.map((user, index) =>
-                        <div key={index} className={"flex items-center space-x-4 mb-4 "}>
-                            <div className="rounded-full w-8 aspect-square overflow-hidden">
-                                <img src={user.avater} alt="" />
+            {loadUsersData ?
+                <div>
+                    <div className="py-6 text-xl font-thin">
+                        <h2> {loadUsersData.length == 0 ? " You have not sent request to anyone " : 'You have sent request to these peoples! '}</h2>
+                    </div>
+                    {
+                        loadUsersData.map((user, index) =>
+                            <div key={index} className={"flex items-center space-x-4 mb-4 "}>
+                                <div className="flex gap-4 items-center justify-start">
+                                    <img src={user.avater} className="h-10 aspect-square rounded-md" alt="" />
+                                    <div>
+                                        <p>{user.fname}</p>
+                                        <button onClick={(e)=>{ deleteRequest(e,user.uid) }}> Cencel request</button>
+                                    </div>
+                                </div>
+
                             </div>
-                            <p> {user.fname} </p>
-                            <div>
-                                <button onClick={(e) => deleteRequest(e, user.uid)}> Delete Request </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </div> : <LoaderIcon customClasses='mt-16 static'></LoaderIcon>}
+                        )
+                    }
+                </div> : <LoaderIcon customClasses='mt-16 static'></LoaderIcon>}
         </div>
 
     )

@@ -39,18 +39,20 @@ const IncomingRequests = () => {
     return (
         <div>
             <h1 className="p-4 mb-4 text-center bg-gray-100" >Message Requests </h1>
-            <div className="bg-gray-50 border p-2 flex flex-col gap-2">
+            <div className="bg-gray-50 border p-2 flex flex-col gap-2 ">
                 {requestList ?
                     (requestList.length === 0 ?
-                        <p>No request!</p> :
+                        <div>
+                            <p> No request</p>
+                        </div> :
                         requestList.map((request, index) =>
                             <div key={index} className=" flex flex-col gap-4 border-b p-4">
                                 <Link className="bg-white border p-4 w-full hover:shadow-md flex space-between justify-center" to={links.sec.modOthers + request.requestorUID}>
                                     {request.fname + ' ' + request.lname}
                                 </Link>
-                                <div>
-                                    <button onClick={(e) => handleDecline(e, request.requestorUID)} className="bg-red-50 text-red-900 hover:bg-red-200 p-2"> Decline </button>
-                                    <button onClick={(e)=> handleAccept(e , request.requestorUID)} className="bg-green-50 text-green-900 hover:bg-green-200 p-2"> Accept </button>
+                                <div className="flex items-center justify-between gap-4 ">
+                                    <button onClick={(e) => handleDecline(e, request.requestorUID)} className="bg-red-50 text-red-900 hover:bg-red-200 p-2 w-full border"> Decline </button>
+                                    <button onClick={(e)=> handleAccept(e , request.requestorUID)} className="bg-green-50 text-green-900 hover:bg-green-200 p-2 w-full border"> Accept </button>
                                 </div>
                             </div>
 

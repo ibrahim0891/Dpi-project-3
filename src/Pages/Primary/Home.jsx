@@ -24,7 +24,7 @@ let Home = () => {
                 <div className=" bg-red-100  flex justify-center items-center overflow-hidden ">
                     {userData ? (
                         <img
-                            src={userData.avater}
+                            src={userData.avater ? userData.avater : '/src/assets'}
                             alt=""
                             className="w-10 bg-gray-700 rounded-full h-10"
                         />
