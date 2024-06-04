@@ -52,7 +52,7 @@ const Inbox = () => {
                             <p className="text-lg font-semibold pb-1">{threadList[value].fname}</p>
                             <p className="text-xs">
                                 <span className="font-bold"> {threadList[value].lastSender == auth.currentUser.uid ? 'You: ' : threadList[value].fname + ': '} </span>
-                                {threadList[value].lastmessage.length > 12 ? threadList[value].lastmessage.slice(0, 12) + '...' : threadList[value].lastmessage} -
+                                {threadList[value].lastmessage.length > 12 ? threadList[value].lastmessage.slice(0, 6) + '...' : threadList[value].lastmessage} -
                                 <span className='italic'> {threadList[value].lastMessageTime} </span>
                             </p>
                         </Link>
