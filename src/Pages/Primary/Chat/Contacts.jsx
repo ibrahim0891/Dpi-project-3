@@ -40,7 +40,7 @@ const Contacts = () => {
 
     }, [])
     return (
-        <div className="mt-2">
+        <div className="h-full">
             <div className="py-2 text-xl font-thin">
                 <h2> {connectionList == null || connectionList.length == 0 ? "Apni ekhono karo sathe connected non." : 'Apnar sathe connected sobaike dekhon ek jaygay!! '}</h2>
             </div>
@@ -53,7 +53,7 @@ const Contacts = () => {
                     </Link>
                     <span className="text-sm"> {connection.activeStatus.online == 'Active now' ? <div className="w-2 h-2 rounded bg-green-400 ml-2"> </div> : <div className="w-2 h-2 rounded bg-red-400 ml-2"> </div>  }</span>
                 </div>
-            )) : <LoaderIcon customClasses='mt-16 static w-full h-full'></LoaderIcon>}
+            )) : <LoaderIcon customClasses='mt-20 static w-full h-full'></LoaderIcon>}
         </div>
     )
 }

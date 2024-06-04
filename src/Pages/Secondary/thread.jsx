@@ -213,7 +213,6 @@ const ChatView = () => {
                                         alt=""
                                     />
                                 }
-
                                 <p className={(messsages[objKeys].sender == chatIDnumber ? 'bg-blue-100' : 'bg-gray-100 max-w-[320px] ') + ' max-w-2/3 px-4 py-2 border rounded-lg'}>
                                     {messsages[objKeys].message}
                                     {messsages ? <div ref={autoScroller}> </div> : null}
@@ -221,7 +220,7 @@ const ChatView = () => {
                             </div>
                         ) : firstMessage ? firstMessage : <LoaderIcon></LoaderIcon>}
                     </div>
-                    <div className="w-full text-sm flex items-start px-6 w-full bg-white pb-2">
+                    <div className="w-full text-sm flex items-start px-6 bg-white pb-2">
                         {typing ? (typing.isTyping ?
                             <div className="flex items-center justify-start w-full">
                                 {receiver.avater ?

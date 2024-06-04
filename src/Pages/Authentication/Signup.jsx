@@ -2,10 +2,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Authenticaion } from "../../Common/Authfunction"
 import { useNavigate } from "react-router-dom"
-import image from "../../assets/img/signup-bg.jpg"
-import { ref, set } from "firebase/database"
-import { database } from "../../../firebase"
-import { setOnline } from "../../Common/SetActiveStatue"
+import image from "../../assets/img/signup-bg.jpg" 
 
 //Ready 
 

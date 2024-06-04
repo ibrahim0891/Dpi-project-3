@@ -113,9 +113,9 @@ const CreatePost = () => {
     return (
         <div>
             <BackButton buttonLink={links.home.root} titlebarText={`Create a new post!`} />
-            <div className="">
+            <div className="mb-8">
                 <img src={moutainPeak} className="-mb-16 border-b"/>
-                <div className="font-thin m-8 flex flex-col space-y-4">
+                <div className="font-thin m-8 -mt-12 flex flex-col space-y-4">
                     <input
                         type="text"
                         placeholder="Title"
@@ -144,7 +144,7 @@ const CreatePost = () => {
                             <input type="file" ref={fileSelect} accept="image/jpeg, image/png, image/gif" multiple onChange={fileSelectChange} className="hidden" />
                         </div>
                     </div>
-                    <div className="pt-4">
+                    <div className="pt-4 pb-6">
                         <button className="bg-gray-600 text-white w-full text-md text-center py-4 px-2 rounded-md hover:bg-gray-500 flex items-center justify-center " onClick={createPost}> 
                         { postUploading ? < img className="w-6 h-6" src='https://i.gifer.com/origin/44/446bcd468478f5bfb7b4e5c804571392_w200.webp' />  :  'Publish' }
                         </button>

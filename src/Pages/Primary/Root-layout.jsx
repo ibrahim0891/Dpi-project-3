@@ -30,7 +30,7 @@ const RootLayout = () => {
     }, [])
 
     const navLinks = {
-        className: "px-4 py-3 w-full text-center rounded-md",
+        className: "px-2 py-3 w-full text-center ",
         linksAndIcon: [
             { iconName: faHome, link: '/' },
             { iconName: faUserCircle, link: links.home.profile },
@@ -40,23 +40,23 @@ const RootLayout = () => {
     }
     return (
         <div >
-            <div className="sticky top-0 z-30 bg-gray-50">
+            <div className="h-screen bg-gray-50 flex flex-col">
 
-                <div className="flex items-center justify-between p-5">
+                <div className="flex items-center justify-between p-5 sticky top-0 bg-white z-10">
                     <h1 className="text-lg"> Dpi-project-3 </h1>
                     {user && <img src={user.avater} className="bg-slate-500 aspect-square w-9 rounded-full" alt="avater" />}
                 </div>
+                <div className="h-full flex-1 overflow-auto">
+                    <Outlet />
+                </div>
 
-                <nav className="flex items-center justify-around mx-2 mb-4 pb-2 ">
+                <nav className="flex items-center justify-around sticky w-full bottom-0 bg-white p-2 border">
                     {navLinks.linksAndIcon.map((linkIdentifier) =>
                         <NavLink className={navLinks.className} key={linkIdentifier.link} to={linkIdentifier.link}>
                             <FontAwesomeIcon icon={linkIdentifier.iconName}> </FontAwesomeIcon>
                         </NavLink>
                     )}
                 </nav>
-            </div>
-            <div className=" ">
-                <Outlet />
             </div>
         </div>
     )

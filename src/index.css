@@ -10,7 +10,7 @@
 }
 
 .active {
-    @apply border bg-white shadow-lg
+    @apply border bg-white shadow-lg rounded-md
 }
 .active:hover{
     @apply  !important

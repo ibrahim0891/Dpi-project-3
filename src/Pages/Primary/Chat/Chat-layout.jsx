@@ -17,7 +17,7 @@ const ChatLayout = () => {
     }
 
     const tabs = [
-        { label: 'Inbox', path: links.home.inbox.inbox },
+        { label: 'Inbox', path: links.home.inbox.inbox }, 
         { label: 'Contacts', path: links.home.inbox.contacts }
     ];
 

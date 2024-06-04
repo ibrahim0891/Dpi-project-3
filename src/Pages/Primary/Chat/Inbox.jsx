@@ -1,27 +1,30 @@
 import { Link } from "react-router-dom"
-import { links } from "../../../assets/Vars"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { links } from "../../../assets/Vars" 
 import { useEffect, useState } from "react";
 import { child, get, onValue, ref } from "firebase/database";
 import { auth, database } from "../../../../firebase";
-import LoaderIcon from "../../../Common/Loader-icon";
-
+import LoaderIcon from "../../../Common/Loader-icon"; 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faComment } from "@fortawesome/free-solid-svg-icons/faComment";
 //under development
 const Inbox = () => {
 
     let [threadList, setThreadList] = useState(null)
     useEffect(() => {
-        onValue(ref(database, `/threadList/${localStorage.getItem('currentUser')}`), (snapshot) => {
+        onValue(ref(database, `/threadList/${localStorage.getItem('currentUser')}`), async (snapshot) => { //currentUser holds UID
             let data = snapshot.val()
             let temp = []
             for (let i in data) {
                 temp.push(data[i]);
             }
-            getThreadList(temp).then((info) => {
-                setThreadList(info)
-                console.log(info);
-            })
+            const info = await getThreadList(temp);
+            // Sort thread list by last message time (descending)
+            const sortedInfo = info.sort((a, b) => {
+                const dateA = new Date(a.lastMessageTime);
+                const dateB = new Date(b.lastMessageTime);
+                return dateB - dateA;
+            });
+            setThreadList(sortedInfo);
         })
         async function getThreadList(threadListObject) {
             let threadListArray = []
@@ -36,8 +39,9 @@ const Inbox = () => {
     }, [])
     return (
         <div className="h-full">
-            <div className="py-2 text-xl font-thin">
-                <h2> {   threadList == null || threadList.length == 0  ? " Apni ekhono kauke message pathan ni " : 'Apnar bondhur sathe chat korun ekhane! '}</h2>
+            <div className="py-1 text-xl font-thin text-center">
+                <FontAwesomeIcon icon={faComment} className="text-2xl text-blue-700" ></FontAwesomeIcon>
+                <h2> {threadList == null || threadList.length == 0 ? " Apni ekhono kauke message pathan ni " : 'Apnar bondhur sathe chat korun ekhane! '}</h2>
             </div>
             <div className="flex flex-col p-4 relative ">
                 {threadList ? Object.keys(threadList).map((value, index) =>
@@ -46,7 +50,8 @@ const Inbox = () => {
                             <img className="w-12 aspect-square rounded-md" src={threadList[value].avater} alt="" />
                             {threadList[value].activeStatus.online == 'Active now' ?
                                 <div className="w-3 aspect-square bg-lime-400 ring-2 ring-white rounded-full absolute bottom-0 right-0"></div> :
-                                <div className="w-3 aspect-square bg-red-500 ring-2 ring-white rounded-full absolute bottom-0 right-0"></div>}
+                                <div className="w-3 aspect-square bg-red-500 ring-2 ring-white rounded-full absolute bottom-0 right-0"></div>
+                            }
                         </div>
                         <Link to={links.sec.modInbox + threadList[value].uid}>
                             <p className="text-lg font-semibold pb-1">{threadList[value].fname}</p>

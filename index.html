@@ -20,24 +20,7 @@
 
         <script type="module" src="/src/main.jsx"></script>
         <script>
-function updateTime() {
-const currentTime = new Date();
-const hours = formatTime(currentTime.getHours());
-const minutes = formatTime(currentTime.getMinutes());
-const seconds = formatTime(currentTime.getSeconds());
-
-// Update the content of the span with the current time
-document.getElementById("currentTime").textContent = `${hours}:${minutes}`;
-}
-
-// Format single-digit time values with leading zeros
-function formatTime(timeValue) {
-return timeValue < 10 ? `0${timeValue}` : timeValue;
-}
-
-// Call updateTime initially and then every second
-updateTime();
-setInterval(updateTime, 1000);
+ 
 </script>
 
     </body>

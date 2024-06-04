@@ -3,19 +3,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 // Firebase
-import { auth, database } from "../../../firebase";
+import { auth, database , storage } from "../../../firebase";
 import { signOut } from "firebase/auth";
 import { child, get, onValue, ref, set } from "firebase/database";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faUser } from "@fortawesome/free-solid-svg-icons";
 // import { faPenNib } from "@fortawesome/free-solid-svg-icons";
 import image from "../../assets/img/profile-bg.jpg";
-import profile from "../../assets/img/default-profile.jpg";
-import { links } from "../../assets/Vars";
-import TimeStamp from "../../Common/TimeStamp";
+import { links } from "../../assets/Vars"; 
 import { setOffline } from "../../Common/SetActiveStatue";
 import Post from "../Components/Post";
 
+import { ref as storageRef, deleteObject, listAll } from "firebase/storage";
 // Under development
 
 const Profile = () => {
@@ -80,6 +79,15 @@ const Profile = () => {
       set(ref(database , '/posts/'+localStorage.getItem('currentUser')+'/'+postID),null).then(() => {
         console.log("Post deleted!");
       })
+
+      //Delet the imaggest from storage
+       let postStorageRef = storageRef(storage, '/'+`${localStorage.getItem('currentUser')}/${postID}`);
+       listAll(postStorageRef).then((result) => {
+           result.items.forEach((itemRef) => {
+               deleteObject(itemRef) 
+            // console.log(itemRef.fullPath);
+           }) 
+       })
     }
     // document.getElementById("edit-button").addEventListener("click", () => {
     // 	document.getElementById("edit-section").style.display = "block";
@@ -126,7 +134,7 @@ const Profile = () => {
             ) : (
                 "Loading something..."
             )}
-            <div className="space-y-6 ">
+            <div className="space-y-6 overflow-auto">
                 {posts ? posts.map((post, index) =>
                     <div key={index}>
                         <Post title={post.postTitle} timestamp={post.timestamp} authorData={post.authorUID} bodyText={post.postBody} imageArray={post.images} ></Post>
