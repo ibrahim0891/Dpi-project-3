@@ -20,6 +20,7 @@ const ChatView = () => {
     const [messsages, setMessages] = useState([])
     const [firstMessage, setFirstMessge] = useState('')
 
+    const textareaRef = useRef(null);
     const [isActive, setIsActive] = useState(false)
     const autoScroller = useRef(null)
     let currentUID = localStorage.getItem('currentUser')
@@ -29,6 +30,22 @@ const ChatView = () => {
         return combinedUID;
     }
 
+    const adjustTextareaHeight = () => {
+        const textarea = textareaRef.current;
+        if (textarea) {
+            if (textarea.value.trim() === '') {
+                textarea.style.height = '2.5rem'; // h-10 equivalent to 2.5rem
+                textarea.className = "ml-1 resize-none border block w-full rounded-md px-4 py-1 focus:outline-none text-[16px]";
+            } else if (textarea.scrollHeight > 40) {
+                textarea.className = "ml-1 resize-none border block w-full rounded-md px-4 py-2 focus:outline-none text-[16px] h-auto";
+                textarea.style.height = `${Math.min(textarea.scrollHeight, 300)}px`;
+            }
+        }
+    };
+
+    useEffect(() => {
+        adjustTextareaHeight();
+    }, [messageContent]);
 
     let threadID = generateThreadID(currentUID, chatIDnumber)
     let message = {
@@ -68,18 +85,25 @@ const ChatView = () => {
         if (autoScroller.current) {
             autoScroller.current.scrollIntoView({ behavior: "smooth" })
         }
-    }, [messsages, []])
+    }, [messsages])
+
+    const removeTrailingNewlines = (str) => {
+        return str.replace(/\n+$/, '');
+    };
 
     let send = (e) => {
         e.preventDefault()
-        if (messageContent !== '') {
+        let cleanedMessage = removeTrailingNewlines(messageContent)
+        if (messageContent !== '' || messageContent !== '/n') {
             let newMessageID = push(ref(database, '/chats')).key
             set(ref(database, '/chats/' + threadID + "/" + newMessageID), message)
+
             let lastMessage = {
                 lastMessageTime: TimeStamp(),
                 lastSender: currentUID,
-                lastMessage: messageContent
+                lastMessage: cleanedMessage,
             }
+            console.log(lastMessage)
             set(ref(database, '/threadList/' + currentUID + '/' + threadID), { ...lastMessage, receiver: chatIDnumber })
             set(ref(database, '/threadList/' + chatIDnumber + '/' + threadID), { ...lastMessage, receiver: currentUID })
             setMessageContent('')
@@ -87,23 +111,30 @@ const ChatView = () => {
             alert('Please enter a message to send')
             return null
         }
-
+        const textarea = textareaRef.current;
+        textarea.focus()
     }
 
 
     // set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData) 
+    const isMobileDevice = () => {
+        return /Mobi|Android/i.test(navigator.userAgent);
+    };
 
     const handleKeyDown = (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            send(e);
-            let typingIndicatorData = {
-                typer: localStorage.getItem('currentUser'),
-                isTyping: true,
-                typeContent: 'is waiting for a reply'
+        if (!isMobileDevice) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                send(e);
+                let typingIndicatorData = {
+                    typer: localStorage.getItem('currentUser'),
+                    isTyping: true,
+                    typeContent: 'is waiting for a reply'
+                }
+                set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData);
             }
-            set(ref(database, `/typingState/${threadID}/${localStorage.getItem('currentUser').slice(0, 4)}`), typingIndicatorData);
         }
+
     };
 
 
@@ -201,22 +232,26 @@ const ChatView = () => {
 
                     </div>
                     <div className=" bg-gray-50 h-full flex-1 overflow-auto p-4 pb-2" >
-                        {messsages ? Object.keys(messsages).map((objKeys) =>
-                            <div className={messsages[objKeys].sender == chatIDnumber ? 'flex items-end p-2' : ' flex justify-end p-2' + ''} key={objKeys}>
+                        {messsages ? Object.keys(messsages).map((message) =>
+                            <div className={messsages[message].sender == chatIDnumber ? 'flex items-end p-2' : ' flex justify-end p-2' + ''} key={message}>
                                 {receiver.avater ?
-                                    <img src={messsages[objKeys].sender == chatIDnumber && receiver.avater}
-                                        className={messsages[objKeys].sender == chatIDnumber ? 'w-8 aspect-square rounded-full mr-2' : 'hidden'}
+                                    <img src={messsages[message].sender == chatIDnumber && receiver.avater}
+                                        className={messsages[message].sender == chatIDnumber ? 'w-8 aspect-square rounded-full mr-2' : 'hidden'}
                                         alt=""
                                     /> :
                                     <img src='https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?size=338&ext=jpg&ga=GA1.1.1700460183.1712793600&semt=ais'
-                                        className={messsages[objKeys].sender == chatIDnumber ? 'w-8 aspect-square rounded-full mr-2' : 'hidden'}
+                                        className={messsages[message].sender == chatIDnumber ? 'w-8 aspect-square rounded-full mr-2' : 'hidden'}
                                         alt=""
                                     />
                                 }
-                                <p className={(messsages[objKeys].sender == chatIDnumber ? 'bg-blue-100' : 'bg-gray-100 max-w-[320px] ') + ' max-w-2/3 px-4 py-2 border rounded-lg'}>
-                                    {messsages[objKeys].message}
-                                    {messsages ? <div ref={autoScroller}> </div> : null}
+                                <p
+                                    className={(messsages[message].sender == chatIDnumber ? 'bg-blue-100' : 'bg-gray-100 max-w-[320px] ') + ' max-w-2/3 px-4 py-2 border rounded-lg'}
+                                    style={{ whiteSpace: 'pre-wrap' }}
+                                >
+                                    {messsages[message].message}
                                 </p>
+                                 
+                                {messsages ? <div ref={autoScroller}></div> : null}
                             </div>
                         ) : firstMessage ? firstMessage : <LoaderIcon></LoaderIcon>}
                     </div>
@@ -231,8 +266,8 @@ const ChatView = () => {
                                     />
                                 }
                                 <div className="flex items-center justify-start w-full">
-                                    <span className="inline-block text-blue-900 z-10 ml-2"> 
-                                    {receiver.fname} {typing.typeContent} {typing.typeContent.length >= 20 ? '...' : ''} 
+                                    <span className="inline-block text-blue-900 z-10 ml-2">
+                                        {receiver.fname} {typing.typeContent} {typing.typeContent.length >= 20 ? '...' : ''}
                                     </span>
                                     <img className="w-16 -mx-3" src="https://i.pinimg.com/originals/90/ad/7c/90ad7c4dac1bceb3359b732146062441.gif" alt="" />
                                 </div>
@@ -242,13 +277,14 @@ const ChatView = () => {
                         <div className="flex items-center justify-between">
                             <FontAwesomeIcon icon={faLink} className="p-3"></FontAwesomeIcon>
                             <textarea
-                                className="ml-1 resize-none border block w-full h-10 rounded-full px-4 pt-1 focus:outline-none text-[16px] "
+                                ref={textareaRef}
+                                className="ml-1 resize-none border block w-full h-12 rounded-md px-4 py-2 focus:outline-none text-[16px] "
                                 value={messageContent}
                                 onFocus={(e) => { typingStart(e) }}
                                 onBlur={typingEnd}
                                 onChange={(e) => handleInputChange(e)}
                                 onKeyDown={handleKeyDown}
-                                required={true}go
+                                required={true}
                                 placeholder="Type a message...">
                             </textarea>
                             <FontAwesomeIcon icon={faFaceSmile} className="p-4"></FontAwesomeIcon>

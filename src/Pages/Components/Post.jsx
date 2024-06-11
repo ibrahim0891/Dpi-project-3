@@ -27,7 +27,7 @@ const Post = ({ authorData, title, bodyText, imageArray, timestamp }) => {
                 </span>
                  <h1 className="text-2xl font-bold text-center "> {title} </h1>
             </div>
-            <p className="text-sm py-3 "> {bodyText} </p>
+            <p className="text-sm py-3 " style={{whiteSpace: 'pre-wrap' }} > {bodyText} </p>
             {imageArray ?
                 <div className="flex flex-no-wrap overflow-x-auto items-center gap-4 ">
                     {imageArray.map((imageUrl, index) => (

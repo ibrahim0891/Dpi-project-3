@@ -138,7 +138,7 @@ const Profile = () => {
                 {posts ? posts.map((post, index) =>
                     <div key={index}>
                         <Post title={post.postTitle} timestamp={post.timestamp} authorData={post.authorUID} bodyText={post.postBody} imageArray={post.images} ></Post>
-                        <button onClick={(e)=>deletePost(e, post.postID)}> Delete post </button>
+                        <button onClick={(e)=>deletePost(e, post.postID)} className="p-4 text-center block my-2 border bg-red-50 text-red-600" > Delete post </button>
                     </div>
                 )
                     : "loading posts..."}
